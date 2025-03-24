@@ -27,7 +27,16 @@
     "typescript": "^5.8.2"
   },
   "dependencies": {
+    "@commercetools-backend/loggers": "^23.2.0",
+    "@commercetools/platform-sdk": "^8.5.0",
+    "@commercetools/sdk-client-v2": "^3.0.0",
+    "@opentelemetry/api-logs": "^0.55.0",
+    "@opentelemetry/exporter-logs-otlp-http": "^0.55.0",
+    "@opentelemetry/resources": "^1.29.0",
+    "@opentelemetry/sdk-logs": "^0.55.0",
+    "@opentelemetry/winston-transport": "^0.8.0",
     "common": "link:../common",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2"
   }
 }
