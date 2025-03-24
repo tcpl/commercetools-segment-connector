@@ -1,6 +1,6 @@
-import { ByProjectKeyRequestBuilder } from "@commercetools/platform-sdk/dist/declarations/src/generated/client/by-project-key-request-builder";
+import { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk/dist/declarations/src/generated/client/by-project-key-request-builder';
 
-const SUBSCRIPTION_KEY = "tcpl-segment-subscription";
+const SUBSCRIPTION_KEY = 'tcpl-segment-subscription';
 
 export async function createSubscription(
   apiRoot: ByProjectKeyRequestBuilder,
@@ -21,19 +21,19 @@ export async function createSubscription(
       body: {
         key: SUBSCRIPTION_KEY,
         destination: {
-          type: "GoogleCloudPubSub",
+          type: 'GoogleCloudPubSub',
           topic: topicName,
           projectId,
         },
         changes: [
           {
-            resourceTypeId: "customer",
+            resourceTypeId: 'customer',
           },
           {
-            resourceTypeId: "order",
+            resourceTypeId: 'order',
           },
           {
-            resourceTypeId: "cart",
+            resourceTypeId: 'cart',
           },
         ],
       },

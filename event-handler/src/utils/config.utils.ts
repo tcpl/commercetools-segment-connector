@@ -1,7 +1,7 @@
-import EnvironmentVariablesValidationError from "../errors/environment-variables-validation.error";
-import type { Configuration } from "../types/index.types";
-import envValidators from "../validators/env.validators";
-import { getValidateMessages } from "../validators/helpers.validators";
+import EnvironmentVariablesValidationError from '../errors/environment-variables-validation.error';
+import type { Configuration } from '../types/index.types';
+import envValidators from '../validators/env.validators';
+import { getValidateMessages } from '../validators/helpers.validators';
 
 export const readConfiguration = (): Configuration => {
   const envVars: Configuration = {
@@ -20,8 +20,8 @@ export const readConfiguration = (): Configuration => {
 
   if (validationErrors.length) {
     throw new EnvironmentVariablesValidationError(
-      "InvalidEnvironmentVariablesError",
-      "Invalid Environment Variables please check your .env file",
+      'InvalidEnvironmentVariablesError',
+      'Invalid Environment Variables please check your .env file',
       validationErrors
     );
   }
