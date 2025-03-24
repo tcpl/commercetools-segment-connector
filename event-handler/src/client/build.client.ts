@@ -1,9 +1,9 @@
-import { ClientBuilder } from "@commercetools/sdk-client-v2";
+import { ClientBuilder } from '@commercetools/sdk-client-v2';
 import type {
   AuthMiddlewareOptions,
   HttpMiddlewareOptions,
-} from "@commercetools/sdk-client-v2";
-import { readConfiguration } from "../utils/config.utils";
+} from '@commercetools/sdk-client-v2';
+import { readConfiguration } from '../utils/config.utils';
 
 const configuration = readConfiguration();
 
@@ -28,8 +28,8 @@ const authMiddlewareOptions: AuthMiddlewareOptions = {
     clientSecret: configuration.clientSecret,
   },
   scopes: [
-    projectScope("manage_subscriptions"), // TODO: only want this when installing/uninstalling the connector
-    projectScope("view_orders"),
-    projectScope("view_customers"),
+    projectScope('manage_subscriptions'), // TODO: only want this when installing/uninstalling the connector
+    projectScope('view_orders'),
+    projectScope('view_customers'),
   ],
 };

@@ -1,11 +1,11 @@
-import express, { Request, Response } from "express";
-import { hello } from "common";
+import express, { Request, Response } from 'express';
+import { hello } from 'common';
 
 const app = express();
-app.disable("x-powered-by");
+app.disable('x-powered-by');
 
-app.get("/", (req: Request, res: Response) => {
-  res.send(hello());
+app.post('/deltaSync', (req: Request, res: Response) => {
+  res.status(204).send();
 });
 
 export default app;

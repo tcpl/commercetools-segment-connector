@@ -13,6 +13,7 @@ async function postDeploy(properties: Map<string, unknown>): Promise<void> {
   const projectId = properties.get(CONNECT_GCP_PROJECT_ID_KEY) as string;
 
   const apiRoot = createApiRoot();
+
   await createSubscription(apiRoot, topicName, projectId);
 }
 
