@@ -54,6 +54,7 @@ export async function sendOrderPlacedTrackEvent(order: Order) {
     if (!order.customerId && order.anonymousId) {
       analytics.identify({
         anonymousId: order.anonymousId,
+        timestamp: new Date(order.createdAt).toISOString(),
         traits: {
           email: order.customerEmail,
         },
