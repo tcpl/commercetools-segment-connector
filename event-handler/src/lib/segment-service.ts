@@ -1,11 +1,15 @@
 import { Analytics, TrackParams } from '@segment/analytics-node';
 import { getLogger } from '../utils/logger.utils';
 import { Customer, Order } from '@commercetools/platform-sdk';
+import { readConfiguration } from '../utils/config.utils';
 
-const createAnalytics = () =>
-  new Analytics({
-    writeKey: process.env.SEGMENT_WRITE_KEY!,
+const createAnalytics = () => {
+  const configuration = readConfiguration();
+
+  return new Analytics({
+    writeKey: configuration.segmentSourceWriteKey,
   });
+};
 
 export async function sendCustomerToSegment(customer: Customer) {
   const logger = getLogger();
@@ -43,7 +47,7 @@ export async function sendOrderTrackEventToSegment(order: Order) {
     }
 
     const event: TrackParams = {
-      userId: customerId as string,
+      userId: customerId as string, // need either userId or anonymousId
       anonymousId: anonymousId,
       event: 'Order Completed',
       properties: {
