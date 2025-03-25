@@ -15,6 +15,8 @@ app.post('/', async (req: Request, res: Response) => {
 
   if (!encodedMessageBody) {
     logger.info('No message body found in the request!');
+    logger.info('Request body:');
+    logger.info(JSON.stringify(req.body));
     res.status(204).send();
     return;
   }
