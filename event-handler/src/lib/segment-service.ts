@@ -46,18 +46,26 @@ export async function sendOrderTrackEventToSegment(order: Order) {
   const analytics = createAnalytics();
 
   try {
-    const customerId = order.customerId;
-    let anonymousId;
+    logger.info(
+      `Order has customer ID: ${order.customerId} and anonymous ID: ${order.anonymousId}`
+    );
 
-    if (!customerId) {
-      anonymousId = order.anonymousId;
+    // if they are an anonymous user, identify them
+    if (!order.customerId && order.anonymousId) {
+      analytics.identify({
+        anonymousId: order.anonymousId,
+        traits: {
+          email: order.customerEmail,
+        },
+      });
     }
 
     const event: TrackParams = {
-      userId: customerId as string, // need either userId or anonymousId
-      anonymousId: anonymousId,
+      userId: order.customerId as string, // need either userId or anonymousId
+      anonymousId: order.anonymousId,
       event: 'Order Completed',
       properties: {
+        email: order.customerEmail,
         order_id: order.id,
         total_cent_amount: order.totalPrice?.centAmount,
         currency: order.totalPrice?.currencyCode,
