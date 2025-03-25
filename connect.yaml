@@ -1,0 +1,27 @@
+deployAs:
+  - name: event-handler
+    applicationType: event
+    endpoint: /
+    scripts:
+      postDeploy: yarn install && yarn build && yarn connector:post-deploy
+      preUndeploy: yarn install && yarn build && yarn connector:pre-undeploy
+    configuration:
+      standardConfiguration: []
+      securedConfiguration: []
+inheritAs:
+  apiClient:
+    scopes:
+      - view_orders
+      - view_customers
+      - manage_subscriptions
+  configuration:
+    securedConfiguration:
+      - key: SEGMENT_SOURCE_WRITE_KEY
+        description: The write key from your Twilio Segment Source
+      - key: OTEL_EXPORTER_OTLP_ENDPOINT_API_KEY
+        description: OpenTelemetry OTLP exporter API key
+        required: false
+    standardConfiguration:
+      - key: OTEL_EXPORTER_OTLP_ENDPOINT
+        description: OpenTelemetry OTLP exporter endpoint
+        required: false
