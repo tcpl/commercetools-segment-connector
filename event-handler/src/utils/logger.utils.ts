@@ -28,7 +28,7 @@ export const getLogger = (useBatchLogRecordProcessor: boolean = true) => {
     ) {
       const loggerProvider = new LoggerProvider({
         resource: new Resource({
-          ['service.name']: `dovetech-campaigns-connector:${configuration.projectKey}`,
+          ['service.name']: `tcpl-segment-connector:${configuration.projectKey}`,
         }),
       });
       const logExporter = new OTLPLogExporter({
