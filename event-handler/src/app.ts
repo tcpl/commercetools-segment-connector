@@ -4,7 +4,8 @@ dotenv.config();
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import { decodeToJson } from './utils/decoder.utils';
-import { handleCustomerCreated } from './lib/customer-event-handler';
+import { handleCustomerCreated as handleCustomerUpsert } from './lib/customer-event-handler';
+import { handleOrderCreated } from './lib/order-event-handler';
 
 const app = express();
 app.disable('x-powered-by');
@@ -22,7 +23,14 @@ app.post('/', async (req: Request, res: Response) => {
   if (resourceType === 'customer') {
     switch (notificationType) {
       case 'ResourceCreated':
-        await handleCustomerCreated(resourceId);
+      case 'ResourceUpdated':
+        await handleCustomerUpsert(resourceId);
+        break;
+    }
+  } else if (resourceType === 'order') {
+    switch (notificationType) {
+      case 'ResourceCreated':
+        await handleOrderCreated(resourceId);
         break;
     }
   }
