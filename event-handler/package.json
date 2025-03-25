@@ -40,6 +40,7 @@
     "@opentelemetry/resources": "^1.29.0",
     "@opentelemetry/sdk-logs": "^0.55.0",
     "@opentelemetry/winston-transport": "^0.8.0",
+    "@segment/analytics-node": "^2.2.1",
     "body-parser": "^1.20.3",
     "common": "link:../common",
     "dotenv": "^16.4.7",
