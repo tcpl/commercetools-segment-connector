@@ -10,11 +10,6 @@ const createAnalytics = () =>
 export async function sendCustomerToSegment(customer: Customer) {
   const logger = getLogger();
 
-  if (!customer || !customer.id) {
-    logger.error('Invalid customer data for Segment');
-    return;
-  }
-
   const analytics = createAnalytics();
 
   try {
@@ -36,11 +31,6 @@ export async function sendCustomerToSegment(customer: Customer) {
 
 export async function sendOrderTrackEventToSegment(order: Order) {
   const logger = getLogger();
-
-  if (!order || !order.id) {
-    logger.error('Invalid order data for Segment');
-    return;
-  }
 
   const analytics = createAnalytics();
 
