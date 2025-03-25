@@ -23,6 +23,13 @@ export async function sendCustomerToSegment(customer: Customer) {
         email: customer.email,
         firstName: customer.firstName,
         lastName: customer.lastName,
+        title: customer.title,
+        salutation: customer.salutation,
+        dateOfBirth: customer.dateOfBirth,
+        customerNumber: customer.customerNumber,
+        externalId: customer.externalId,
+        isEmailVerified: customer.isEmailVerified,
+        locale: customer.locale,
       },
     });
 
