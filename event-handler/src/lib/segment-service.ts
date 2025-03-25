@@ -11,7 +11,7 @@ const createAnalytics = () => {
   });
 };
 
-export async function sendCustomerToSegment(customer: Customer) {
+export async function sendCustomer(customer: Customer) {
   const logger = getLogger();
 
   const analytics = createAnalytics();
@@ -40,7 +40,7 @@ export async function sendCustomerToSegment(customer: Customer) {
   }
 }
 
-export async function sendOrderTrackEventToSegment(order: Order) {
+export async function sendOrderPlacedTrackEvent(order: Order) {
   const logger = getLogger();
 
   const analytics = createAnalytics();
@@ -63,7 +63,8 @@ export async function sendOrderTrackEventToSegment(order: Order) {
     const event: TrackParams = {
       userId: order.customerId as string, // need either userId or anonymousId
       anonymousId: order.anonymousId,
-      event: 'Order Completed',
+      timestamp: new Date(order.createdAt).toISOString(),
+      event: 'Order Placed',
       properties: {
         email: order.customerEmail,
         order_id: order.id,
