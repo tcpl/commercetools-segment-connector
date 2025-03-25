@@ -4,32 +4,35 @@ import type {
   HttpMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
 import { readConfiguration } from '../utils/config.utils';
+import { Configuration } from '../types/index.types';
 
-const configuration = readConfiguration();
+const getProjectScope = (configuration: Configuration, scope: string) =>
+  `${scope}:${configuration.projectKey}`;
 
-const projectScope = (scope: string) => `${scope}:${configuration.projectKey}`;
+export const createClient = () => {
+  const configuration = readConfiguration();
 
-export const createClient = () =>
-  new ClientBuilder()
+  const httpMiddlewareOptions: HttpMiddlewareOptions = {
+    host: configuration.apiUrl,
+  };
+
+  const authMiddlewareOptions: AuthMiddlewareOptions = {
+    host: configuration.authUrl,
+    projectKey: configuration.projectKey,
+    credentials: {
+      clientId: configuration.clientId,
+      clientSecret: configuration.clientSecret,
+    },
+    scopes: [
+      getProjectScope(configuration, 'manage_subscriptions'), // TODO: only want this when installing/uninstalling the connector
+      getProjectScope(configuration, 'view_orders'),
+      getProjectScope(configuration, 'view_customers'),
+    ],
+  };
+
+  return new ClientBuilder()
     .withProjectKey(configuration.projectKey)
     .withClientCredentialsFlow(authMiddlewareOptions)
     .withHttpMiddleware(httpMiddlewareOptions)
     .build();
-
-const httpMiddlewareOptions: HttpMiddlewareOptions = {
-  host: configuration.apiUrl,
-};
-
-const authMiddlewareOptions: AuthMiddlewareOptions = {
-  host: configuration.authUrl,
-  projectKey: configuration.projectKey,
-  credentials: {
-    clientId: configuration.clientId,
-    clientSecret: configuration.clientSecret,
-  },
-  scopes: [
-    projectScope('manage_subscriptions'), // TODO: only want this when installing/uninstalling the connector
-    projectScope('view_orders'),
-    projectScope('view_customers'),
-  ],
 };
