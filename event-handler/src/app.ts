@@ -4,7 +4,7 @@ dotenv.config();
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import { decodeToJson } from './utils/decoder.utils';
-import { handleCustomerCreated as handleCustomerUpsert } from './lib/customer-event-handler';
+import { handleCustomerUpsert } from './lib/customer-event-handler';
 import { handleOrderCreated } from './lib/order-event-handler';
 
 const app = express();
