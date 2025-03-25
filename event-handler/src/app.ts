@@ -2,25 +2,18 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import express, { Request, Response } from 'express';
+import bodyParser from 'body-parser';
 import { getLogger } from './utils/logger.utils';
 import { decodeToJson } from './utils/decoder.utils';
 
 const app = express();
 app.disable('x-powered-by');
+app.use(bodyParser.json());
 
 app.post('/', async (req: Request, res: Response) => {
   const logger = getLogger();
 
-  const encodedMessageBody = req.body?.message?.data;
-
-  if (!encodedMessageBody) {
-    logger.info('No message body found in the request!');
-    logger.info('Request body:');
-    logger.info(JSON.stringify(req.body));
-    res.status(204).send();
-    return;
-  }
-
+  const encodedMessageBody = req.body.message.data;
   const messageBody = decodeToJson(encodedMessageBody);
   const resourceType = messageBody?.resource?.typeId;
 
