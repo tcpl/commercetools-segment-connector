@@ -19,6 +19,8 @@ export async function sendCustomer(customer: Customer) {
   try {
     analytics.identify({
       userId: customer.id,
+      messageId: `${customer.id}-${customer.version}`,
+      timestamp: customer.lastModifiedAt,
       traits: {
         email: customer.email,
         firstName: customer.firstName,
@@ -72,7 +74,7 @@ export async function sendOrderCompletedTrackEvent(order: Order) {
     const event: TrackParams = {
       userId: order.customerId as string, // need either userId or anonymousId
       anonymousId: order.anonymousId,
-      timestamp: new Date(order.createdAt).toISOString(),
+      timestamp: order.createdAt,
       messageId: `${order.id}-order-completed`,
       event: 'Order Completed',
       properties: {
