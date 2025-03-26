@@ -32,10 +32,9 @@ describe('segment-service', () => {
 
   describe('sendCustomer', () => {
     it('should send customer data to Segment', async () => {
-      const mockCustomer = {
+      const mockCustomer = createMockCustomer({
         id: 'customer-123',
         version: 1,
-        lastModifiedAt: '2023-01-01T12:00:00.000Z',
         email: 'test@example.com',
         firstName: 'John',
         lastName: 'Doe',
@@ -46,18 +45,14 @@ describe('segment-service', () => {
         externalId: 'EXT123',
         isEmailVerified: true,
         locale: 'en-US',
-        createdAt: '2023-01-01T10:00:00.000Z',
-        addresses: [],
-        stores: [],
-        authenticationMode: 'password',
-      };
+      });
 
       await sendCustomer(mockCustomer);
 
       expect(mockIdentify).toHaveBeenCalledWith({
         userId: 'customer-123',
         messageId: 'customer-123-1',
-        timestamp: '2023-01-01T12:00:00.000Z',
+        timestamp: '2023-02-01T12:00:00.000Z',
         traits: {
           email: 'test@example.com',
           firstName: 'John',
@@ -74,18 +69,7 @@ describe('segment-service', () => {
     });
 
     it('should handle missing customer properties gracefully', async () => {
-      // Prepare minimal customer data
-      const mockCustomer = {
-        id: 'customer-456',
-        version: 2,
-        lastModifiedAt: '2023-02-01T12:00:00.000Z',
-        email: 'minimal@example.com',
-        createdAt: '2023-01-01T12:00:00.000Z',
-        addresses: [],
-        isEmailVerified: false,
-        stores: [],
-        authenticationMode: 'password',
-      };
+      const mockCustomer = createMockCustomer();
 
       await sendCustomer(mockCustomer);
 
@@ -94,7 +78,7 @@ describe('segment-service', () => {
         messageId: 'customer-456-2',
         timestamp: '2023-02-01T12:00:00.000Z',
         traits: {
-          email: 'minimal@example.com',
+          email: 'test@example.com',
           firstName: undefined,
           lastName: undefined,
           title: undefined,
@@ -130,4 +114,17 @@ describe('segment-service', () => {
     //   );
     // });
   });
+});
+
+const createMockCustomer = (overrides = {}) => ({
+  id: 'customer-456',
+  version: 2,
+  lastModifiedAt: '2023-02-01T12:00:00.000Z',
+  email: 'test@example.com',
+  createdAt: '2023-01-01T12:00:00.000Z',
+  addresses: [],
+  isEmailVerified: false,
+  stores: [],
+  authenticationMode: 'password',
+  ...overrides,
 });
