@@ -93,9 +93,9 @@ describe('segment-service', () => {
     it('should throw an error when Segment API fails', async () => {
       const segmentError = new Error('Segment API failure');
 
-      // mockIdentify.mockImplementation(() => {
-      //   throw segmentError;
-      // });
+      mockIdentify.mockImplementation(() => {
+        throw segmentError;
+      });
 
       const mockCustomer = createMockCustomer();
 
