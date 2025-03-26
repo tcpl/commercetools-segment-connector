@@ -50,17 +50,6 @@ export async function sendOrderPlacedTrackEvent(order: Order) {
       `Order has customer ID: ${order.customerId} and anonymous ID: ${order.anonymousId}`
     );
 
-    // if they are an anonymous user, identify them
-    if (!order.customerId && order.anonymousId) {
-      analytics.identify({
-        anonymousId: order.anonymousId,
-        timestamp: new Date(order.createdAt).toISOString(),
-        traits: {
-          email: order.customerEmail,
-        },
-      });
-    }
-
     const event: TrackParams = {
       userId: order.customerId as string, // need either userId or anonymousId
       anonymousId: order.anonymousId,
