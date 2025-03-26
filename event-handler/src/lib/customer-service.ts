@@ -11,3 +11,17 @@ export async function getCustomer(customerId: string) {
 
   return response.body;
 }
+
+export async function getCustomerByEmail(email: string) {
+  const response = await createApiRoot()
+    .customers()
+    .get({
+      queryArgs: {
+        where: `email="${email}"`,
+        limit: 1,
+      },
+    })
+    .execute();
+
+  return response.body.results.length > 0 ? response.body.results[0] : null;
+}

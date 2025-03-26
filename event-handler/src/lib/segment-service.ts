@@ -40,21 +40,40 @@ export async function sendCustomer(customer: Customer) {
   }
 }
 
+export async function identifyAnonymousUser(
+  anonymousId: string,
+  email: string
+) {
+  const logger = getLogger();
+
+  const analytics = createAnalytics();
+
+  try {
+    analytics.identify({
+      anonymousId,
+      traits: { email },
+    });
+
+    logger.info(
+      `Anonymous user ${anonymousId} identified in Segment successfully`
+    );
+  } catch (error) {
+    logger.error(`Error identifying anonymous user in Segment: ${error}`);
+    throw error;
+  }
+}
+
 export async function sendOrderPlacedTrackEvent(order: Order) {
   const logger = getLogger();
 
   const analytics = createAnalytics();
 
   try {
-    logger.info(
-      `Order has customer ID: ${order.customerId} and anonymous ID: ${order.anonymousId}`
-    );
-
     const event: TrackParams = {
       userId: order.customerId as string, // need either userId or anonymousId
       anonymousId: order.anonymousId,
       timestamp: new Date(order.createdAt).toISOString(),
-      event: 'Order Placed',
+      event: 'Order Completed',
       properties: {
         email: order.customerEmail,
         order_id: order.id,
