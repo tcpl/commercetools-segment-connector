@@ -18,6 +18,12 @@ jobs:
         with:
           node-version: 23
 
+      - name: Build
+        run: yarn build
+
+      - name: Unit Test
+        run: yarn test
+
       - name: Install Dependencies
         run: yarn
 
