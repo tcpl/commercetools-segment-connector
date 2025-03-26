@@ -2,7 +2,7 @@ import { getOrder } from './order-service';
 import { getCustomerByEmail } from './customer-service';
 import {
   identifyAnonymousUser,
-  sendOrderPlacedTrackEvent,
+  sendOrderCompletedTrackEvent,
 } from './segment-service';
 
 export async function handleOrderCreated(orderId: string) {
@@ -18,5 +18,5 @@ export async function handleOrderCreated(orderId: string) {
     }
   }
 
-  await sendOrderPlacedTrackEvent(order);
+  await sendOrderCompletedTrackEvent(order);
 }

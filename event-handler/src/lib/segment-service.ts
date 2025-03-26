@@ -63,7 +63,7 @@ export async function identifyAnonymousUser(
   }
 }
 
-export async function sendOrderPlacedTrackEvent(order: Order) {
+export async function sendOrderCompletedTrackEvent(order: Order) {
   const logger = getLogger();
 
   const analytics = createAnalytics();
@@ -73,6 +73,7 @@ export async function sendOrderPlacedTrackEvent(order: Order) {
       userId: order.customerId as string, // need either userId or anonymousId
       anonymousId: order.anonymousId,
       timestamp: new Date(order.createdAt).toISOString(),
+      messageId: `${order.id}-order-completed`,
       event: 'Order Completed',
       properties: {
         email: order.customerEmail,
