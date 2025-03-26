@@ -33,8 +33,6 @@ describe('segment-service', () => {
   describe('sendCustomer', () => {
     it('should send customer data to Segment', async () => {
       const mockCustomer = createMockCustomer({
-        id: 'customer-123',
-        version: 1,
         email: 'test@example.com',
         firstName: 'John',
         lastName: 'Doe',
@@ -50,8 +48,8 @@ describe('segment-service', () => {
       await sendCustomer(mockCustomer);
 
       expect(mockIdentify).toHaveBeenCalledWith({
-        userId: 'customer-123',
-        messageId: 'customer-123-1',
+        userId: '762a5ae5-e8c8-47c2-8af2-0dd7024d0f7c',
+        messageId: '762a5ae5-e8c8-47c2-8af2-0dd7024d0f7c-2',
         timestamp: '2023-02-01T12:00:00.000Z',
         traits: {
           email: 'test@example.com',
@@ -74,8 +72,8 @@ describe('segment-service', () => {
       await sendCustomer(mockCustomer);
 
       expect(mockIdentify).toHaveBeenCalledWith({
-        userId: 'customer-456',
-        messageId: 'customer-456-2',
+        userId: '762a5ae5-e8c8-47c2-8af2-0dd7024d0f7c',
+        messageId: '762a5ae5-e8c8-47c2-8af2-0dd7024d0f7c-2',
         timestamp: '2023-02-01T12:00:00.000Z',
         traits: {
           email: 'test@example.com',
@@ -117,7 +115,7 @@ describe('segment-service', () => {
 });
 
 const createMockCustomer = (overrides = {}) => ({
-  id: 'customer-456',
+  id: '762a5ae5-e8c8-47c2-8af2-0dd7024d0f7c',
   version: 2,
   lastModifiedAt: '2023-02-01T12:00:00.000Z',
   email: 'test@example.com',
