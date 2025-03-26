@@ -11,7 +11,7 @@ const createAnalytics = () => {
   });
 };
 
-export async function sendCustomer(customer: Customer) {
+export function sendCustomer(customer: Customer) {
   const logger = getLogger();
 
   const analytics = createAnalytics();

@@ -45,7 +45,7 @@ describe('segment-service', () => {
         locale: 'en-US',
       });
 
-      await sendCustomer(mockCustomer);
+      sendCustomer(mockCustomer);
 
       expect(mockIdentify).toHaveBeenCalledWith({
         userId: '762a5ae5-e8c8-47c2-8af2-0dd7024d0f7c',
@@ -69,7 +69,7 @@ describe('segment-service', () => {
     it('should handle missing customer properties gracefully', async () => {
       const mockCustomer = createMockCustomer();
 
-      await sendCustomer(mockCustomer);
+      sendCustomer(mockCustomer);
 
       expect(mockIdentify).toHaveBeenCalledWith({
         userId: '762a5ae5-e8c8-47c2-8af2-0dd7024d0f7c',
@@ -90,27 +90,17 @@ describe('segment-service', () => {
       });
     });
 
-    // it('should throw an error when Segment API fails', async () => {
-    //   // Setup Segment API to fail
-    //   const segmentError = new Error('Segment API failure');
-    //   mockIdentify.mockRejectedValueOnce(segmentError);
+    it('should throw an error when Segment API fails', async () => {
+      const segmentError = new Error('Segment API failure');
 
-    //   // Prepare test data
-    //   const mockCustomer = {
-    //     id: 'customer-789',
-    //     version: 3,
-    //     lastModifiedAt: '2023-03-01T12:00:00.000Z',
-    //     email: 'error@example.com',
-    //   };
+      mockIdentify.mockImplementation(() => {
+        throw segmentError;
+      });
 
-    //   // Call the function and expect it to throw
-    //   await expect(sendCustomer(mockCustomer)).rejects.toThrow(segmentError);
+      const mockCustomer = createMockCustomer();
 
-    //   // Verify error was logged
-    //   expect(mockError).toHaveBeenCalledWith(
-    //     'Error sending customer to Segment: Error: Segment API failure'
-    //   );
-    // });
+      expect(() => sendCustomer(mockCustomer)).toThrow(segmentError);
+    });
   });
 });
 
