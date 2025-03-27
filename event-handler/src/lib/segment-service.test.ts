@@ -172,8 +172,11 @@ describe('trackOrderCompleted', () => {
         email: 'seb@example.com',
         order_id: '33925a10-c3fb-4ff5-a9b2-9134400b9d4d',
         total: 169.8,
+        revenue: 119.8,
         shipping: 50.0,
+        subtotal: 119.8,
         tax: 8.07,
+        discount: 0,
         coupon: undefined,
         products: [
           {

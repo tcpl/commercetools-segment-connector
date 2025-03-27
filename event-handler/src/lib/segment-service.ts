@@ -97,6 +97,32 @@ export function trackOrderCompleted(order: Order) {
       };
     });
 
+    let subTotalCentAmount = order.lineItems.reduce((acc, lineItem) => {
+      return acc + lineItem.totalPrice.centAmount;
+    }, 0);
+
+    subTotalCentAmount -=
+      order.discountOnTotalPrice?.discountedAmount?.centAmount ?? 0;
+
+    const subTotalCurrencyUnits = getCentAmountInCurrencyUnits(
+      subTotalCentAmount,
+      order.totalPrice.fractionDigits
+    );
+
+    let discountTotalCents = order.lineItems.reduce((acc, lineItem) => {
+      const lineItemPrice = getLineItemPrice(lineItem);
+      const lineItemSubtotal = lineItemPrice.centAmount * lineItem.quantity;
+      const lineItemTotal = lineItem.totalPrice.centAmount;
+      const lineItemDiscount = lineItemSubtotal - lineItemTotal;
+
+      return acc + lineItemDiscount;
+    }, 0);
+
+    discountTotalCents +=
+      order.discountOnTotalPrice?.discountedAmount?.centAmount ?? 0;
+
+    // TODO: add shipping discount to discount total
+
     const event: TrackParams = {
       userId: order.customerId as string, // need either userId or anonymousId
       anonymousId: order.anonymousId,
@@ -107,9 +133,12 @@ export function trackOrderCompleted(order: Order) {
         email: order.customerEmail,
         order_id: order.id,
         total: getTypedMoneyInCurrencyUnits(order.totalPrice), // Subtotal ($) with shipping and taxes added in
-        // subtotal: Order total after discounts but before taxes and shipping
-        // revenue: Revenue ($) associated with the transaction (including discounts, but excluding shipping and taxes)
-        // discount: Total discount associated with the transaction
+        subtotal: subTotalCurrencyUnits, // subtotal: Order total after discounts but before taxes and shipping
+        revenue: subTotalCurrencyUnits, // Revenue ($) associated with the transaction (including discounts, but excluding shipping and taxes)
+        discount: getCentAmountInCurrencyUnits(
+          discountTotalCents,
+          order.totalPrice.fractionDigits
+        ),
         shipping: getShippingCostInCurrencyUnits(order),
         tax:
           order.taxedPrice?.totalTax !== undefined
