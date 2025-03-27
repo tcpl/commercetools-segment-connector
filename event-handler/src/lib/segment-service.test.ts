@@ -178,7 +178,7 @@ describe('trackOrderCompleted', () => {
         tax: 8.07,
         discount: 0,
         coupon: undefined,
-        total: 169.8,
+        total: 177.87,
         products: [
           {
             product_id: 'b5241ecf-537f-4714-acaf-a0c36b20a74d',

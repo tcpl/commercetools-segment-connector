@@ -157,7 +157,7 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
     properties: {
       email: order.customerEmail,
       order_id: order.id,
-      total: getTypedMoneyInCurrencyUnits(order.totalPrice), // Subtotal ($) with shipping and taxes added in
+      total: getTypedMoneyInCurrencyUnits(order.taxedPrice!.totalGross), // Subtotal ($) with shipping and taxes added in
       subtotal: subTotalCurrencyUnits, // subtotal: Order total after discounts but before taxes and shipping
       revenue: subTotalCurrencyUnits, // Revenue ($) associated with the transaction (including discounts, but excluding shipping and taxes)
       discount: getCentAmountInCurrencyUnits(
