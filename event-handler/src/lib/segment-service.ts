@@ -17,6 +17,8 @@ export function sendCustomer(customer: Customer) {
   const analytics = createAnalytics();
 
   try {
+    // https://segment.com/docs/connections/spec/identify/#custom-traits
+
     analytics.identify({
       userId: customer.id,
       messageId: `${customer.id}-${customer.version}`,
@@ -26,12 +28,12 @@ export function sendCustomer(customer: Customer) {
         firstName: customer.firstName,
         lastName: customer.lastName,
         title: customer.title,
-        salutation: customer.salutation,
         dateOfBirth: customer.dateOfBirth,
         customerNumber: customer.customerNumber,
         externalId: customer.externalId,
         isEmailVerified: customer.isEmailVerified,
         locale: customer.locale,
+        createdAt: customer.createdAt,
       },
     });
 

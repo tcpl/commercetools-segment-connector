@@ -23,7 +23,6 @@ describe('segment-service', () => {
         lastName: 'Doe',
         middleName: 'middle',
         title: 'Mr',
-        salutation: 'Salutation',
         dateOfBirth: '1990-11-01',
         customerNumber: 'CN123',
         externalId: 'EXT123',
@@ -42,12 +41,12 @@ describe('segment-service', () => {
           firstName: 'John',
           lastName: 'Doe',
           title: 'Mr',
-          salutation: 'Salutation',
           dateOfBirth: '1990-11-01',
           customerNumber: 'CN123',
           externalId: 'EXT123',
           isEmailVerified: true,
           locale: 'en-US',
+          createdAt: '2023-01-01T12:00:00.000Z',
         },
       });
     });
@@ -63,10 +62,10 @@ describe('segment-service', () => {
         timestamp: '2023-02-01T12:00:00.000Z',
         traits: {
           email: 'test@example.com',
+          createdAt: '2023-01-01T12:00:00.000Z',
           firstName: undefined,
           lastName: undefined,
           title: undefined,
-          salutation: undefined,
           dateOfBirth: undefined,
           customerNumber: undefined,
           externalId: undefined,
