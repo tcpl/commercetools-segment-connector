@@ -7,6 +7,7 @@ import {
 import * as orderWithUSTax from './test-orders/order-with-us-tax.json';
 import * as anonymousOrderWithShippingDiscount from './test-orders/anonymous-order-shipping-discount.json';
 import * as orderWithDiscountOnTotalPrice from './test-orders/order-with-discount-on-total-price.json';
+import * as orderWithItemDiscount from './test-orders/order-with-item-discount.json';
 import { Order } from '@commercetools/platform-sdk';
 
 jest.mock('@segment/analytics-node');
@@ -247,6 +248,25 @@ describe('trackOrderCompleted', () => {
           tax: 26.86,
           discount: 17.9,
           total: 161.1,
+        }),
+      })
+    );
+  });
+
+  it('order with item discount tracked correctly', () => {
+    const order = orderWithItemDiscount as Order;
+
+    trackOrderCompleted(order);
+
+    expect(mockTrack).toHaveBeenCalledWith(
+      expect.objectContaining({
+        properties: expect.objectContaining({
+          revenue: 3.12,
+          subtotal: 3.12,
+          shipping: 100.0,
+          tax: 17.29,
+          discount: 1.25,
+          total: 103.74,
         }),
       })
     );
