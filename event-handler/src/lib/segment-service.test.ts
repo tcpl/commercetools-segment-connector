@@ -5,6 +5,7 @@ import {
   trackOrderCompleted,
 } from './segment-service';
 import * as orderWithUSTax from './test-orders/order-with-us-tax.json';
+import * as anonymousOrderWithShippingDiscount from './test-orders/anonymous-order-shipping-discount.json';
 import { Order } from '@commercetools/platform-sdk';
 
 jest.mock('@segment/analytics-node');
