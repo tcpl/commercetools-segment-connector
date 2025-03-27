@@ -1,15 +1,11 @@
 import { Analytics } from '@segment/analytics-node';
 import { sendCustomer } from './segment-service';
-import { getLogger } from '../utils/logger.utils';
 
 jest.mock('@segment/analytics-node');
-jest.mock('../utils/logger.utils');
 jest.mock('../utils/config.utils');
 
 describe('segment-service', () => {
   const mockIdentify = jest.fn();
-  const mockInfo = jest.fn();
-  const mockError = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -17,11 +13,6 @@ describe('segment-service', () => {
     (Analytics as jest.Mock).mockImplementation(() => ({
       identify: mockIdentify,
     }));
-
-    (getLogger as jest.Mock).mockReturnValue({
-      info: mockInfo,
-      error: mockError,
-    });
   });
 
   describe('sendCustomer', () => {
