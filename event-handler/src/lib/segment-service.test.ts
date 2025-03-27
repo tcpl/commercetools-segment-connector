@@ -4,17 +4,17 @@ import { identifyAnonymousUser, sendCustomer } from './segment-service';
 jest.mock('@segment/analytics-node');
 jest.mock('../utils/config.utils');
 
-const mockIdentify = jest.fn();
-
-beforeEach(() => {
-  jest.clearAllMocks();
-
-  (Analytics as jest.Mock).mockImplementation(() => ({
-    identify: mockIdentify,
-  }));
-});
-
 describe('sendCustomer', () => {
+  const mockIdentify = jest.fn();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    (Analytics as jest.Mock).mockImplementation(() => ({
+      identify: mockIdentify,
+    }));
+  });
+
   it('should send customer data to Segment', async () => {
     const mockCustomer = createMockCustomer({
       email: 'test@example.com',
