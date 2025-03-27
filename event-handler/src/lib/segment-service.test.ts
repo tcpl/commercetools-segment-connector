@@ -1,5 +1,5 @@
 import { Analytics } from '@segment/analytics-node';
-import { identifyAnonymousUser, sendCustomer } from './segment-service';
+import { identifyAnonymousCustomer, identifyCustomer } from './segment-service';
 
 jest.mock('@segment/analytics-node');
 jest.mock('../utils/config.utils');
@@ -29,7 +29,7 @@ describe('sendCustomer', () => {
       locale: 'en-US',
     });
 
-    sendCustomer(mockCustomer);
+    identifyCustomer(mockCustomer);
 
     expect(mockIdentify).toHaveBeenCalledWith({
       userId: '762a5ae5-e8c8-47c2-8af2-0dd7024d0f7c',
@@ -53,7 +53,7 @@ describe('sendCustomer', () => {
   it('should handle missing customer properties gracefully', async () => {
     const mockCustomer = createMockCustomer();
 
-    sendCustomer(mockCustomer);
+    identifyCustomer(mockCustomer);
 
     expect(mockIdentify).toHaveBeenCalledWith({
       userId: '762a5ae5-e8c8-47c2-8af2-0dd7024d0f7c',
@@ -83,7 +83,7 @@ describe('sendCustomer', () => {
 
     const mockCustomer = createMockCustomer();
 
-    expect(() => sendCustomer(mockCustomer)).toThrow(segmentError);
+    expect(() => identifyCustomer(mockCustomer)).toThrow(segmentError);
   });
 });
 
@@ -102,7 +102,7 @@ describe('identifyAnonymousUser', () => {
     const anonymousId = '550e8400-e29b-41d4-a716-446655440000';
     const email = 'anonymous@example.com';
 
-    await identifyAnonymousUser(anonymousId, email);
+    await identifyAnonymousCustomer(anonymousId, email);
 
     expect(mockIdentify).toHaveBeenCalledWith({
       anonymousId,
@@ -119,7 +119,7 @@ describe('identifyAnonymousUser', () => {
     const anonymousId = '550e8400-e29b-41d4-a716-446655440002';
     const email = 'anonymous@example.com';
 
-    await expect(identifyAnonymousUser(anonymousId, email)).rejects.toThrow(
+    await expect(identifyAnonymousCustomer(anonymousId, email)).rejects.toThrow(
       segmentError
     );
   });

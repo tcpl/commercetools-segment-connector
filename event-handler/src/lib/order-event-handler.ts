@@ -1,8 +1,8 @@
 import { getOrder } from './order-service';
 import { getCustomerByEmail } from './customer-service';
 import {
-  identifyAnonymousUser,
-  sendOrderCompletedTrackEvent,
+  identifyAnonymousCustomer,
+  trackOrderCompleted,
 } from './segment-service';
 
 export async function handleOrderCreated(orderId: string) {
@@ -14,9 +14,9 @@ export async function handleOrderCreated(orderId: string) {
 
     // only identify the user if they are not already in the system
     if (!customer) {
-      await identifyAnonymousUser(order.anonymousId, order.customerEmail);
+      await identifyAnonymousCustomer(order.anonymousId, order.customerEmail);
     }
   }
 
-  await sendOrderCompletedTrackEvent(order);
+  await trackOrderCompleted(order);
 }

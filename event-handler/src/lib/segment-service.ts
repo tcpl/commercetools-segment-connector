@@ -11,7 +11,7 @@ const createAnalytics = () => {
   });
 };
 
-export function sendCustomer(customer: Customer) {
+export function identifyCustomer(customer: Customer) {
   const logger = getLogger();
 
   const analytics = createAnalytics();
@@ -39,12 +39,12 @@ export function sendCustomer(customer: Customer) {
 
     logger.info(`Customer ${customer.id} sent to Segment successfully`);
   } catch (error) {
-    logger.error(`Error sending customer to Segment: ${error}`);
+    logger.error(`Error sending customer ${customer.id} to Segment: ${error}`);
     throw error;
   }
 }
 
-export async function identifyAnonymousUser(
+export async function identifyAnonymousCustomer(
   anonymousId: string,
   email: string
 ) {
@@ -59,15 +59,17 @@ export async function identifyAnonymousUser(
     });
 
     logger.info(
-      `Anonymous user ${anonymousId} identified in Segment successfully`
+      `Anonymous customer ${anonymousId} sent to Segment successfully`
     );
   } catch (error) {
-    logger.error(`Error identifying anonymous user in Segment: ${error}`);
+    logger.error(
+      `Error sending anonymous customer ${anonymousId} to Segment: ${error}`
+    );
     throw error;
   }
 }
 
-export async function sendOrderCompletedTrackEvent(order: Order) {
+export async function trackOrderCompleted(order: Order) {
   const logger = getLogger();
 
   const analytics = createAnalytics();
@@ -89,7 +91,9 @@ export async function sendOrderCompletedTrackEvent(order: Order) {
 
     analytics.track(event);
 
-    logger.info(`Order ${order.id} track event sent to Segment successfully`);
+    logger.info(
+      `Order Completed ${order.id} track event sent to Segment successfully`
+    );
   } catch (error) {
     logger.error(`Error sending order to Segment: ${error}`);
     throw error;
