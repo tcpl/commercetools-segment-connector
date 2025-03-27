@@ -203,7 +203,7 @@ describe('trackOrderCompleted', () => {
     expect(mockTrack).toHaveBeenCalledWith({
       event: 'Order Completed',
       userId: undefined,
-      anonymousId: 'jzimle22wy3yjwief722l7r7',
+      anonymousId: 'af71da5e-28bd-4059-8b06-cfe3c513274e',
       timestamp: '2025-03-26T16:05:23.415Z',
       messageId: '6fb68079-06fd-4bd4-bff1-b790d275f996-order-completed',
       properties: {
