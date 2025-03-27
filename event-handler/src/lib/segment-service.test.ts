@@ -1,5 +1,11 @@
 import { Analytics } from '@segment/analytics-node';
-import { identifyAnonymousCustomer, identifyCustomer } from './segment-service';
+import {
+  identifyAnonymousCustomer,
+  identifyCustomer,
+  trackOrderCompleted,
+} from './segment-service';
+import * as orderWithUSTax from './test-orders/order-with-us-tax.json';
+import { Order } from '@commercetools/platform-sdk';
 
 jest.mock('@segment/analytics-node');
 jest.mock('../utils/config.utils');
@@ -138,4 +144,50 @@ const createMockCustomer = (overrides = {}) => ({
   password: '****2Zk=',
   authenticationMode: 'password',
   ...overrides,
+});
+
+describe('trackOrderCompleted', () => {
+  const mockTrack = jest.fn();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    (Analytics as jest.Mock).mockImplementation(() => ({
+      track: mockTrack,
+    }));
+  });
+
+  it('order with US Tax tracked correctly', () => {
+    const order = orderWithUSTax as Order;
+
+    trackOrderCompleted(order);
+
+    expect(mockTrack).toHaveBeenCalledWith({
+      event: 'Order Completed',
+      userId: 'e3b424f5-0d5c-419d-b067-32cd70b13a89',
+      anonymousId: undefined,
+      timestamp: '2025-02-03T10:29:22.895Z',
+      messageId: '33925a10-c3fb-4ff5-a9b2-9134400b9d4d-order-completed',
+      properties: {
+        email: 'seb@example.com',
+        order_id: '33925a10-c3fb-4ff5-a9b2-9134400b9d4d',
+        total: 169.8,
+        shipping: 50.0,
+        tax: 8.07,
+        coupon: undefined,
+        products: [
+          {
+            product_id: 'b5241ecf-537f-4714-acaf-a0c36b20a74d',
+            sku: 'FLAS-094',
+            price: 5.99,
+            quantity: 20,
+            image_url:
+              'https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Steel_Hip_Flask-1.1.jpeg',
+            position: 1,
+          },
+        ],
+        currency: 'USD',
+      },
+    });
+  });
 });

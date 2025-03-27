@@ -44,6 +44,7 @@
     "@segment/analytics-node": "^2.2.1",
     "body-parser": "^1.20.3",
     "common": "link:../common",
+    "decimal.js": "^10.5.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "validator": "^13.12.0"

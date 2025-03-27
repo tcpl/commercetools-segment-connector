@@ -1,7 +1,13 @@
 import { Analytics, TrackParams } from '@segment/analytics-node';
 import { getLogger } from '../utils/logger.utils';
-import { Customer, Order } from '@commercetools/platform-sdk';
+import {
+  Customer,
+  LineItem,
+  Order,
+  TypedMoney,
+} from '@commercetools/platform-sdk';
 import { readConfiguration } from '../utils/config.utils';
+import Decimal from 'decimal.js';
 
 const createAnalytics = () => {
   const configuration = readConfiguration();
@@ -69,12 +75,28 @@ export async function identifyAnonymousCustomer(
   }
 }
 
-export async function trackOrderCompleted(order: Order) {
+export function trackOrderCompleted(order: Order) {
   const logger = getLogger();
 
   const analytics = createAnalytics();
 
   try {
+    // https://segment.com/docs/connections/spec/ecommerce/v2/#order-completed
+
+    const products = order.lineItems.map((lineItem, i) => {
+      return {
+        product_id: lineItem.productId,
+        sku: lineItem.variant.sku,
+        price: getTypedMoneyInCurrencyUnits(getLineItemPrice(lineItem)),
+        quantity: lineItem.quantity,
+        image_url:
+          lineItem.variant.images && lineItem.variant.images.length > 0
+            ? lineItem.variant.images[0]?.url
+            : undefined,
+        position: i + 1,
+      };
+    });
+
     const event: TrackParams = {
       userId: order.customerId as string, // need either userId or anonymousId
       anonymousId: order.anonymousId,
@@ -84,7 +106,21 @@ export async function trackOrderCompleted(order: Order) {
       properties: {
         email: order.customerEmail,
         order_id: order.id,
-        total_cent_amount: order.totalPrice?.centAmount,
+        total: getTypedMoneyInCurrencyUnits(order.totalPrice), // Subtotal ($) with shipping and taxes added in
+        // subtotal: Order total after discounts but before taxes and shipping
+        // revenue: Revenue ($) associated with the transaction (including discounts, but excluding shipping and taxes)
+        // discount: Total discount associated with the transaction
+        shipping: getShippingCostInCurrencyUnits(order),
+        tax:
+          order.taxedPrice?.totalTax !== undefined
+            ? getTypedMoneyInCurrencyUnits(order.taxedPrice?.totalTax)
+            : undefined,
+        // coupon is a defined as a string in Spec: V2 Ecommerce Events, so just using the first discount code
+        coupon:
+          order.discountCodes && order.discountCodes.length > 0
+            ? order.discountCodes[0].discountCode
+            : undefined,
+        products,
         currency: order.totalPrice?.currencyCode,
       },
     };
@@ -99,3 +135,43 @@ export async function trackOrderCompleted(order: Order) {
     throw error;
   }
 }
+
+const getTypedMoneyInCurrencyUnits = (money: TypedMoney) => {
+  return getCentAmountInCurrencyUnits(money.centAmount, money.fractionDigits);
+};
+
+const getCentAmountInCurrencyUnits = (
+  centAmount: number,
+  fractionDigits: number
+) => {
+  return new Decimal(centAmount)
+    .div(new Decimal(10).pow(fractionDigits))
+    .toNumber();
+};
+
+const getLineItemPrice = (lineItem: LineItem) => {
+  return lineItem.price.discounted
+    ? lineItem.price.discounted.value
+    : lineItem.price.value;
+};
+
+const getShippingCostInCurrencyUnits = (order: Order) => {
+  // TODO: check for discounts
+
+  if (order.shippingMode === 'Multiple') {
+    const shippingTotalCentAmount = order.shipping.reduce((acc, shipping) => {
+      return acc + shipping.shippingInfo.price.centAmount;
+    }, 0);
+
+    return getCentAmountInCurrencyUnits(
+      shippingTotalCentAmount,
+      order.totalPrice.fractionDigits
+    );
+  }
+
+  if (!order.shippingInfo) {
+    return 0;
+  }
+
+  return getTypedMoneyInCurrencyUnits(order.shippingInfo.price);
+};

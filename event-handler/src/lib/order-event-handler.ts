@@ -18,5 +18,5 @@ export async function handleOrderCreated(orderId: string) {
     }
   }
 
-  await trackOrderCompleted(order);
+  trackOrderCompleted(order);
 }
