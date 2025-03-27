@@ -6,6 +6,7 @@ import {
 } from './segment-service';
 import * as orderWithUSTax from './test-orders/order-with-us-tax.json';
 import * as anonymousOrderWithShippingDiscount from './test-orders/anonymous-order-shipping-discount.json';
+import * as orderWithDiscountOnTotalPrice from './test-orders/order-with-discount-on-total-price.json';
 import { Order } from '@commercetools/platform-sdk';
 
 jest.mock('@segment/analytics-node');
@@ -230,5 +231,24 @@ describe('trackOrderCompleted', () => {
         currency: 'GBP',
       },
     });
+  });
+
+  it('order with discount on total price tracked correctly', () => {
+    const order = orderWithDiscountOnTotalPrice as Order;
+
+    trackOrderCompleted(order);
+
+    expect(mockTrack).toHaveBeenCalledWith(
+      expect.objectContaining({
+        properties: expect.objectContaining({
+          revenue: 47.93,
+          subtotal: 47.93,
+          shipping: 100.0,
+          tax: 26.86,
+          discount: 17.9,
+          total: 161.1,
+        }),
+      })
+    );
   });
 });
