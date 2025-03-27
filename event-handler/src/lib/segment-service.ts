@@ -142,12 +142,6 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
 
   discountTotalCents += getShippingDiscountInCents(order);
 
-  // shipping cost needs to either be without tax and then tax amount includes shipping tax
-  // or shipping cost needs to be with tax and tax amount doesn't include shipping tax
-  // otherwise reading totals doesn't make sense
-
-  // discount amount needs to be without tax?
-
   const event: TrackParams = {
     userId: order.customerId as string, // need either userId or anonymousId
     anonymousId: order.anonymousId,
