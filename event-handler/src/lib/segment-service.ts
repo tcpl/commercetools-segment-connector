@@ -83,76 +83,7 @@ export function trackOrderCompleted(order: Order) {
   try {
     // https://segment.com/docs/connections/spec/ecommerce/v2/#order-completed
 
-    const products = order.lineItems.map((lineItem, i) => {
-      return {
-        product_id: lineItem.productId,
-        sku: lineItem.variant.sku,
-        price: getTypedMoneyInCurrencyUnits(getLineItemPrice(lineItem)),
-        quantity: lineItem.quantity,
-        image_url:
-          lineItem.variant.images && lineItem.variant.images.length > 0
-            ? lineItem.variant.images[0]?.url
-            : undefined,
-        position: i + 1,
-      };
-    });
-
-    let subTotalCentAmount = order.lineItems.reduce((acc, lineItem) => {
-      return acc + lineItem.totalPrice.centAmount;
-    }, 0);
-
-    subTotalCentAmount -=
-      order.discountOnTotalPrice?.discountedAmount?.centAmount ?? 0;
-
-    const subTotalCurrencyUnits = getCentAmountInCurrencyUnits(
-      subTotalCentAmount,
-      order.totalPrice.fractionDigits
-    );
-
-    let discountTotalCents = order.lineItems.reduce((acc, lineItem) => {
-      const lineItemPrice = getLineItemPrice(lineItem);
-      const lineItemSubtotal = lineItemPrice.centAmount * lineItem.quantity;
-      const lineItemTotal = lineItem.totalPrice.centAmount;
-      const lineItemDiscount = lineItemSubtotal - lineItemTotal;
-
-      return acc + lineItemDiscount;
-    }, 0);
-
-    discountTotalCents +=
-      order.discountOnTotalPrice?.discountedAmount?.centAmount ?? 0;
-
-    // TODO: add shipping discount to discount total
-
-    const event: TrackParams = {
-      userId: order.customerId as string, // need either userId or anonymousId
-      anonymousId: order.anonymousId,
-      timestamp: order.createdAt,
-      messageId: `${order.id}-order-completed`,
-      event: 'Order Completed',
-      properties: {
-        email: order.customerEmail,
-        order_id: order.id,
-        total: getTypedMoneyInCurrencyUnits(order.totalPrice), // Subtotal ($) with shipping and taxes added in
-        subtotal: subTotalCurrencyUnits, // subtotal: Order total after discounts but before taxes and shipping
-        revenue: subTotalCurrencyUnits, // Revenue ($) associated with the transaction (including discounts, but excluding shipping and taxes)
-        discount: getCentAmountInCurrencyUnits(
-          discountTotalCents,
-          order.totalPrice.fractionDigits
-        ),
-        shipping: getShippingCostInCurrencyUnits(order),
-        tax:
-          order.taxedPrice?.totalTax !== undefined
-            ? getTypedMoneyInCurrencyUnits(order.taxedPrice?.totalTax)
-            : undefined,
-        // coupon is a defined as a string in Spec: V2 Ecommerce Events, so just using the first discount code
-        coupon:
-          order.discountCodes && order.discountCodes.length > 0
-            ? order.discountCodes[0].discountCode
-            : undefined,
-        products,
-        currency: order.totalPrice?.currencyCode,
-      },
-    };
+    const event: TrackParams = buildOrderCompletedTrackEvent(order);
 
     analytics.track(event);
 
@@ -164,6 +95,81 @@ export function trackOrderCompleted(order: Order) {
     throw error;
   }
 }
+
+const buildOrderCompletedTrackEvent = (order: Order) => {
+  const products = order.lineItems.map((lineItem, i) => {
+    const imageUrl =
+      lineItem.variant.images && lineItem.variant.images.length > 0
+        ? lineItem.variant.images[0]?.url
+        : undefined;
+
+    return {
+      product_id: lineItem.productId,
+      sku: lineItem.variant.sku,
+      price: getTypedMoneyInCurrencyUnits(getLineItemPrice(lineItem)),
+      quantity: lineItem.quantity,
+      image_url: imageUrl,
+      position: i + 1,
+    };
+  });
+
+  let subTotalCentAmount = order.lineItems.reduce((acc, lineItem) => {
+    return acc + lineItem.totalPrice.centAmount;
+  }, 0);
+
+  subTotalCentAmount -=
+    order.discountOnTotalPrice?.discountedAmount?.centAmount ?? 0;
+
+  const subTotalCurrencyUnits = getCentAmountInCurrencyUnits(
+    subTotalCentAmount,
+    order.totalPrice.fractionDigits
+  );
+
+  let discountTotalCents = order.lineItems.reduce((acc, lineItem) => {
+    const lineItemPrice = getLineItemPrice(lineItem);
+    const lineItemSubtotal = lineItemPrice.centAmount * lineItem.quantity;
+    const lineItemTotal = lineItem.totalPrice.centAmount;
+    const lineItemDiscount = lineItemSubtotal - lineItemTotal;
+
+    return acc + lineItemDiscount;
+  }, 0);
+
+  discountTotalCents +=
+    order.discountOnTotalPrice?.discountedAmount?.centAmount ?? 0;
+
+  // TODO: add shipping discount to discount total
+  const event: TrackParams = {
+    userId: order.customerId as string, // need either userId or anonymousId
+    anonymousId: order.anonymousId,
+    timestamp: order.createdAt,
+    messageId: `${order.id}-order-completed`,
+    event: 'Order Completed',
+    properties: {
+      email: order.customerEmail,
+      order_id: order.id,
+      total: getTypedMoneyInCurrencyUnits(order.totalPrice), // Subtotal ($) with shipping and taxes added in
+      subtotal: subTotalCurrencyUnits, // subtotal: Order total after discounts but before taxes and shipping
+      revenue: subTotalCurrencyUnits, // Revenue ($) associated with the transaction (including discounts, but excluding shipping and taxes)
+      discount: getCentAmountInCurrencyUnits(
+        discountTotalCents,
+        order.totalPrice.fractionDigits
+      ),
+      shipping: getShippingCostInCurrencyUnits(order),
+      tax:
+        order.taxedPrice?.totalTax !== undefined
+          ? getTypedMoneyInCurrencyUnits(order.taxedPrice?.totalTax)
+          : undefined,
+      // coupon is a defined as a string in Spec: V2 Ecommerce Events, so just using the first discount code
+      coupon:
+        order.discountCodes && order.discountCodes.length > 0
+          ? order.discountCodes[0].discountCode
+          : undefined,
+      products,
+      currency: order.totalPrice?.currencyCode,
+    },
+  };
+  return event;
+};
 
 const getTypedMoneyInCurrencyUnits = (money: TypedMoney) => {
   return getCentAmountInCurrencyUnits(money.centAmount, money.fractionDigits);
