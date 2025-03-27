@@ -1,7 +1,6 @@
 import { Analytics } from '@segment/analytics-node';
 import { sendCustomer } from './segment-service';
 import { getLogger } from '../utils/logger.utils';
-import { readConfiguration } from '../utils/config.utils';
 
 jest.mock('@segment/analytics-node');
 jest.mock('../utils/logger.utils');
@@ -11,7 +10,6 @@ describe('segment-service', () => {
   const mockIdentify = jest.fn();
   const mockInfo = jest.fn();
   const mockError = jest.fn();
-  const mockReadConfiguration = readConfiguration as jest.Mock;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -23,10 +21,6 @@ describe('segment-service', () => {
     (getLogger as jest.Mock).mockReturnValue({
       info: mockInfo,
       error: mockError,
-    });
-
-    mockReadConfiguration.mockReturnValue({
-      segmentSourceWriteKey: 'test-write-key',
     });
   });
 
