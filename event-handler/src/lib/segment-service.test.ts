@@ -172,13 +172,13 @@ describe('trackOrderCompleted', () => {
       properties: {
         email: 'seb@example.com',
         order_id: '33925a10-c3fb-4ff5-a9b2-9134400b9d4d',
-        total: 169.8,
         revenue: 119.8,
-        shipping: 50.0,
         subtotal: 119.8,
+        shipping: 50.0,
         tax: 8.07,
         discount: 0,
         coupon: undefined,
+        total: 169.8,
         products: [
           {
             product_id: 'b5241ecf-537f-4714-acaf-a0c36b20a74d',
@@ -209,12 +209,12 @@ describe('trackOrderCompleted', () => {
       properties: {
         email: 'anon401@example.com',
         order_id: '6fb68079-06fd-4bd4-bff1-b790d275f996',
-        total: 169.0,
         revenue: 79.0,
-        shipping: 90.0,
         subtotal: 79.0,
+        shipping: 90.0,
         tax: 28.17,
         discount: 10.0,
+        total: 169.0,
         coupon: undefined,
         products: [
           {
