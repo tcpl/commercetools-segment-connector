@@ -115,9 +115,11 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
   });
 
   let subTotalCentAmount = order.lineItems.reduce((acc, lineItem) => {
-    return acc + lineItem.totalPrice.centAmount;
+    // TODO: what to do if no taxedPrice? Tax should have been calculated so error?
+    return acc + lineItem.taxedPrice!.totalNet.centAmount;
   }, 0);
 
+  // TODO: need net version
   subTotalCentAmount -=
     order.discountOnTotalPrice?.discountedAmount?.centAmount ?? 0;
 

@@ -209,8 +209,8 @@ describe('trackOrderCompleted', () => {
       properties: {
         email: 'anon401@example.com',
         order_id: '6fb68079-06fd-4bd4-bff1-b790d275f996',
-        revenue: 79.0,
-        subtotal: 79.0,
+        revenue: 65.83,
+        subtotal: 65.83,
         shipping: 90.0,
         tax: 28.17,
         discount: 10.0,
