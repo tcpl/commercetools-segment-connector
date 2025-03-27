@@ -4,6 +4,7 @@ import {
   Customer,
   LineItem,
   Order,
+  ShippingInfo,
   TypedMoney,
 } from '@commercetools/platform-sdk';
 import { readConfiguration } from '../utils/config.utils';
@@ -125,6 +126,10 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
     order.totalPrice.fractionDigits
   );
 
+  const shippingTotalCents = getShippingCostInCents(order);
+  const nonDiscountedShippingTotalCents =
+    getNonDiscountedShippingCostInCents(order);
+
   let discountTotalCents = order.lineItems.reduce((acc, lineItem) => {
     const lineItemPrice = getLineItemPrice(lineItem);
     const lineItemSubtotal = lineItemPrice.centAmount * lineItem.quantity;
@@ -137,7 +142,8 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
   discountTotalCents +=
     order.discountOnTotalPrice?.discountedAmount?.centAmount ?? 0;
 
-  // TODO: add shipping discount to discount total
+  discountTotalCents += nonDiscountedShippingTotalCents - shippingTotalCents;
+
   const event: TrackParams = {
     userId: order.customerId as string, // need either userId or anonymousId
     anonymousId: order.anonymousId,
@@ -154,7 +160,10 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
         discountTotalCents,
         order.totalPrice.fractionDigits
       ),
-      shipping: getShippingCostInCurrencyUnits(order),
+      shipping: getCentAmountInCurrencyUnits(
+        shippingTotalCents,
+        order.totalPrice.fractionDigits
+      ),
       tax:
         order.taxedPrice?.totalTax !== undefined
           ? getTypedMoneyInCurrencyUnits(order.taxedPrice?.totalTax)
@@ -171,6 +180,48 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
   return event;
 };
 
+const getShippingCostInCents = (order: Order) => {
+  if (order.shippingMode === 'Multiple') {
+    const shippingTotalCentAmount = order.shipping.reduce((acc, shipping) => {
+      return acc + getShippingInfoPrice(shipping.shippingInfo).centAmount;
+    }, 0);
+
+    return shippingTotalCentAmount;
+  }
+
+  if (!order.shippingInfo) {
+    return 0;
+  }
+
+  return getShippingInfoPrice(order.shippingInfo).centAmount;
+};
+
+const getNonDiscountedShippingCostInCents = (order: Order) => {
+  if (order.shippingMode === 'Multiple') {
+    const shippingTotalCentAmount = order.shipping.reduce((acc, shipping) => {
+      return acc + shipping.shippingInfo.price.centAmount;
+    }, 0);
+
+    return shippingTotalCentAmount;
+  }
+
+  if (!order.shippingInfo) {
+    return 0;
+  }
+
+  return order.shippingInfo.price.centAmount;
+};
+
+const getLineItemPrice = (lineItem: LineItem) => {
+  return lineItem.price.discounted
+    ? lineItem.price.discounted.value
+    : lineItem.price.value;
+};
+
+const getShippingInfoPrice = (shippingInfo: ShippingInfo) => {
+  return shippingInfo.discountedPrice?.value ?? shippingInfo.price;
+};
+
 const getTypedMoneyInCurrencyUnits = (money: TypedMoney) => {
   return getCentAmountInCurrencyUnits(money.centAmount, money.fractionDigits);
 };
@@ -182,31 +233,4 @@ const getCentAmountInCurrencyUnits = (
   return new Decimal(centAmount)
     .div(new Decimal(10).pow(fractionDigits))
     .toNumber();
-};
-
-const getLineItemPrice = (lineItem: LineItem) => {
-  return lineItem.price.discounted
-    ? lineItem.price.discounted.value
-    : lineItem.price.value;
-};
-
-const getShippingCostInCurrencyUnits = (order: Order) => {
-  // TODO: check for discounts
-
-  if (order.shippingMode === 'Multiple') {
-    const shippingTotalCentAmount = order.shipping.reduce((acc, shipping) => {
-      return acc + shipping.shippingInfo.price.centAmount;
-    }, 0);
-
-    return getCentAmountInCurrencyUnits(
-      shippingTotalCentAmount,
-      order.totalPrice.fractionDigits
-    );
-  }
-
-  if (!order.shippingInfo) {
-    return 0;
-  }
-
-  return getTypedMoneyInCurrencyUnits(order.shippingInfo.price);
 };

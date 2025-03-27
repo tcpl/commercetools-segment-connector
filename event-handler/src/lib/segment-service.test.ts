@@ -194,4 +194,41 @@ describe('trackOrderCompleted', () => {
       },
     });
   });
+
+  it('anonymous order with shipping discount tracked correctly', () => {
+    const order = anonymousOrderWithShippingDiscount as Order;
+
+    trackOrderCompleted(order);
+
+    expect(mockTrack).toHaveBeenCalledWith({
+      event: 'Order Completed',
+      userId: undefined,
+      anonymousId: 'jzimle22wy3yjwief722l7r7',
+      timestamp: '2025-03-26T16:05:23.415Z',
+      messageId: '6fb68079-06fd-4bd4-bff1-b790d275f996-order-completed',
+      properties: {
+        email: 'anon401@example.com',
+        order_id: '6fb68079-06fd-4bd4-bff1-b790d275f996',
+        total: 169.0,
+        revenue: 79.0,
+        shipping: 90.0,
+        subtotal: 79.0,
+        tax: 28.17,
+        discount: 10.0,
+        coupon: undefined,
+        products: [
+          {
+            product_id: '600bf085-00fa-47a8-88d3-e615ec6d9d71',
+            sku: 'CNS-0434',
+            price: 79.0,
+            quantity: 1,
+            image_url:
+              'https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Minimalist_Cedar_Nightstand-1.3.jpeg',
+            position: 1,
+          },
+        ],
+        currency: 'GBP',
+      },
+    });
+  });
 });
