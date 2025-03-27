@@ -17,7 +17,7 @@ export async function getCustomerByEmail(email: string) {
     .customers()
     .get({
       queryArgs: {
-        where: `email="${email}"`,
+        where: `lowercaseEmail="${email.toLocaleLowerCase()}"`,
         limit: 1,
       },
     })
