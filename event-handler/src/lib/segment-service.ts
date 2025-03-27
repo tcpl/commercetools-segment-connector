@@ -126,10 +126,6 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
     order.totalPrice.fractionDigits
   );
 
-  const shippingTotalCents = getShippingCostInCents(order);
-  const nonDiscountedShippingTotalCents =
-    getNonDiscountedShippingCostInCents(order);
-
   let discountTotalCents = order.lineItems.reduce((acc, lineItem) => {
     const lineItemPrice = getLineItemPrice(lineItem);
     const lineItemSubtotal = lineItemPrice.centAmount * lineItem.quantity;
@@ -142,7 +138,7 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
   discountTotalCents +=
     order.discountOnTotalPrice?.discountedAmount?.centAmount ?? 0;
 
-  discountTotalCents += nonDiscountedShippingTotalCents - shippingTotalCents;
+  discountTotalCents += getShippingDiscountInCents(order);
 
   const event: TrackParams = {
     userId: order.customerId as string, // need either userId or anonymousId
@@ -161,7 +157,7 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
         order.totalPrice.fractionDigits
       ),
       shipping: getCentAmountInCurrencyUnits(
-        shippingTotalCents,
+        getShippingCostInCents(order),
         order.totalPrice.fractionDigits
       ),
       tax:
@@ -196,26 +192,39 @@ const getShippingCostInCents = (order: Order) => {
   return getShippingInfoPrice(order.shippingInfo).centAmount;
 };
 
-const getNonDiscountedShippingCostInCents = (order: Order) => {
+const getShippingDiscountInCents = (order: Order) => {
   if (order.shippingMode === 'Multiple') {
-    const shippingTotalCentAmount = order.shipping.reduce((acc, shipping) => {
-      return acc + shipping.shippingInfo.price.centAmount;
-    }, 0);
+    const shippingDiscountCentAmount = order.shipping.reduce(
+      (acc, shipping) => {
+        return acc + getShippingInfoDiscountInCents(shipping.shippingInfo);
+      },
+      0
+    );
 
-    return shippingTotalCentAmount;
+    return shippingDiscountCentAmount;
   }
 
   if (!order.shippingInfo) {
     return 0;
   }
 
-  return order.shippingInfo.price.centAmount;
+  return getShippingInfoDiscountInCents(order.shippingInfo);
 };
 
 const getLineItemPrice = (lineItem: LineItem) => {
   return lineItem.price.discounted
     ? lineItem.price.discounted.value
     : lineItem.price.value;
+};
+
+const getShippingInfoDiscountInCents = (shippingInfo: ShippingInfo) => {
+  const discountedCentAmount = shippingInfo.discountedPrice?.value?.centAmount;
+
+  if (!discountedCentAmount) {
+    return 0;
+  }
+
+  return shippingInfo.price.centAmount - discountedCentAmount;
 };
 
 const getShippingInfoPrice = (shippingInfo: ShippingInfo) => {
