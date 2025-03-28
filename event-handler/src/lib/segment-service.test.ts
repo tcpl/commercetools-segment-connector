@@ -176,7 +176,7 @@ describe('trackOrderCompleted', () => {
         email: 'seb@example.com',
         order_id: '33925a10-c3fb-4ff5-a9b2-9134400b9d4d',
         subtotal: 119.8,
-        shipping: 50.0,
+        shipping: 52.38,
         tax: 8.07,
         discount: 0,
         coupon: undefined,
@@ -242,7 +242,7 @@ describe('trackOrderCompleted', () => {
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 59.24,
-          shipping: 100.0,
+          shipping: 90.0,
           tax: 26.86,
           discount: 17.9,
           total: 161.1,

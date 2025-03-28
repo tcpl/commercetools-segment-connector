@@ -119,6 +119,8 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
     order.taxedPrice!.totalNet.centAmount -
     order.taxedShippingPrice!.totalNet.centAmount;
 
+  const shippingCentAmount = order.taxedShippingPrice!.totalGross.centAmount;
+
   const subTotalCurrencyUnits = getCentAmountInCurrencyUnits(
     subTotalCentAmount,
     order.totalPrice.fractionDigits
@@ -154,7 +156,7 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
         order.totalPrice.fractionDigits
       ),
       shipping: getCentAmountInCurrencyUnits(
-        getShippingCostInCents(order),
+        shippingCentAmount,
         order.totalPrice.fractionDigits
       ),
       tax:
@@ -171,22 +173,6 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
     },
   };
   return event;
-};
-
-const getShippingCostInCents = (order: Order) => {
-  if (order.shippingMode === 'Multiple') {
-    const shippingTotalCentAmount = order.shipping.reduce((acc, shipping) => {
-      return acc + getShippingInfoPrice(shipping.shippingInfo).centAmount;
-    }, 0);
-
-    return shippingTotalCentAmount;
-  }
-
-  if (!order.shippingInfo) {
-    return 0;
-  }
-
-  return getShippingInfoPrice(order.shippingInfo).centAmount;
 };
 
 const getShippingDiscountInCents = (order: Order) => {
@@ -222,10 +208,6 @@ const getShippingInfoDiscountInCents = (shippingInfo: ShippingInfo) => {
   }
 
   return shippingInfo.price.centAmount - discountedCentAmount;
-};
-
-const getShippingInfoPrice = (shippingInfo: ShippingInfo) => {
-  return shippingInfo.discountedPrice?.value ?? shippingInfo.price;
 };
 
 const getTypedMoneyInCurrencyUnits = (money: TypedMoney) => {
