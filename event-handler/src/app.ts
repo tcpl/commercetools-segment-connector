@@ -27,12 +27,11 @@ app.post('/', async (req: Request, res: Response) => {
         await handleCustomerUpsert(resourceId);
         break;
     }
-  } else if (resourceType === 'order') {
-    switch (notificationType) {
-      case 'ResourceCreated':
-        await handleOrderCreated(resourceId);
-        break;
-    }
+  } else if (
+    resourceType === 'order' &&
+    notificationType === 'ResourceCreated'
+  ) {
+    await handleOrderCreated(resourceId);
   }
 
   res.status(204).send();
