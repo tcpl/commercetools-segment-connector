@@ -1,0 +1,418 @@
+{
+  "type": "Order",
+  "id": "74eedb57-1acf-4d20-8c58-707f9715ece4",
+  "version": 1,
+  "versionModifiedAt": "2025-03-28T10:52:02.916Z",
+  "lastMessageSequenceNumber": 1,
+  "createdAt": "2025-03-28T10:52:02.897Z",
+  "lastModifiedAt": "2025-03-28T10:52:02.897Z",
+  "lastModifiedBy": {
+    "clientId": "sOrR9n__bOkuAMvqqhlllNZ6",
+    "isPlatformClient": false
+  },
+  "createdBy": {
+    "clientId": "sOrR9n__bOkuAMvqqhlllNZ6",
+    "isPlatformClient": false
+  },
+  "customerEmail": "test@example.com",
+  "totalPrice": {
+    "type": "centPrecision",
+    "currencyCode": "GBP",
+    "centAmount": 7599,
+    "fractionDigits": 2
+  },
+  "taxedPrice": {
+    "totalNet": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 6332,
+      "fractionDigits": 2
+    },
+    "totalGross": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 7599,
+      "fractionDigits": 2
+    },
+    "taxPortions": [
+      {
+        "rate": 0.2,
+        "amount": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 2100,
+          "fractionDigits": 2
+        },
+        "name": "Standard VAT for UK"
+      }
+    ],
+    "totalTax": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 1267,
+      "fractionDigits": 2
+    }
+  },
+  "country": "GB",
+  "taxedShippingPrice": {
+    "totalNet": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 5026,
+      "fractionDigits": 2
+    },
+    "totalGross": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 6031,
+      "fractionDigits": 2
+    },
+    "taxPortions": [
+      {
+        "rate": 0.2,
+        "amount": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 1667,
+          "fractionDigits": 2
+        },
+        "name": "Standard VAT for UK"
+      }
+    ],
+    "totalTax": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 1005,
+      "fractionDigits": 2
+    }
+  },
+  "discountOnTotalPrice": {
+    "discountedAmount": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 5000,
+      "fractionDigits": 2
+    },
+    "includedDiscounts": [
+      {
+        "discount": {
+          "typeId": "cart-discount",
+          "id": "98e3c7bd-7bbc-42f6-84f1-b7f1aef69c8f"
+        },
+        "discountedAmount": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 5000,
+          "fractionDigits": 2
+        }
+      }
+    ],
+    "discountedNetAmount": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 4167,
+      "fractionDigits": 2
+    },
+    "discountedGrossAmount": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 5000,
+      "fractionDigits": 2
+    }
+  },
+  "orderState": "Open",
+  "syncInfo": [],
+  "returnInfo": [],
+  "taxMode": "Platform",
+  "inventoryMode": "None",
+  "taxRoundingMode": "HalfEven",
+  "taxCalculationMode": "LineItemLevel",
+  "origin": "Customer",
+  "shippingMode": "Single",
+  "shippingInfo": {
+    "shippingMethodName": "Standard Delivery",
+    "price": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 10000,
+      "fractionDigits": 2
+    },
+    "shippingRate": {
+      "price": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 10000,
+        "fractionDigits": 2
+      },
+      "freeAbove": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 10000,
+        "fractionDigits": 2
+      },
+      "tiers": []
+    },
+    "taxRate": {
+      "name": "Standard VAT for UK",
+      "amount": 0.2,
+      "includedInPrice": true,
+      "country": "GB",
+      "id": "9Ze-zWsD",
+      "key": "vat-standard-uk",
+      "subRates": []
+    },
+    "taxCategory": {
+      "typeId": "tax-category",
+      "id": "e4105917-4e42-4998-b0e1-685f744f9956"
+    },
+    "deliveries": [],
+    "shippingMethod": {
+      "typeId": "shipping-method",
+      "id": "2f48ba1e-d8ee-4a1c-bd04-5bfe7e00fe7c"
+    },
+    "taxedPrice": {
+      "totalNet": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 8333,
+        "fractionDigits": 2
+      },
+      "totalGross": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 10000,
+        "fractionDigits": 2
+      },
+      "taxPortions": [
+        {
+          "rate": 0.2,
+          "amount": {
+            "type": "centPrecision",
+            "currencyCode": "GBP",
+            "centAmount": 1667,
+            "fractionDigits": 2
+          },
+          "name": "Standard VAT for UK"
+        }
+      ],
+      "totalTax": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 1667,
+        "fractionDigits": 2
+      }
+    },
+    "shippingMethodState": "MatchesCart"
+  },
+  "shippingAddress": {
+    "firstName": "First",
+    "lastName": "Last",
+    "streetName": "Street",
+    "postalCode": "Post Code",
+    "city": "Town",
+    "country": "GB",
+    "email": "test@example.com"
+  },
+  "shipping": [],
+  "discountTypeCombination": {
+    "type": "Stacking"
+  },
+  "lineItems": [
+    {
+      "id": "f9b5d316-8df4-4f07-955b-3f11a13c539b",
+      "productId": "168a95d8-28e0-4a31-b55b-4a0019a60f57",
+      "productKey": "luxe-pillow-cover",
+      "name": {
+        "en-US": "Luxe Pillow Cover",
+        "en-GB": "Luxe Pillow Cover",
+        "de-DE": "Luxe Kissenbezug"
+      },
+      "productType": {
+        "typeId": "product-type",
+        "id": "d1a88a56-c368-453c-b5d1-73f5389fd898",
+        "version": 1
+      },
+      "productSlug": {
+        "en-US": "luxe-pillow-cover",
+        "en-GB": "luxe-pillow-cover",
+        "de-DE": "luxuriser-kissenbezug"
+      },
+      "variant": {
+        "id": 1,
+        "sku": "LPC-011",
+        "key": "luxePillowCover01",
+        "prices": [
+          {
+            "id": "7811790a-9673-4d72-b1d9-4ce658b5d8f9",
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "EUR",
+              "centAmount": 2599,
+              "fractionDigits": 2
+            },
+            "key": "2599EUR",
+            "country": "DE"
+          },
+          {
+            "id": "c70a07bf-cd98-45f0-9761-5b5dbcf7a144",
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "GBP",
+              "centAmount": 2599,
+              "fractionDigits": 2
+            },
+            "key": "2599GBP",
+            "country": "GB"
+          },
+          {
+            "id": "951d71f2-ba4e-4130-a8a7-b51379c474eb",
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "USD",
+              "centAmount": 2599,
+              "fractionDigits": 2
+            },
+            "key": "2599USD",
+            "country": "US"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Luxe_Pillow_Cover-1.1.jpeg",
+            "dimensions": {
+              "w": 6123,
+              "h": 4082
+            }
+          }
+        ],
+        "attributes": [
+          {
+            "name": "color",
+            "value": {
+              "en-GB": "Black:#000000",
+              "de-DE": "Schwarz:#000000",
+              "en-US": "Black:#000000"
+            }
+          },
+          {
+            "name": "productspec",
+            "value": {
+              "en-GB": "- Machine washable\n- Pillow not included",
+              "de-DE": "- Waschmaschinenfest\n- Kissen nicht im Lieferumfang enthalten",
+              "en-US": "- Machine washable\n- Pillow not included"
+            }
+          }
+        ],
+        "assets": [],
+        "availability": {
+          "isOnStock": true,
+          "availableQuantity": 100,
+          "version": 1,
+          "id": "d13b2876-e305-4f68-a8d8-b4861dd077c9"
+        }
+      },
+      "price": {
+        "id": "c70a07bf-cd98-45f0-9761-5b5dbcf7a144",
+        "value": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 2599,
+          "fractionDigits": 2
+        },
+        "key": "2599GBP",
+        "country": "GB"
+      },
+      "quantity": 1,
+      "discountedPricePerQuantity": [],
+      "taxRate": {
+        "name": "Standard VAT for UK",
+        "amount": 0.2,
+        "includedInPrice": true,
+        "country": "GB",
+        "id": "9Ze-zWsD",
+        "key": "vat-standard-uk",
+        "subRates": []
+      },
+      "perMethodTaxRate": [],
+      "addedAt": "2025-03-28T10:50:27.494Z",
+      "lastModifiedAt": "2025-03-28T10:50:27.494Z",
+      "state": [
+        {
+          "quantity": 1,
+          "state": {
+            "typeId": "state",
+            "id": "23a7d77f-c6a0-4876-b763-a5d8a27f9549"
+          }
+        }
+      ],
+      "priceMode": "Platform",
+      "lineItemMode": "Standard",
+      "totalPrice": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 2599,
+        "fractionDigits": 2
+      },
+      "taxedPrice": {
+        "totalNet": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 2166,
+          "fractionDigits": 2
+        },
+        "totalGross": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 2599,
+          "fractionDigits": 2
+        },
+        "taxPortions": [
+          {
+            "rate": 0.2,
+            "amount": {
+              "type": "centPrecision",
+              "currencyCode": "GBP",
+              "centAmount": 433,
+              "fractionDigits": 2
+            },
+            "name": "Standard VAT for UK"
+          }
+        ],
+        "totalTax": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 433,
+          "fractionDigits": 2
+        }
+      },
+      "taxedPricePortions": []
+    }
+  ],
+  "customLineItems": [],
+  "transactionFee": true,
+  "discountCodes": [],
+  "directDiscounts": [],
+  "cart": {
+    "typeId": "cart",
+    "id": "96ac2d1a-2a7a-4ad2-8ef0-0461aae7aa6d"
+  },
+  "paymentInfo": {
+    "payments": [
+      {
+        "typeId": "payment",
+        "id": "6b0a9d9c-1595-414a-bed6-ad5a9797a376"
+      }
+    ]
+  },
+  "billingAddress": {
+    "firstName": "First",
+    "lastName": "Last",
+    "streetName": "Street",
+    "postalCode": "Post Code",
+    "city": "Town",
+    "country": "GB",
+    "email": "test@example.com"
+  },
+  "itemShippingAddresses": [],
+  "refusedGifts": []
+}

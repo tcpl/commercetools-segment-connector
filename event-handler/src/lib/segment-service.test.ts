@@ -9,6 +9,7 @@ import * as anonymousOrderWithShippingDiscount from './test-orders/anonymous-ord
 import * as orderWithDiscountOnTotalPrice from './test-orders/order-with-discount-on-total-price.json';
 import * as orderWithItemDiscount from './test-orders/order-with-item-discount.json';
 import * as orderWithProductDiscount from './test-orders/order-with-product-discount.json';
+import * as orderWithTotalPriceDiscountLargerThanItemTotal from './test-orders/order-with-total-price-discount-larger-than-item-total.json';
 import { Order } from '@commercetools/platform-sdk';
 
 jest.mock('@segment/analytics-node');
@@ -246,6 +247,24 @@ describe('trackOrderCompleted', () => {
           tax: 26.86,
           discount: 17.9,
           total: 161.1,
+        }),
+      })
+    );
+  });
+
+  it('order with total price discount larger than item total tracked correctly', () => {
+    const order = orderWithTotalPriceDiscountLargerThanItemTotal as Order;
+
+    trackOrderCompleted(order);
+
+    expect(mockTrack).toHaveBeenCalledWith(
+      expect.objectContaining({
+        properties: expect.objectContaining({
+          subtotal: 13.06,
+          shipping: 60.31,
+          tax: 12.67,
+          discount: 50.0,
+          total: 75.99,
         }),
       })
     );
