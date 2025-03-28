@@ -3,7 +3,7 @@ import { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk/dist/dec
 const SUBSCRIPTION_KEY = 'tcpl-segment-subscription';
 
 export async function createSubscription(
-  apiRoot: any,
+  apiRoot: ByProjectKeyRequestBuilder,
   topicName: string,
   projectId: string
 ) {
