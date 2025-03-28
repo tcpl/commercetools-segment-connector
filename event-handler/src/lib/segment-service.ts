@@ -166,6 +166,7 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
       order_id: order.id,
       total: getTypedMoneyInCurrencyUnits(order.taxedPrice!.totalGross), // Subtotal ($) with shipping and taxes added in
       subtotal: subTotalCurrencyUnits, // subtotal: Order total after discounts but before taxes and shipping
+      // gross discount amount
       discount: getCentAmountInCurrencyUnits(
         discountTotalCents,
         order.totalPrice.fractionDigits
