@@ -155,7 +155,6 @@ const createMockCustomer = (overrides = {}) => ({
   isEmailVerified: false,
   stores: [],
   customerGroupAssignments: [],
-  password: '****2Zk=',
   authenticationMode: 'password',
   ...overrides,
 });
