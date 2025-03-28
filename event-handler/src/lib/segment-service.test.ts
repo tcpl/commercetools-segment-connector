@@ -14,6 +14,7 @@ import * as anonymousOrderWithNoDiscounts from './test-orders/anonymous-order-wi
 import * as orderWithUSTaxAndItemDiscount from './test-orders/order-with-us-tax-item-discount.json';
 import * as orderWithUSTaxAndMultiBuyDiscount from './test-orders/order-with-us-tax-multi-buy-discount.json';
 import * as orderWithUSTaxItemAndProductDiscount from './test-orders/order-with-us-tax-item-and-product-discount.json';
+import * as orderWithMultipleShippingMethods from './test-orders/order-with-multiple-shipping-methods.json';
 import { Order } from '@commercetools/platform-sdk';
 
 jest.mock('@segment/analytics-node');
@@ -377,6 +378,24 @@ describe('trackOrderCompleted', () => {
           tax: 53.97,
           discount: 91.29,
           total: 323.85,
+        }),
+      })
+    );
+  });
+
+  it('order with multiple shipping methods tracked correctly', () => {
+    const order = orderWithMultipleShippingMethods as Order;
+
+    trackOrderCompleted(order);
+
+    expect(mockTrack).toHaveBeenCalledWith(
+      expect.objectContaining({
+        properties: expect.objectContaining({
+          subtotal: 280.66,
+          shipping: 500,
+          tax: 133.16,
+          discount: 0,
+          total: 833.99,
         }),
       })
     );
