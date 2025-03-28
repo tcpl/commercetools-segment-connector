@@ -4,9 +4,17 @@ import {
   identifyAnonymousCustomer,
   trackOrderCompleted,
 } from './segment-service';
+import { getLogger } from '../utils/logger.utils';
 
 export async function handleOrderCreated(orderId: string) {
+  const logger = getLogger();
+
   const order = await getOrder(orderId);
+
+  if (!order.customerId && !order.anonymousId) {
+    logger.warn(`Order ${orderId} has no customerId or anonymousId`);
+    return;
+  }
 
   // Handle anonymous orders
   if (!order.customerId && order.customerEmail && order.anonymousId) {
