@@ -5,7 +5,7 @@ import {
   trackOrderCompleted,
 } from './segment-service';
 import * as orderWithUSTax from './test-orders/order-with-us-tax.json';
-import * as anonymousOrderWithShippingDiscount from './test-orders/anonymous-order-shipping-discount.json';
+import * as orderWithShippingDiscount from './test-orders/order-with-shipping-discount.json';
 import * as orderWithDiscountOnTotalPrice from './test-orders/order-with-discount-on-total-price.json';
 import * as orderWithItemDiscount from './test-orders/order-with-item-discount.json';
 import * as orderWithProductDiscount from './test-orders/order-with-product-discount.json';
@@ -199,8 +199,8 @@ describe('trackOrderCompleted', () => {
     });
   });
 
-  it('anonymous order with shipping discount tracked correctly', () => {
-    const order = anonymousOrderWithShippingDiscount as Order;
+  it('order with shipping discount tracked correctly', () => {
+    const order = orderWithShippingDiscount as Order;
 
     trackOrderCompleted(order);
 
