@@ -24,7 +24,7 @@ export const createClient = () => {
       clientSecret: configuration.clientSecret,
     },
     scopes: [
-      getProjectScope(configuration, 'manage_subscriptions'), // TODO: only want this when installing/uninstalling the connector
+      getProjectScope(configuration, 'manage_subscriptions'),
       getProjectScope(configuration, 'view_orders'),
       getProjectScope(configuration, 'view_customers'),
     ],
