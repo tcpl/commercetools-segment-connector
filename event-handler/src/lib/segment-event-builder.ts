@@ -6,6 +6,7 @@ import {
 } from '@commercetools/platform-sdk';
 import Decimal from 'decimal.js';
 import { TrackParams } from '@segment/analytics-node';
+import _ from 'lodash';
 
 export const buildOrderCompletedTrackEvent = (order: Order): TrackParams => {
   if (!order.taxedPrice) {
@@ -63,29 +64,17 @@ export const buildOrderCompletedTrackEvent = (order: Order): TrackParams => {
 };
 
 const calculateDiscountTotalCents = (order: Order): number => {
-  let discountTotalCents = order.lineItems.reduce((acc, lineItem) => {
-    return (
-      acc +
-      lineItem.discountedPricePerQuantity.reduce(
-        (discountAcc, discountedPricePerQuantity) => {
-          return (
-            discountAcc +
-            discountedPricePerQuantity.discountedPrice.includedDiscounts.reduce(
-              (discountedPriceAcc, discount) => {
-                return (
-                  discountedPricePerQuantity.quantity *
-                    discount.discountedAmount.centAmount +
-                  discountedPriceAcc
-                );
-              },
-              0
-            )
-          );
-        },
-        0
-      )
-    );
-  }, 0);
+  let discountTotalCents = _.sumBy(order.lineItems, (lineItem) =>
+    _.sumBy(
+      lineItem.discountedPricePerQuantity,
+      (discountedPricePerQuantity) =>
+        discountedPricePerQuantity.quantity *
+        _.sumBy(
+          discountedPricePerQuantity.discountedPrice.includedDiscounts,
+          (discount) => discount.discountedAmount.centAmount
+        )
+    )
+  );
 
   discountTotalCents +=
     order.discountOnTotalPrice?.discountedAmount?.centAmount ?? 0;
