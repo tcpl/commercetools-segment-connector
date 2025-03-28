@@ -155,6 +155,7 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
         discountTotalCents,
         order.totalPrice.fractionDigits
       ),
+      // gross shipping amount
       shipping: getCentAmountInCurrencyUnits(
         shippingCentAmount,
         order.totalPrice.fractionDigits
