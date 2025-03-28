@@ -11,8 +11,9 @@ import * as orderWithItemDiscount from './test-orders/order-with-item-discount.j
 import * as orderWithProductDiscount from './test-orders/order-with-product-discount.json';
 import * as orderWithTotalPriceDiscountLargerThanItemTotal from './test-orders/order-with-total-price-discount-larger-than-item-total.json';
 import * as anonymousOrderWithNoDiscounts from './test-orders/anonymous-order-with-no-discounts.json';
-import * as orderWithUsTaxAndItemDiscount from './test-orders/order-with-us-tax-item-discount.json';
-import * as orderWithUsTaxAndMultiBuyDiscount from './test-orders/order-with-us-tax-multi-buy-discount.json';
+import * as orderWithUSTaxAndItemDiscount from './test-orders/order-with-us-tax-item-discount.json';
+import * as orderWithUSTaxAndMultiBuyDiscount from './test-orders/order-with-us-tax-multi-buy-discount.json';
+import * as orderWithUSTaxItemAndProductDiscount from './test-orders/order-with-us-tax-item-and-product-discount.json';
 import { Order } from '@commercetools/platform-sdk';
 
 jest.mock('@segment/analytics-node');
@@ -328,7 +329,7 @@ describe('trackOrderCompleted', () => {
   });
 
   it('order with US tax and item discount tracked correctly', () => {
-    const order = orderWithUsTaxAndItemDiscount as Order;
+    const order = orderWithUSTaxAndItemDiscount as Order;
 
     trackOrderCompleted(order);
 
@@ -346,7 +347,7 @@ describe('trackOrderCompleted', () => {
   });
 
   it('order with US tax and multi-buy discount tracked correctly', () => {
-    const order = orderWithUsTaxAndMultiBuyDiscount as Order;
+    const order = orderWithUSTaxAndMultiBuyDiscount as Order;
 
     trackOrderCompleted(order);
 
@@ -358,6 +359,24 @@ describe('trackOrderCompleted', () => {
           tax: 84.49,
           discount: 79,
           total: 507.0,
+        }),
+      })
+    );
+  });
+
+  it('order with US tax, item discount, and product discount tracked correctly', () => {
+    const order = orderWithUSTaxItemAndProductDiscount as Order;
+
+    trackOrderCompleted(order);
+
+    expect(mockTrack).toHaveBeenCalledWith(
+      expect.objectContaining({
+        properties: expect.objectContaining({
+          subtotal: 228.21,
+          shipping: 50,
+          tax: 53.97,
+          discount: 91.29,
+          total: 323.85,
         }),
       })
     );
