@@ -22,7 +22,7 @@ export async function handleOrderCreated(orderId: string) {
 
     // only identify the user if they are not already in the system
     if (!customer) {
-      await identifyAnonymousCustomer(order.anonymousId, order.customerEmail);
+      identifyAnonymousCustomer(order.anonymousId, order.customerEmail);
     }
   }
 

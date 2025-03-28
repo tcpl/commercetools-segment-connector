@@ -121,7 +121,7 @@ describe('identifyAnonymousUser', () => {
     const anonymousId = '550e8400-e29b-41d4-a716-446655440000';
     const email = 'anonymous@example.com';
 
-    await identifyAnonymousCustomer(anonymousId, email);
+    identifyAnonymousCustomer(anonymousId, email);
 
     expect(mockIdentify).toHaveBeenCalledWith({
       anonymousId,
@@ -131,6 +131,7 @@ describe('identifyAnonymousUser', () => {
 
   it('should throw an error when Segment API fails', async () => {
     const segmentError = new Error('Segment API failure');
+
     mockIdentify.mockImplementation(() => {
       throw segmentError;
     });
@@ -138,7 +139,7 @@ describe('identifyAnonymousUser', () => {
     const anonymousId = '550e8400-e29b-41d4-a716-446655440002';
     const email = 'anonymous@example.com';
 
-    await expect(identifyAnonymousCustomer(anonymousId, email)).rejects.toThrow(
+    expect(() => identifyAnonymousCustomer(anonymousId, email)).toThrow(
       segmentError
     );
   });

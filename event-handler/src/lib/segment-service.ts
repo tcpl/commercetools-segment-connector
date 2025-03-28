@@ -45,10 +45,7 @@ export function identifyCustomer(customer: Customer) {
   }
 }
 
-export async function identifyAnonymousCustomer(
-  anonymousId: string,
-  email: string
-) {
+export function identifyAnonymousCustomer(anonymousId: string, email: string) {
   const logger = getLogger();
 
   const analytics = createAnalytics();
