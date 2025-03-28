@@ -127,12 +127,27 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
   );
 
   let discountTotalCents = order.lineItems.reduce((acc, lineItem) => {
-    const lineItemPrice = getLineItemPrice(lineItem);
-    const lineItemSubtotal = lineItemPrice.centAmount * lineItem.quantity;
-    const lineItemTotal = lineItem.totalPrice.centAmount;
-    const lineItemDiscount = lineItemSubtotal - lineItemTotal;
-
-    return acc + lineItemDiscount;
+    return (
+      acc +
+      lineItem.discountedPricePerQuantity.reduce(
+        (discountAcc, discountedPricePerQuantity) => {
+          return (
+            discountAcc +
+            discountedPricePerQuantity.discountedPrice.includedDiscounts.reduce(
+              (discountedPriceAcc, discount) => {
+                return (
+                  discountedPricePerQuantity.quantity *
+                    discount.discountedAmount.centAmount +
+                  discountedPriceAcc
+                );
+              },
+              0
+            )
+          );
+        },
+        0
+      )
+    );
   }, 0);
 
   discountTotalCents +=
