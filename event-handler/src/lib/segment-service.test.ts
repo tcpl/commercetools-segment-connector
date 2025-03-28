@@ -175,7 +175,6 @@ describe('trackOrderCompleted', () => {
       properties: {
         email: 'seb@example.com',
         order_id: '33925a10-c3fb-4ff5-a9b2-9134400b9d4d',
-        revenue: 119.8,
         subtotal: 119.8,
         shipping: 50.0,
         tax: 8.07,
@@ -212,7 +211,6 @@ describe('trackOrderCompleted', () => {
       properties: {
         email: 'anon401@example.com',
         order_id: '6fb68079-06fd-4bd4-bff1-b790d275f996',
-        revenue: 65.83,
         subtotal: 65.83,
         shipping: 90.0,
         tax: 28.17,
@@ -243,7 +241,6 @@ describe('trackOrderCompleted', () => {
     expect(mockTrack).toHaveBeenCalledWith(
       expect.objectContaining({
         properties: expect.objectContaining({
-          revenue: 47.93,
           subtotal: 47.93,
           shipping: 100.0,
           tax: 26.86,
@@ -262,7 +259,6 @@ describe('trackOrderCompleted', () => {
     expect(mockTrack).toHaveBeenCalledWith(
       expect.objectContaining({
         properties: expect.objectContaining({
-          revenue: 3.12,
           subtotal: 3.12,
           shipping: 100.0,
           tax: 17.29,
@@ -281,7 +277,6 @@ describe('trackOrderCompleted', () => {
     expect(mockTrack).toHaveBeenCalledWith(
       expect.objectContaining({
         properties: expect.objectContaining({
-          revenue: 282.62,
           subtotal: 282.62,
           shipping: 0,
           tax: 56.53,
