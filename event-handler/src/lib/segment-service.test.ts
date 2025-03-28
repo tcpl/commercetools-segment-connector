@@ -457,4 +457,26 @@ describe('trackOrderCompleted', () => {
       })
     );
   });
+
+  it('should throw an error if taxedPrice is missing', () => {
+    const order = {
+      ...anonymousOrderWithNoDiscounts,
+      taxedPrice: undefined,
+    } as Order;
+
+    expect(() => trackOrderCompleted(order)).toThrow(
+      `Order ${order.id} is missing taxedPrice`
+    );
+  });
+
+  it('should throw an error if taxedShippingPrice is missing', () => {
+    const order = {
+      ...anonymousOrderWithNoDiscounts,
+      taxedShippingPrice: undefined,
+    } as Order;
+
+    expect(() => trackOrderCompleted(order)).toThrow(
+      `Order ${order.id} is missing taxedShippingPrice`
+    );
+  });
 });

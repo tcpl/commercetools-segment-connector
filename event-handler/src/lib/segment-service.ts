@@ -98,6 +98,14 @@ export function trackOrderCompleted(order: Order) {
 }
 
 const buildOrderCompletedTrackEvent = (order: Order) => {
+  if (!order.taxedPrice) {
+    throw new Error(`Order ${order.id} is missing taxedPrice`);
+  }
+
+  if (!order.taxedShippingPrice) {
+    throw new Error(`Order ${order.id} is missing taxedShippingPrice`);
+  }
+
   const products = order.lineItems.map((lineItem, i) => {
     const imageUrl =
       lineItem.variant.images && lineItem.variant.images.length > 0
@@ -114,12 +122,11 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
     };
   });
 
-  // TODO: handle no taxed values
   const subTotalCentAmount =
-    order.taxedPrice!.totalNet.centAmount -
-    order.taxedShippingPrice!.totalNet.centAmount;
+    order.taxedPrice.totalNet.centAmount -
+    order.taxedShippingPrice.totalNet.centAmount;
 
-  const shippingCentAmount = order.taxedShippingPrice!.totalGross.centAmount;
+  const shippingCentAmount = order.taxedShippingPrice.totalGross.centAmount;
 
   const subTotalCurrencyUnits = getCentAmountInCurrencyUnits(
     subTotalCentAmount,
@@ -164,7 +171,7 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
     properties: {
       email: order.customerEmail,
       order_id: order.id,
-      total: getTypedMoneyInCurrencyUnits(order.taxedPrice!.totalGross), // Subtotal ($) with shipping and taxes added in
+      total: getTypedMoneyInCurrencyUnits(order.taxedPrice.totalGross), // Subtotal ($) with shipping and taxes added in
       subtotal: subTotalCurrencyUnits, // subtotal: Order total after discounts but before taxes and shipping
       // gross discount amount
       discount: getCentAmountInCurrencyUnits(
@@ -177,7 +184,7 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
         order.totalPrice.fractionDigits
       ),
       tax:
-        order.taxedPrice?.totalTax !== undefined
+        order.taxedPrice.totalTax !== undefined
           ? getTypedMoneyInCurrencyUnits(order.taxedPrice.totalTax)
           : undefined,
       // coupon is a defined as a string in Spec: V2 Ecommerce Events, so just using the first discount code
@@ -186,7 +193,7 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
           ? order.discountCodes[0].discountCode
           : undefined,
       products,
-      currency: order.totalPrice?.currencyCode,
+      currency: order.totalPrice.currencyCode,
     },
   };
   return event;
