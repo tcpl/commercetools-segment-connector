@@ -114,14 +114,10 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
     };
   });
 
-  let subTotalCentAmount = order.lineItems.reduce((acc, lineItem) => {
-    // TODO: what to do if no taxedPrice? Tax should have been calculated so error?
-    return acc + lineItem.taxedPrice!.totalNet.centAmount;
-  }, 0);
-
-  // TODO: need net version
-  subTotalCentAmount -=
-    order.discountOnTotalPrice?.discountedAmount?.centAmount ?? 0;
+  // TODO: handle no taxed values
+  const subTotalCentAmount =
+    order.taxedPrice!.totalNet.centAmount -
+    order.taxedShippingPrice!.totalNet.centAmount;
 
   const subTotalCurrencyUnits = getCentAmountInCurrencyUnits(
     subTotalCentAmount,
@@ -163,7 +159,7 @@ const buildOrderCompletedTrackEvent = (order: Order) => {
       ),
       tax:
         order.taxedPrice?.totalTax !== undefined
-          ? getTypedMoneyInCurrencyUnits(order.taxedPrice?.totalTax)
+          ? getTypedMoneyInCurrencyUnits(order.taxedPrice.totalTax)
           : undefined,
       // coupon is a defined as a string in Spec: V2 Ecommerce Events, so just using the first discount code
       coupon:

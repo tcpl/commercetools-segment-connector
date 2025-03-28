@@ -241,7 +241,7 @@ describe('trackOrderCompleted', () => {
     expect(mockTrack).toHaveBeenCalledWith(
       expect.objectContaining({
         properties: expect.objectContaining({
-          subtotal: 47.93,
+          subtotal: 59.24,
           shipping: 100.0,
           tax: 26.86,
           discount: 17.9,
