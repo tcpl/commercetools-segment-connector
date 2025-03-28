@@ -1,0 +1,432 @@
+{
+  "type": "Order",
+  "id": "47984e29-6dcd-49fd-8a3a-b74c0d1668a4",
+  "version": 1,
+  "versionModifiedAt": "2025-03-27T15:26:54.144Z",
+  "lastMessageSequenceNumber": 1,
+  "createdAt": "2025-03-27T15:26:54.129Z",
+  "lastModifiedAt": "2025-03-27T15:26:54.129Z",
+  "lastModifiedBy": {
+    "clientId": "sOrR9n__bOkuAMvqqhlllNZ6",
+    "isPlatformClient": false
+  },
+  "createdBy": {
+    "clientId": "sOrR9n__bOkuAMvqqhlllNZ6",
+    "isPlatformClient": false
+  },
+  "customerEmail": "test@example.com",
+  "totalPrice": {
+    "type": "centPrecision",
+    "currencyCode": "GBP",
+    "centAmount": 10374,
+    "fractionDigits": 2
+  },
+  "taxedPrice": {
+    "totalNet": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 8645,
+      "fractionDigits": 2
+    },
+    "totalGross": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 10374,
+      "fractionDigits": 2
+    },
+    "taxPortions": [
+      {
+        "rate": 0.2,
+        "amount": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 1729,
+          "fractionDigits": 2
+        },
+        "name": "Standard VAT for UK"
+      }
+    ],
+    "totalTax": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 1729,
+      "fractionDigits": 2
+    }
+  },
+  "country": "GB",
+  "taxedShippingPrice": {
+    "totalNet": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 8333,
+      "fractionDigits": 2
+    },
+    "totalGross": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 10000,
+      "fractionDigits": 2
+    },
+    "taxPortions": [
+      {
+        "rate": 0.2,
+        "amount": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 1667,
+          "fractionDigits": 2
+        },
+        "name": "Standard VAT for UK"
+      }
+    ],
+    "totalTax": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 1667,
+      "fractionDigits": 2
+    }
+  },
+  "orderState": "Open",
+  "syncInfo": [],
+  "returnInfo": [],
+  "taxMode": "Platform",
+  "inventoryMode": "None",
+  "taxRoundingMode": "HalfEven",
+  "taxCalculationMode": "LineItemLevel",
+  "origin": "Customer",
+  "shippingMode": "Single",
+  "shippingInfo": {
+    "shippingMethodName": "Standard Delivery",
+    "price": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 10000,
+      "fractionDigits": 2
+    },
+    "shippingRate": {
+      "price": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 10000,
+        "fractionDigits": 2
+      },
+      "freeAbove": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 10000,
+        "fractionDigits": 2
+      },
+      "tiers": []
+    },
+    "taxRate": {
+      "name": "Standard VAT for UK",
+      "amount": 0.2,
+      "includedInPrice": true,
+      "country": "GB",
+      "id": "9Ze-zWsD",
+      "key": "vat-standard-uk",
+      "subRates": []
+    },
+    "taxCategory": {
+      "typeId": "tax-category",
+      "id": "e4105917-4e42-4998-b0e1-685f744f9956"
+    },
+    "deliveries": [],
+    "shippingMethod": {
+      "typeId": "shipping-method",
+      "id": "2f48ba1e-d8ee-4a1c-bd04-5bfe7e00fe7c"
+    },
+    "taxedPrice": {
+      "totalNet": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 8333,
+        "fractionDigits": 2
+      },
+      "totalGross": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 10000,
+        "fractionDigits": 2
+      },
+      "taxPortions": [
+        {
+          "rate": 0.2,
+          "amount": {
+            "type": "centPrecision",
+            "currencyCode": "GBP",
+            "centAmount": 1667,
+            "fractionDigits": 2
+          },
+          "name": "Standard VAT for UK"
+        }
+      ],
+      "totalTax": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 1667,
+        "fractionDigits": 2
+      }
+    },
+    "shippingMethodState": "MatchesCart"
+  },
+  "shippingAddress": {
+    "firstName": "First",
+    "lastName": "Last",
+    "streetName": "street",
+    "postalCode": "post code",
+    "city": "town",
+    "country": "GB",
+    "email": "test@example.com"
+  },
+  "shipping": [],
+  "discountTypeCombination": {
+    "type": "Stacking"
+  },
+  "lineItems": [
+    {
+      "id": "13b0642a-24e5-4157-a725-c13a4cf757cd",
+      "productId": "8c53f80a-62de-446f-9b64-cbf80b2b3ca6",
+      "productKey": "ice-bucket",
+      "name": {
+        "en-US": "Ice Bucket",
+        "en-GB": "Ice Bucket",
+        "de-DE": "Eis Eimer"
+      },
+      "productType": {
+        "typeId": "product-type",
+        "id": "d1a88a56-c368-453c-b5d1-73f5389fd898",
+        "version": 1
+      },
+      "productSlug": {
+        "en-US": "ice-bucket",
+        "en-GB": "ice-bucket",
+        "de-DE": "eis-eimer"
+      },
+      "variant": {
+        "id": 1,
+        "sku": "BUCK-023",
+        "key": "iceBucket01",
+        "prices": [
+          {
+            "id": "b1722c32-fda5-475e-92e8-052355d5055e",
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "EUR",
+              "centAmount": 499,
+              "fractionDigits": 2
+            },
+            "key": "499EUR",
+            "country": "DE"
+          },
+          {
+            "id": "5d0ea9c4-3531-4dc9-804a-7ebe24ead14a",
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "GBP",
+              "centAmount": 499,
+              "fractionDigits": 2
+            },
+            "key": "499GBP",
+            "country": "GB"
+          },
+          {
+            "id": "341bb660-b940-4e5a-9535-d6a1ca02fc40",
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "USD",
+              "centAmount": 499,
+              "fractionDigits": 2
+            },
+            "key": "499USD",
+            "country": "US"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Ice_Bucket-1.1.jpeg",
+            "dimensions": {
+              "w": 5072,
+              "h": 4992
+            }
+          }
+        ],
+        "attributes": [
+          {
+            "name": "productspec",
+            "value": {
+              "en-GB": "- Stainless steel\n- Dishwasher safe",
+              "de-DE": "- Edelstahl\n- Spülmaschinenfest",
+              "en-US": "- Stainless steel\n- Dishwasher safe"
+            }
+          },
+          {
+            "name": "finish",
+            "value": {
+              "en-GB": "Silver:#C0C0C0",
+              "de-DE": "Silber:#C0C0C0",
+              "en-US": "Silver:#C0C0C0"
+            }
+          }
+        ],
+        "assets": [],
+        "availability": {
+          "isOnStock": true,
+          "availableQuantity": 100,
+          "version": 1,
+          "id": "87ab5c9f-9f46-493d-986f-f021ac75ca38"
+        }
+      },
+      "price": {
+        "id": "5d0ea9c4-3531-4dc9-804a-7ebe24ead14a",
+        "value": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 499,
+          "fractionDigits": 2
+        },
+        "key": "499GBP",
+        "country": "GB"
+      },
+      "quantity": 1,
+      "discountedPrice": {
+        "value": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 374,
+          "fractionDigits": 2
+        },
+        "includedDiscounts": [
+          {
+            "discount": {
+              "typeId": "cart-discount",
+              "id": "e435beeb-7ce0-4e90-9b0e-3342c92be874"
+            },
+            "discountedAmount": {
+              "type": "centPrecision",
+              "currencyCode": "GBP",
+              "centAmount": 125,
+              "fractionDigits": 2
+            }
+          }
+        ]
+      },
+      "discountedPricePerQuantity": [
+        {
+          "quantity": 1,
+          "discountedPrice": {
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "GBP",
+              "centAmount": 374,
+              "fractionDigits": 2
+            },
+            "includedDiscounts": [
+              {
+                "discount": {
+                  "typeId": "cart-discount",
+                  "id": "e435beeb-7ce0-4e90-9b0e-3342c92be874"
+                },
+                "discountedAmount": {
+                  "type": "centPrecision",
+                  "currencyCode": "GBP",
+                  "centAmount": 125,
+                  "fractionDigits": 2
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "taxRate": {
+        "name": "Standard VAT for UK",
+        "amount": 0.2,
+        "includedInPrice": true,
+        "country": "GB",
+        "id": "9Ze-zWsD",
+        "key": "vat-standard-uk",
+        "subRates": []
+      },
+      "perMethodTaxRate": [],
+      "addedAt": "2025-03-27T15:25:42.311Z",
+      "lastModifiedAt": "2025-03-27T15:25:42.311Z",
+      "state": [
+        {
+          "quantity": 1,
+          "state": {
+            "typeId": "state",
+            "id": "23a7d77f-c6a0-4876-b763-a5d8a27f9549"
+          }
+        }
+      ],
+      "priceMode": "Platform",
+      "lineItemMode": "Standard",
+      "totalPrice": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 374,
+        "fractionDigits": 2
+      },
+      "taxedPrice": {
+        "totalNet": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 312,
+          "fractionDigits": 2
+        },
+        "totalGross": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 374,
+          "fractionDigits": 2
+        },
+        "taxPortions": [
+          {
+            "rate": 0.2,
+            "amount": {
+              "type": "centPrecision",
+              "currencyCode": "GBP",
+              "centAmount": 62,
+              "fractionDigits": 2
+            },
+            "name": "Standard VAT for UK"
+          }
+        ],
+        "totalTax": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 62,
+          "fractionDigits": 2
+        }
+      },
+      "taxedPricePortions": []
+    }
+  ],
+  "customLineItems": [],
+  "transactionFee": true,
+  "discountCodes": [],
+  "directDiscounts": [],
+  "cart": {
+    "typeId": "cart",
+    "id": "b37016c5-bc9a-4fd5-a8e2-aeb3ede84d6a"
+  },
+  "paymentInfo": {
+    "payments": [
+      {
+        "typeId": "payment",
+        "id": "72b71b78-36a3-4e30-8bbd-08432e85995c"
+      }
+    ]
+  },
+  "billingAddress": {
+    "firstName": "First",
+    "lastName": "Last",
+    "streetName": "street",
+    "postalCode": "post code",
+    "city": "town",
+    "country": "GB",
+    "email": "test@example.com"
+  },
+  "itemShippingAddresses": [],
+  "refusedGifts": []
+}

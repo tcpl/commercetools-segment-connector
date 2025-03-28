@@ -32,9 +32,6 @@ export async function createSubscription(
           {
             resourceTypeId: 'order',
           },
-          {
-            resourceTypeId: 'cart',
-          },
         ],
       },
     })

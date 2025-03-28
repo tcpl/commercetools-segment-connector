@@ -1,0 +1,439 @@
+{
+  "type": "Order",
+  "id": "29d67727-8e2c-405d-84ec-e56ec199dd72",
+  "version": 1,
+  "versionModifiedAt": "2025-03-27T15:47:57.405Z",
+  "lastMessageSequenceNumber": 1,
+  "createdAt": "2025-03-27T15:47:57.390Z",
+  "lastModifiedAt": "2025-03-27T15:47:57.390Z",
+  "lastModifiedBy": {
+    "clientId": "sOrR9n__bOkuAMvqqhlllNZ6",
+    "isPlatformClient": false
+  },
+  "createdBy": {
+    "clientId": "sOrR9n__bOkuAMvqqhlllNZ6",
+    "isPlatformClient": false
+  },
+  "customerEmail": "test@example.com",
+  "totalPrice": {
+    "type": "centPrecision",
+    "currencyCode": "GBP",
+    "centAmount": 33915,
+    "fractionDigits": 2
+  },
+  "taxedPrice": {
+    "totalNet": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 28262,
+      "fractionDigits": 2
+    },
+    "totalGross": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 33915,
+      "fractionDigits": 2
+    },
+    "taxPortions": [
+      {
+        "rate": 0.2,
+        "amount": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 5653,
+          "fractionDigits": 2
+        },
+        "name": "Standard VAT for UK"
+      }
+    ],
+    "totalTax": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 5653,
+      "fractionDigits": 2
+    }
+  },
+  "country": "GB",
+  "taxedShippingPrice": {
+    "totalNet": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 0,
+      "fractionDigits": 2
+    },
+    "totalGross": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 0,
+      "fractionDigits": 2
+    },
+    "taxPortions": [
+      {
+        "rate": 0.2,
+        "amount": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 0,
+          "fractionDigits": 2
+        },
+        "name": "Standard VAT for UK"
+      }
+    ],
+    "totalTax": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 0,
+      "fractionDigits": 2
+    }
+  },
+  "orderState": "Open",
+  "syncInfo": [],
+  "returnInfo": [],
+  "taxMode": "Platform",
+  "inventoryMode": "None",
+  "taxRoundingMode": "HalfEven",
+  "taxCalculationMode": "LineItemLevel",
+  "origin": "Customer",
+  "shippingMode": "Single",
+  "shippingInfo": {
+    "shippingMethodName": "Standard Delivery",
+    "price": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 0,
+      "fractionDigits": 2
+    },
+    "shippingRate": {
+      "price": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 10000,
+        "fractionDigits": 2
+      },
+      "freeAbove": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 10000,
+        "fractionDigits": 2
+      },
+      "tiers": []
+    },
+    "taxRate": {
+      "name": "Standard VAT for UK",
+      "amount": 0.2,
+      "includedInPrice": true,
+      "country": "GB",
+      "id": "9Ze-zWsD",
+      "key": "vat-standard-uk",
+      "subRates": []
+    },
+    "taxCategory": {
+      "typeId": "tax-category",
+      "id": "e4105917-4e42-4998-b0e1-685f744f9956"
+    },
+    "deliveries": [],
+    "shippingMethod": {
+      "typeId": "shipping-method",
+      "id": "2f48ba1e-d8ee-4a1c-bd04-5bfe7e00fe7c"
+    },
+    "taxedPrice": {
+      "totalNet": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 0,
+        "fractionDigits": 2
+      },
+      "totalGross": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 0,
+        "fractionDigits": 2
+      },
+      "taxPortions": [
+        {
+          "rate": 0.2,
+          "amount": {
+            "type": "centPrecision",
+            "currencyCode": "GBP",
+            "centAmount": 0,
+            "fractionDigits": 2
+          },
+          "name": "Standard VAT for UK"
+        }
+      ],
+      "totalTax": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 0,
+        "fractionDigits": 2
+      }
+    },
+    "shippingMethodState": "MatchesCart"
+  },
+  "shippingAddress": {
+    "firstName": "First",
+    "lastName": "Last",
+    "streetName": "Street",
+    "postalCode": "post code",
+    "city": "town",
+    "country": "GB",
+    "email": "test@example.com"
+  },
+  "shipping": [],
+  "discountTypeCombination": {
+    "type": "Stacking"
+  },
+  "lineItems": [
+    {
+      "id": "02aa14ac-7324-4585-9786-b2943bd593ed",
+      "productId": "b9103ee7-0e28-44f5-b82c-278e1420ab94",
+      "productKey": "turner-velvet-armchair",
+      "name": {
+        "en-US": "Turner Velvet Armchair",
+        "en-GB": "Turner Velvet Armchair",
+        "de-DE": "Samtsessel >Turner<"
+      },
+      "productType": {
+        "typeId": "product-type",
+        "id": "d1a88a56-c368-453c-b5d1-73f5389fd898",
+        "version": 1
+      },
+      "productSlug": {
+        "en-US": "turner-velvet-armchair",
+        "en-GB": "turner-velvet-armchair",
+        "de-DE": "turner-samtsessel"
+      },
+      "variant": {
+        "id": 1,
+        "sku": "TARM-03",
+        "key": "turnerVelvetArmchair01",
+        "prices": [
+          {
+            "id": "d6bb757b-5116-4fae-985a-d2689231bb00",
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "EUR",
+              "centAmount": 39900,
+              "fractionDigits": 2
+            },
+            "key": "39900EUR",
+            "country": "DE",
+            "discounted": {
+              "value": {
+                "type": "centPrecision",
+                "currencyCode": "EUR",
+                "centAmount": 33915,
+                "fractionDigits": 2
+              },
+              "discount": {
+                "typeId": "product-discount",
+                "id": "f191c9e3-7a84-489f-b1c0-fbbc1d840a3d"
+              }
+            }
+          },
+          {
+            "id": "d2f67c46-901d-4fd4-880e-2a64b26ba685",
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "GBP",
+              "centAmount": 39900,
+              "fractionDigits": 2
+            },
+            "key": "39900GBP",
+            "country": "GB",
+            "discounted": {
+              "value": {
+                "type": "centPrecision",
+                "currencyCode": "GBP",
+                "centAmount": 33915,
+                "fractionDigits": 2
+              },
+              "discount": {
+                "typeId": "product-discount",
+                "id": "f191c9e3-7a84-489f-b1c0-fbbc1d840a3d"
+              }
+            }
+          },
+          {
+            "id": "06bf52ee-90f7-4f23-8a49-832ce35bd639",
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "USD",
+              "centAmount": 39900,
+              "fractionDigits": 2
+            },
+            "key": "39900USD",
+            "country": "US",
+            "discounted": {
+              "value": {
+                "type": "centPrecision",
+                "currencyCode": "USD",
+                "centAmount": 33915,
+                "fractionDigits": 2
+              },
+              "discount": {
+                "typeId": "product-discount",
+                "id": "f191c9e3-7a84-489f-b1c0-fbbc1d840a3d"
+              }
+            }
+          }
+        ],
+        "images": [
+          {
+            "url": "https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Turner_Velvet_Armchair-1.1.jpeg",
+            "dimensions": {
+              "w": 2500,
+              "h": 2500
+            }
+          },
+          {
+            "url": "https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Turner_Velvet_Armchair-1.2.jpeg",
+            "dimensions": {
+              "w": 2500,
+              "h": 2500
+            }
+          }
+        ],
+        "attributes": [
+          {
+            "name": "productspec",
+            "value": {
+              "en-GB": "- Dry clean only",
+              "en-US": "- Dry clean only",
+              "de-DE": "- Nur chemische Reinigung"
+            }
+          },
+          {
+            "name": "color",
+            "value": {
+              "en-GB": "Royal Blue:#4169E1",
+              "de-DE": "Königs blau:#4169E1",
+              "en-US": "Royal Blue:#4169E1"
+            }
+          }
+        ],
+        "assets": [],
+        "availability": {
+          "isOnStock": true,
+          "availableQuantity": 100,
+          "version": 1,
+          "id": "3469a240-25a9-40cd-934c-9896db849978"
+        }
+      },
+      "price": {
+        "id": "d2f67c46-901d-4fd4-880e-2a64b26ba685",
+        "value": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 39900,
+          "fractionDigits": 2
+        },
+        "key": "39900GBP",
+        "country": "GB",
+        "discounted": {
+          "value": {
+            "type": "centPrecision",
+            "currencyCode": "GBP",
+            "centAmount": 33915,
+            "fractionDigits": 2
+          },
+          "discount": {
+            "typeId": "product-discount",
+            "id": "f191c9e3-7a84-489f-b1c0-fbbc1d840a3d"
+          }
+        }
+      },
+      "quantity": 1,
+      "discountedPricePerQuantity": [],
+      "taxRate": {
+        "name": "Standard VAT for UK",
+        "amount": 0.2,
+        "includedInPrice": true,
+        "country": "GB",
+        "id": "9Ze-zWsD",
+        "key": "vat-standard-uk",
+        "subRates": []
+      },
+      "perMethodTaxRate": [],
+      "addedAt": "2025-03-27T15:47:16.318Z",
+      "lastModifiedAt": "2025-03-27T15:47:16.318Z",
+      "state": [
+        {
+          "quantity": 1,
+          "state": {
+            "typeId": "state",
+            "id": "23a7d77f-c6a0-4876-b763-a5d8a27f9549"
+          }
+        }
+      ],
+      "priceMode": "Platform",
+      "lineItemMode": "Standard",
+      "totalPrice": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 33915,
+        "fractionDigits": 2
+      },
+      "taxedPrice": {
+        "totalNet": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 28262,
+          "fractionDigits": 2
+        },
+        "totalGross": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 33915,
+          "fractionDigits": 2
+        },
+        "taxPortions": [
+          {
+            "rate": 0.2,
+            "amount": {
+              "type": "centPrecision",
+              "currencyCode": "GBP",
+              "centAmount": 5653,
+              "fractionDigits": 2
+            },
+            "name": "Standard VAT for UK"
+          }
+        ],
+        "totalTax": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 5653,
+          "fractionDigits": 2
+        }
+      },
+      "taxedPricePortions": []
+    }
+  ],
+  "customLineItems": [],
+  "transactionFee": true,
+  "discountCodes": [],
+  "directDiscounts": [],
+  "cart": {
+    "typeId": "cart",
+    "id": "3ffb23d7-172c-462e-8228-a2dbe29e0ecf"
+  },
+  "paymentInfo": {
+    "payments": [
+      {
+        "typeId": "payment",
+        "id": "1d3e2364-008d-4250-ab26-fe4bba7ffc4e"
+      }
+    ]
+  },
+  "billingAddress": {
+    "firstName": "First",
+    "lastName": "Last",
+    "streetName": "Street",
+    "postalCode": "post code",
+    "city": "town",
+    "country": "GB",
+    "email": "test@example.com"
+  },
+  "itemShippingAddresses": [],
+  "refusedGifts": []
+}

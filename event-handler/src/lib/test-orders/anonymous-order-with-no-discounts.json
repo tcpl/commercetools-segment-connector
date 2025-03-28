@@ -1,0 +1,390 @@
+{
+  "type": "Order",
+  "id": "5e446455-d78d-4120-93ab-2643ae3ba8b6",
+  "version": 1,
+  "versionModifiedAt": "2025-03-28T10:37:40.084Z",
+  "lastMessageSequenceNumber": 1,
+  "createdAt": "2025-03-28T10:37:40.070Z",
+  "lastModifiedAt": "2025-03-28T10:37:40.070Z",
+  "lastModifiedBy": {
+    "clientId": "sOrR9n__bOkuAMvqqhlllNZ6",
+    "isPlatformClient": false
+  },
+  "createdBy": {
+    "clientId": "sOrR9n__bOkuAMvqqhlllNZ6",
+    "isPlatformClient": false
+  },
+  "customerEmail": "test@example.com",
+  "totalPrice": {
+    "type": "centPrecision",
+    "currencyCode": "GBP",
+    "centAmount": 17900,
+    "fractionDigits": 2
+  },
+  "taxedPrice": {
+    "totalNet": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 14916,
+      "fractionDigits": 2
+    },
+    "totalGross": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 17900,
+      "fractionDigits": 2
+    },
+    "taxPortions": [
+      {
+        "rate": 0.2,
+        "amount": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 2984,
+          "fractionDigits": 2
+        },
+        "name": "Standard VAT for UK"
+      }
+    ],
+    "totalTax": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 2984,
+      "fractionDigits": 2
+    }
+  },
+  "country": "GB",
+  "taxedShippingPrice": {
+    "totalNet": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 8333,
+      "fractionDigits": 2
+    },
+    "totalGross": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 10000,
+      "fractionDigits": 2
+    },
+    "taxPortions": [
+      {
+        "rate": 0.2,
+        "amount": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 1667,
+          "fractionDigits": 2
+        },
+        "name": "Standard VAT for UK"
+      }
+    ],
+    "totalTax": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 1667,
+      "fractionDigits": 2
+    }
+  },
+  "orderState": "Open",
+  "syncInfo": [],
+  "returnInfo": [],
+  "taxMode": "Platform",
+  "inventoryMode": "None",
+  "taxRoundingMode": "HalfEven",
+  "taxCalculationMode": "LineItemLevel",
+  "origin": "Customer",
+  "shippingMode": "Single",
+  "shippingInfo": {
+    "shippingMethodName": "Standard Delivery",
+    "price": {
+      "type": "centPrecision",
+      "currencyCode": "GBP",
+      "centAmount": 10000,
+      "fractionDigits": 2
+    },
+    "shippingRate": {
+      "price": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 10000,
+        "fractionDigits": 2
+      },
+      "freeAbove": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 10000,
+        "fractionDigits": 2
+      },
+      "tiers": []
+    },
+    "taxRate": {
+      "name": "Standard VAT for UK",
+      "amount": 0.2,
+      "includedInPrice": true,
+      "country": "GB",
+      "id": "9Ze-zWsD",
+      "key": "vat-standard-uk",
+      "subRates": []
+    },
+    "taxCategory": {
+      "typeId": "tax-category",
+      "id": "e4105917-4e42-4998-b0e1-685f744f9956"
+    },
+    "deliveries": [],
+    "shippingMethod": {
+      "typeId": "shipping-method",
+      "id": "2f48ba1e-d8ee-4a1c-bd04-5bfe7e00fe7c"
+    },
+    "taxedPrice": {
+      "totalNet": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 8333,
+        "fractionDigits": 2
+      },
+      "totalGross": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 10000,
+        "fractionDigits": 2
+      },
+      "taxPortions": [
+        {
+          "rate": 0.2,
+          "amount": {
+            "type": "centPrecision",
+            "currencyCode": "GBP",
+            "centAmount": 1667,
+            "fractionDigits": 2
+          },
+          "name": "Standard VAT for UK"
+        }
+      ],
+      "totalTax": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 1667,
+        "fractionDigits": 2
+      }
+    },
+    "shippingMethodState": "MatchesCart"
+  },
+  "shippingAddress": {
+    "firstName": "First",
+    "lastName": "Last",
+    "streetName": "STreet",
+    "postalCode": "Post Code",
+    "city": "Town",
+    "country": "GB",
+    "email": "test@example.com"
+  },
+  "shipping": [],
+  "discountTypeCombination": {
+    "type": "Stacking"
+  },
+  "lineItems": [
+    {
+      "id": "559d6036-e628-45a1-8222-dcf836693cb1",
+      "productId": "600bf085-00fa-47a8-88d3-e615ec6d9d71",
+      "productKey": "minimalist-cedar-nightstand",
+      "name": {
+        "en-GB": "Minimalist Cedar Nightstand",
+        "de-DE": "Minimalistischer Zedernholz Nachttisch",
+        "en-US": "Minimalist Cedar Nightstand"
+      },
+      "productType": {
+        "typeId": "product-type",
+        "id": "d1a88a56-c368-453c-b5d1-73f5389fd898",
+        "version": 1
+      },
+      "productSlug": {
+        "en-GB": "minimalist-cedar-nightstand",
+        "de-DE": "minimalistischer-nachttisch-aus-zedernholz",
+        "en-US": "minimalist-cedar-nightstand"
+      },
+      "variant": {
+        "id": 1,
+        "sku": "CNS-0434",
+        "key": "minimalistCedarNightstand01",
+        "prices": [
+          {
+            "id": "3c78b1d0-0f09-43d8-ad32-6c604884a22b",
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "EUR",
+              "centAmount": 7900,
+              "fractionDigits": 2
+            },
+            "key": "7900EUR",
+            "country": "DE"
+          },
+          {
+            "id": "3289119d-0957-440c-892c-022ebaf39d87",
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "GBP",
+              "centAmount": 7900,
+              "fractionDigits": 2
+            },
+            "key": "7900GBP",
+            "country": "GB"
+          },
+          {
+            "id": "c8ae3d3f-f412-4fc8-ab89-576202f69d92",
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "USD",
+              "centAmount": 7900,
+              "fractionDigits": 2
+            },
+            "key": "7900USD",
+            "country": "US"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Minimalist_Cedar_Nightstand-1.3.jpeg",
+            "dimensions": {
+              "w": 4011,
+              "h": 6016
+            }
+          },
+          {
+            "url": "https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Minimalist_Cedar_Nightstand-1.1.jpeg",
+            "dimensions": {
+              "w": 4011,
+              "h": 6016
+            }
+          },
+          {
+            "url": "https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Minimalist_Cedar_Nightstand-1.2.jpeg",
+            "dimensions": {
+              "w": 4011,
+              "h": 6016
+            }
+          }
+        ],
+        "attributes": [
+          {
+            "name": "finish",
+            "value": {
+              "en-GB": "Gainsboro:#dcdcdc",
+              "de-DE": "Gainsboro:#dcdcdc",
+              "en-US": "Gainsboro:#dcdcdc"
+            }
+          }
+        ],
+        "assets": [],
+        "availability": {
+          "isOnStock": true,
+          "availableQuantity": 100,
+          "version": 1,
+          "id": "59f21bb1-fb1d-4a5a-ba39-ea31561608d5"
+        }
+      },
+      "price": {
+        "id": "3289119d-0957-440c-892c-022ebaf39d87",
+        "value": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 7900,
+          "fractionDigits": 2
+        },
+        "key": "7900GBP",
+        "country": "GB"
+      },
+      "quantity": 1,
+      "discountedPricePerQuantity": [],
+      "taxRate": {
+        "name": "Standard VAT for UK",
+        "amount": 0.2,
+        "includedInPrice": true,
+        "country": "GB",
+        "id": "9Ze-zWsD",
+        "key": "vat-standard-uk",
+        "subRates": []
+      },
+      "perMethodTaxRate": [],
+      "addedAt": "2025-03-28T10:36:45.969Z",
+      "lastModifiedAt": "2025-03-28T10:36:45.969Z",
+      "state": [
+        {
+          "quantity": 1,
+          "state": {
+            "typeId": "state",
+            "id": "23a7d77f-c6a0-4876-b763-a5d8a27f9549"
+          }
+        }
+      ],
+      "priceMode": "Platform",
+      "lineItemMode": "Standard",
+      "totalPrice": {
+        "type": "centPrecision",
+        "currencyCode": "GBP",
+        "centAmount": 7900,
+        "fractionDigits": 2
+      },
+      "taxedPrice": {
+        "totalNet": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 6583,
+          "fractionDigits": 2
+        },
+        "totalGross": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 7900,
+          "fractionDigits": 2
+        },
+        "taxPortions": [
+          {
+            "rate": 0.2,
+            "amount": {
+              "type": "centPrecision",
+              "currencyCode": "GBP",
+              "centAmount": 1317,
+              "fractionDigits": 2
+            },
+            "name": "Standard VAT for UK"
+          }
+        ],
+        "totalTax": {
+          "type": "centPrecision",
+          "currencyCode": "GBP",
+          "centAmount": 1317,
+          "fractionDigits": 2
+        }
+      },
+      "taxedPricePortions": []
+    }
+  ],
+  "customLineItems": [],
+  "transactionFee": true,
+  "discountCodes": [],
+  "directDiscounts": [],
+  "cart": {
+    "typeId": "cart",
+    "id": "987c76f4-68da-43d6-8feb-a7790faa7aa5"
+  },
+  "paymentInfo": {
+    "payments": [
+      {
+        "typeId": "payment",
+        "id": "01eaa9d4-e06b-4fe0-8945-a8281b50d0e2"
+      }
+    ]
+  },
+  "billingAddress": {
+    "firstName": "First",
+    "lastName": "Last",
+    "streetName": "STreet",
+    "postalCode": "Post Code",
+    "city": "Town",
+    "country": "GB",
+    "email": "test@example.com"
+  },
+  "itemShippingAddresses": [],
+  "refusedGifts": []
+}

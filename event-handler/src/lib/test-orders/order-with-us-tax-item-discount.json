@@ -1,0 +1,671 @@
+{
+  "type": "Order",
+  "id": "a7b43a19-1118-4183-8e67-ef8be43cf227",
+  "version": 1,
+  "versionModifiedAt": "2025-03-28T12:07:53.294Z",
+  "lastMessageSequenceNumber": 1,
+  "createdAt": "2025-03-28T12:07:53.270Z",
+  "lastModifiedAt": "2025-03-28T12:07:53.270Z",
+  "lastModifiedBy": {
+    "clientId": "sOrR9n__bOkuAMvqqhlllNZ6",
+    "isPlatformClient": false
+  },
+  "createdBy": {
+    "clientId": "sOrR9n__bOkuAMvqqhlllNZ6",
+    "isPlatformClient": false
+  },
+  "customerEmail": "test@example.com",
+  "totalPrice": {
+    "type": "centPrecision",
+    "currencyCode": "USD",
+    "centAmount": 25697,
+    "fractionDigits": 2
+  },
+  "taxedPrice": {
+    "totalNet": {
+      "type": "centPrecision",
+      "currencyCode": "USD",
+      "centAmount": 21414,
+      "fractionDigits": 2
+    },
+    "totalGross": {
+      "type": "centPrecision",
+      "currencyCode": "USD",
+      "centAmount": 25697,
+      "fractionDigits": 2
+    },
+    "taxPortions": [
+      {
+        "rate": 0.2,
+        "amount": {
+          "type": "centPrecision",
+          "currencyCode": "USD",
+          "centAmount": 4283,
+          "fractionDigits": 2
+        },
+        "name": "Standard VAT for US"
+      }
+    ],
+    "totalTax": {
+      "type": "centPrecision",
+      "currencyCode": "USD",
+      "centAmount": 4283,
+      "fractionDigits": 2
+    }
+  },
+  "country": "US",
+  "taxedShippingPrice": {
+    "totalNet": {
+      "type": "centPrecision",
+      "currencyCode": "USD",
+      "centAmount": 4167,
+      "fractionDigits": 2
+    },
+    "totalGross": {
+      "type": "centPrecision",
+      "currencyCode": "USD",
+      "centAmount": 5000,
+      "fractionDigits": 2
+    },
+    "taxPortions": [
+      {
+        "rate": 0.2,
+        "amount": {
+          "type": "centPrecision",
+          "currencyCode": "USD",
+          "centAmount": 833,
+          "fractionDigits": 2
+        },
+        "name": "Standard VAT for US"
+      }
+    ],
+    "totalTax": {
+      "type": "centPrecision",
+      "currencyCode": "USD",
+      "centAmount": 833,
+      "fractionDigits": 2
+    }
+  },
+  "orderState": "Open",
+  "syncInfo": [],
+  "returnInfo": [],
+  "taxMode": "Platform",
+  "inventoryMode": "None",
+  "taxRoundingMode": "HalfEven",
+  "taxCalculationMode": "LineItemLevel",
+  "origin": "Customer",
+  "shippingMode": "Single",
+  "shippingInfo": {
+    "shippingMethodName": "US Delivery",
+    "price": {
+      "type": "centPrecision",
+      "currencyCode": "USD",
+      "centAmount": 5000,
+      "fractionDigits": 2
+    },
+    "shippingRate": {
+      "price": {
+        "type": "centPrecision",
+        "currencyCode": "USD",
+        "centAmount": 5000,
+        "fractionDigits": 2
+      },
+      "freeAbove": {
+        "type": "centPrecision",
+        "currencyCode": "USD",
+        "centAmount": 100000,
+        "fractionDigits": 2
+      },
+      "tiers": []
+    },
+    "taxRate": {
+      "name": "Standard VAT for US",
+      "amount": 0.2,
+      "includedInPrice": true,
+      "country": "US",
+      "id": "Fr1LDwTv",
+      "key": "vat-standard-us",
+      "subRates": []
+    },
+    "taxCategory": {
+      "typeId": "tax-category",
+      "id": "e4105917-4e42-4998-b0e1-685f744f9956"
+    },
+    "deliveries": [],
+    "shippingMethod": {
+      "typeId": "shipping-method",
+      "id": "92d79985-d895-478e-80be-15a8683bd606"
+    },
+    "taxedPrice": {
+      "totalNet": {
+        "type": "centPrecision",
+        "currencyCode": "USD",
+        "centAmount": 4167,
+        "fractionDigits": 2
+      },
+      "totalGross": {
+        "type": "centPrecision",
+        "currencyCode": "USD",
+        "centAmount": 5000,
+        "fractionDigits": 2
+      },
+      "taxPortions": [
+        {
+          "rate": 0.2,
+          "amount": {
+            "type": "centPrecision",
+            "currencyCode": "USD",
+            "centAmount": 833,
+            "fractionDigits": 2
+          },
+          "name": "Standard VAT for US"
+        }
+      ],
+      "totalTax": {
+        "type": "centPrecision",
+        "currencyCode": "USD",
+        "centAmount": 833,
+        "fractionDigits": 2
+      }
+    },
+    "shippingMethodState": "MatchesCart"
+  },
+  "shippingAddress": {
+    "firstName": "FIrst",
+    "lastName": "Last",
+    "streetName": "Street",
+    "postalCode": "Zip",
+    "city": "Town",
+    "state": "AK",
+    "country": "US",
+    "email": "test@example.com"
+  },
+  "shipping": [],
+  "discountTypeCombination": {
+    "type": "Stacking"
+  },
+  "lineItems": [
+    {
+      "id": "7bf3322f-3553-440b-9ee9-eebd26de5a57",
+      "productId": "168a95d8-28e0-4a31-b55b-4a0019a60f57",
+      "productKey": "luxe-pillow-cover",
+      "name": {
+        "en-US": "Luxe Pillow Cover",
+        "en-GB": "Luxe Pillow Cover",
+        "de-DE": "Luxe Kissenbezug"
+      },
+      "productType": {
+        "typeId": "product-type",
+        "id": "d1a88a56-c368-453c-b5d1-73f5389fd898",
+        "version": 1
+      },
+      "productSlug": {
+        "en-US": "luxe-pillow-cover",
+        "en-GB": "luxe-pillow-cover",
+        "de-DE": "luxuriser-kissenbezug"
+      },
+      "variant": {
+        "id": 1,
+        "sku": "LPC-011",
+        "key": "luxePillowCover01",
+        "prices": [
+          {
+            "id": "7811790a-9673-4d72-b1d9-4ce658b5d8f9",
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "EUR",
+              "centAmount": 2599,
+              "fractionDigits": 2
+            },
+            "key": "2599EUR",
+            "country": "DE"
+          },
+          {
+            "id": "c70a07bf-cd98-45f0-9761-5b5dbcf7a144",
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "GBP",
+              "centAmount": 2599,
+              "fractionDigits": 2
+            },
+            "key": "2599GBP",
+            "country": "GB"
+          },
+          {
+            "id": "951d71f2-ba4e-4130-a8a7-b51379c474eb",
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "USD",
+              "centAmount": 2599,
+              "fractionDigits": 2
+            },
+            "key": "2599USD",
+            "country": "US"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Luxe_Pillow_Cover-1.1.jpeg",
+            "dimensions": {
+              "w": 6123,
+              "h": 4082
+            }
+          }
+        ],
+        "attributes": [
+          {
+            "name": "color",
+            "value": {
+              "en-GB": "Black:#000000",
+              "de-DE": "Schwarz:#000000",
+              "en-US": "Black:#000000"
+            }
+          },
+          {
+            "name": "productspec",
+            "value": {
+              "en-GB": "- Machine washable\n- Pillow not included",
+              "de-DE": "- Waschmaschinenfest\n- Kissen nicht im Lieferumfang enthalten",
+              "en-US": "- Machine washable\n- Pillow not included"
+            }
+          }
+        ],
+        "assets": [],
+        "availability": {
+          "isOnStock": true,
+          "availableQuantity": 100,
+          "version": 1,
+          "id": "d13b2876-e305-4f68-a8d8-b4861dd077c9"
+        }
+      },
+      "price": {
+        "id": "951d71f2-ba4e-4130-a8a7-b51379c474eb",
+        "value": {
+          "type": "centPrecision",
+          "currencyCode": "USD",
+          "centAmount": 2599,
+          "fractionDigits": 2
+        },
+        "key": "2599USD",
+        "country": "US"
+      },
+      "quantity": 1,
+      "discountedPrice": {
+        "value": {
+          "type": "centPrecision",
+          "currencyCode": "USD",
+          "centAmount": 1949,
+          "fractionDigits": 2
+        },
+        "includedDiscounts": [
+          {
+            "discount": {
+              "typeId": "cart-discount",
+              "id": "e435beeb-7ce0-4e90-9b0e-3342c92be874"
+            },
+            "discountedAmount": {
+              "type": "centPrecision",
+              "currencyCode": "USD",
+              "centAmount": 650,
+              "fractionDigits": 2
+            }
+          }
+        ]
+      },
+      "discountedPricePerQuantity": [
+        {
+          "quantity": 1,
+          "discountedPrice": {
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "USD",
+              "centAmount": 1949,
+              "fractionDigits": 2
+            },
+            "includedDiscounts": [
+              {
+                "discount": {
+                  "typeId": "cart-discount",
+                  "id": "e435beeb-7ce0-4e90-9b0e-3342c92be874"
+                },
+                "discountedAmount": {
+                  "type": "centPrecision",
+                  "currencyCode": "USD",
+                  "centAmount": 650,
+                  "fractionDigits": 2
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "taxRate": {
+        "name": "Standard VAT for US",
+        "amount": 0.2,
+        "includedInPrice": true,
+        "country": "US",
+        "id": "Fr1LDwTv",
+        "key": "vat-standard-us",
+        "subRates": []
+      },
+      "perMethodTaxRate": [],
+      "addedAt": "2025-03-28T12:07:07.640Z",
+      "lastModifiedAt": "2025-03-28T12:07:07.640Z",
+      "state": [
+        {
+          "quantity": 1,
+          "state": {
+            "typeId": "state",
+            "id": "23a7d77f-c6a0-4876-b763-a5d8a27f9549"
+          }
+        }
+      ],
+      "priceMode": "Platform",
+      "lineItemMode": "Standard",
+      "totalPrice": {
+        "type": "centPrecision",
+        "currencyCode": "USD",
+        "centAmount": 1949,
+        "fractionDigits": 2
+      },
+      "taxedPrice": {
+        "totalNet": {
+          "type": "centPrecision",
+          "currencyCode": "USD",
+          "centAmount": 1624,
+          "fractionDigits": 2
+        },
+        "totalGross": {
+          "type": "centPrecision",
+          "currencyCode": "USD",
+          "centAmount": 1949,
+          "fractionDigits": 2
+        },
+        "taxPortions": [
+          {
+            "rate": 0.2,
+            "amount": {
+              "type": "centPrecision",
+              "currencyCode": "USD",
+              "centAmount": 325,
+              "fractionDigits": 2
+            },
+            "name": "Standard VAT for US"
+          }
+        ],
+        "totalTax": {
+          "type": "centPrecision",
+          "currencyCode": "USD",
+          "centAmount": 325,
+          "fractionDigits": 2
+        }
+      },
+      "taxedPricePortions": []
+    },
+    {
+      "id": "b15ca1ff-a066-4214-b89f-473e6b8e6ca5",
+      "productId": "286342c3-bccc-414b-97ae-d7a1b83f4726",
+      "productKey": "aria-rug",
+      "name": {
+        "en-US": "Aria Rug",
+        "en-GB": "Aria Rug",
+        "de-DE": "Teppich \"Aria\""
+      },
+      "productType": {
+        "typeId": "product-type",
+        "id": "d1a88a56-c368-453c-b5d1-73f5389fd898",
+        "version": 1
+      },
+      "productSlug": {
+        "en-US": "aria-rug",
+        "en-GB": "aria-rug",
+        "de-DE": "aria-teppich"
+      },
+      "variant": {
+        "id": 1,
+        "sku": "AAR-34",
+        "key": "ariaRug01",
+        "prices": [
+          {
+            "id": "246a0062-a9d8-463d-ad5f-dee2537f1d48",
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "EUR",
+              "centAmount": 12499,
+              "fractionDigits": 2
+            },
+            "key": "12499EUR",
+            "country": "DE"
+          },
+          {
+            "id": "a718216b-62e5-4839-8e7a-43c60792116c",
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "GBP",
+              "centAmount": 12499,
+              "fractionDigits": 2
+            },
+            "key": "12499GBP",
+            "country": "GB"
+          },
+          {
+            "id": "ade2b1af-8a3d-47bc-8f1c-0cefb093124e",
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "USD",
+              "centAmount": 12499,
+              "fractionDigits": 2
+            },
+            "key": "12499USD",
+            "country": "US"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Aria_Rug-1.1.jpeg",
+            "dimensions": {
+              "w": 5200,
+              "h": 3900
+            }
+          },
+          {
+            "url": "https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Aria_Rug-1.2.jpeg",
+            "dimensions": {
+              "w": 5200,
+              "h": 3900
+            }
+          },
+          {
+            "url": "https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Aria_Rug-1.4.jpeg",
+            "dimensions": {
+              "w": 5200,
+              "h": 3900
+            }
+          },
+          {
+            "url": "https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Aria_Rug-1.3.jpeg",
+            "dimensions": {
+              "w": 5200,
+              "h": 3900
+            }
+          }
+        ],
+        "attributes": [
+          {
+            "name": "productspec",
+            "value": {
+              "en-GB": "- Dry clean only\n- 5ft x 7ft",
+              "de-DE": "- Nur chemische Reinigung\n- 5 Fuß x 7 Fuß",
+              "en-US": "- Dry clean only\n- 5ft x 7ft"
+            }
+          },
+          {
+            "name": "color",
+            "value": {
+              "en-GB": "Ivory:#FFFFF0",
+              "de-DE": "Elfenbein:#FFFFF0",
+              "en-US": "Ivory:#FFFFF0"
+            }
+          }
+        ],
+        "assets": [],
+        "availability": {
+          "isOnStock": true,
+          "availableQuantity": 100,
+          "version": 1,
+          "id": "b4462a27-38ce-4cc2-a066-84a5c4d61cce"
+        }
+      },
+      "price": {
+        "id": "ade2b1af-8a3d-47bc-8f1c-0cefb093124e",
+        "value": {
+          "type": "centPrecision",
+          "currencyCode": "USD",
+          "centAmount": 12499,
+          "fractionDigits": 2
+        },
+        "key": "12499USD",
+        "country": "US"
+      },
+      "quantity": 2,
+      "discountedPrice": {
+        "value": {
+          "type": "centPrecision",
+          "currencyCode": "USD",
+          "centAmount": 9374,
+          "fractionDigits": 2
+        },
+        "includedDiscounts": [
+          {
+            "discount": {
+              "typeId": "cart-discount",
+              "id": "e435beeb-7ce0-4e90-9b0e-3342c92be874"
+            },
+            "discountedAmount": {
+              "type": "centPrecision",
+              "currencyCode": "USD",
+              "centAmount": 3125,
+              "fractionDigits": 2
+            }
+          }
+        ]
+      },
+      "discountedPricePerQuantity": [
+        {
+          "quantity": 2,
+          "discountedPrice": {
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "USD",
+              "centAmount": 9374,
+              "fractionDigits": 2
+            },
+            "includedDiscounts": [
+              {
+                "discount": {
+                  "typeId": "cart-discount",
+                  "id": "e435beeb-7ce0-4e90-9b0e-3342c92be874"
+                },
+                "discountedAmount": {
+                  "type": "centPrecision",
+                  "currencyCode": "USD",
+                  "centAmount": 3125,
+                  "fractionDigits": 2
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "taxRate": {
+        "name": "Standard VAT for US",
+        "amount": 0.2,
+        "includedInPrice": true,
+        "country": "US",
+        "id": "Fr1LDwTv",
+        "key": "vat-standard-us",
+        "subRates": []
+      },
+      "perMethodTaxRate": [],
+      "addedAt": "2025-03-28T12:07:13.937Z",
+      "lastModifiedAt": "2025-03-28T12:07:14.636Z",
+      "state": [
+        {
+          "quantity": 2,
+          "state": {
+            "typeId": "state",
+            "id": "23a7d77f-c6a0-4876-b763-a5d8a27f9549"
+          }
+        }
+      ],
+      "priceMode": "Platform",
+      "lineItemMode": "Standard",
+      "totalPrice": {
+        "type": "centPrecision",
+        "currencyCode": "USD",
+        "centAmount": 18748,
+        "fractionDigits": 2
+      },
+      "taxedPrice": {
+        "totalNet": {
+          "type": "centPrecision",
+          "currencyCode": "USD",
+          "centAmount": 15623,
+          "fractionDigits": 2
+        },
+        "totalGross": {
+          "type": "centPrecision",
+          "currencyCode": "USD",
+          "centAmount": 18748,
+          "fractionDigits": 2
+        },
+        "taxPortions": [
+          {
+            "rate": 0.2,
+            "amount": {
+              "type": "centPrecision",
+              "currencyCode": "USD",
+              "centAmount": 3125,
+              "fractionDigits": 2
+            },
+            "name": "Standard VAT for US"
+          }
+        ],
+        "totalTax": {
+          "type": "centPrecision",
+          "currencyCode": "USD",
+          "centAmount": 3125,
+          "fractionDigits": 2
+        }
+      },
+      "taxedPricePortions": []
+    }
+  ],
+  "customLineItems": [],
+  "transactionFee": true,
+  "discountCodes": [],
+  "directDiscounts": [],
+  "cart": {
+    "typeId": "cart",
+    "id": "39aa0781-c1bf-4d43-b3ac-3295ab57235a"
+  },
+  "paymentInfo": {
+    "payments": [
+      {
+        "typeId": "payment",
+        "id": "1739cb23-61b0-4a5a-a0bb-b264d6f11800"
+      }
+    ]
+  },
+  "billingAddress": {
+    "firstName": "FIrst",
+    "lastName": "Last",
+    "streetName": "Street",
+    "postalCode": "Zip",
+    "city": "Town",
+    "country": "US",
+    "email": "test@example.com"
+  },
+  "itemShippingAddresses": [],
+  "refusedGifts": []
+}
