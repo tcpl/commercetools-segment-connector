@@ -25,6 +25,8 @@ An `Order Completed` tracking event is sent to segment when an order is created 
 
 Depending on the destination you are sending the events to, you may need to edit the mapping configuration in Segment. **Review these values carefully to ensure they are correct for your use case.**
 
+We use `[orderId]-order-completed` as the `messageId` to ensure any duplicate order created events from commercetools are not duplicated in Segment.
+
 ### Anonymous Orders
 
 For anonymous/guest account orders, an `Identify` call will be made if there is no registered account for the email address on the order. This is only done if the email address is not already registered in commercetools because otherwise guest account orders (where the email hasn't been verified) would be attached to a registered account.
