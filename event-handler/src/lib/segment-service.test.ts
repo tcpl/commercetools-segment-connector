@@ -196,6 +196,7 @@ describe('trackOrderCompleted', () => {
             sku: 'FLAS-094',
             price: 5.99,
             quantity: 20,
+            name: 'Steel Hip Flask',
             image_url:
               'https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Steel_Hip_Flask-1.1.jpeg',
             position: 1,
@@ -232,6 +233,7 @@ describe('trackOrderCompleted', () => {
             sku: 'CNS-0434',
             price: 79.0,
             quantity: 1,
+            name: 'Minimalist Cedar Nightstand',
             image_url:
               'https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Minimalist_Cedar_Nightstand-1.3.jpeg',
             position: 1,

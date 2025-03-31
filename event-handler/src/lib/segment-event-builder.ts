@@ -141,6 +141,7 @@ const buildProducts = (order: Order) => {
 
     return {
       product_id: lineItem.productId,
+      name: lineItem.name['en-GB'],
       sku: lineItem.variant.sku,
       price: getTypedMoneyInCurrencyUnits(getLineItemPrice(lineItem)),
       quantity: lineItem.quantity,
