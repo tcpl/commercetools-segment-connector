@@ -29,6 +29,7 @@
     "jest": "^29.7.0",
     "prettier": "^3.5.3",
     "rimraf": "^6.0.1",
+    "ts-jest": "^29.3.0",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.28.0"
@@ -42,10 +43,13 @@
     "@opentelemetry/resources": "^1.29.0",
     "@opentelemetry/sdk-logs": "^0.55.0",
     "@opentelemetry/winston-transport": "^0.8.0",
+    "@segment/analytics-node": "^2.2.1",
     "body-parser": "^1.20.3",
     "common": "link:../common",
+    "decimal.js": "^10.5.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "lodash": "^4.17.21",
     "validator": "^13.12.0"
   }
 }
