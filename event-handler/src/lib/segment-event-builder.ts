@@ -53,10 +53,7 @@ export const buildOrderCompletedTrackEvent = (order: Order): TrackParams => {
         order.taxedPrice.totalTax !== undefined
           ? getTypedMoneyInCurrencyUnits(order.taxedPrice.totalTax)
           : undefined,
-      coupon:
-        order.discountCodes && order.discountCodes.length > 0
-          ? order.discountCodes[0].discountCode
-          : undefined,
+      coupon: undefined,
       products: buildProducts(order),
       currency: order.totalPrice.currencyCode,
     },
