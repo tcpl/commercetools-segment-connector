@@ -1,6 +1,6 @@
 # commercetools-segment-connector
 
-This connector uses commercetools subscriptions to handle events and make calls to Twilio Segment based on these.
+This connector uses commercetools subscriptions to send customer and order data to Twilio Segment.
 
 At present this connector handles the following commercetools events:
 
