@@ -6,7 +6,11 @@ deployAs:
       postDeploy: yarn install && yarn build && yarn connector:post-deploy
       preUndeploy: yarn install && yarn build && yarn connector:pre-undeploy
     configuration:
-      standardConfiguration: []
+      standardConfiguration:
+        - key: LOCALE
+          description: Locale to use for multilingual properties (e.g product names)
+          required: false
+          default: en-GB
       securedConfiguration: []
 inheritAs:
   apiClient:

@@ -14,6 +14,7 @@ export const readConfiguration = (): Configuration => {
     otlpExporterEndpoint: process.env.OTEL_EXPORTER_OTLP_ENDPOINT as string,
     otlpExporterEndpointApiKey: process.env
       .OTEL_EXPORTER_OTLP_ENDPOINT_API_KEY as string,
+    locale: process.env.LOCALE || 'en-GB',
   };
 
   const validationErrors = getValidateMessages(envValidators, envVars);

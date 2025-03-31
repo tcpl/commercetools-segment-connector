@@ -7,6 +7,7 @@ import {
 import Decimal from 'decimal.js';
 import { TrackParams } from '@segment/analytics-node';
 import _ from 'lodash';
+import { readConfiguration } from '../utils/config.utils';
 
 export const buildOrderCompletedTrackEvent = (order: Order): TrackParams => {
   if (!order.taxedPrice) {
@@ -130,6 +131,8 @@ const getCentAmountInCurrencyUnits = (
 };
 
 const buildProducts = (order: Order) => {
+  const { locale } = readConfiguration();
+
   return order.lineItems.map((lineItem, i) => {
     const imageUrl =
       lineItem.variant.images && lineItem.variant.images.length > 0
@@ -138,7 +141,7 @@ const buildProducts = (order: Order) => {
 
     return {
       product_id: lineItem.productId,
-      name: lineItem.name['en-GB'],
+      name: lineItem.name[locale],
       sku: lineItem.variant.sku,
       price: getTypedMoneyInCurrencyUnits(getLineItemPrice(lineItem)),
       quantity: lineItem.quantity,
