@@ -6,7 +6,11 @@ export async function getOrder(orderId: string) {
     .withId({
       ID: orderId,
     })
-    .get()
+    .get({
+      queryArgs: {
+        expand: ['discountCodes[*].discountCode'],
+      },
+    })
     .execute();
 
   return response.body;

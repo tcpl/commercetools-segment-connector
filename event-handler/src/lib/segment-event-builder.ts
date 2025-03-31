@@ -53,7 +53,7 @@ export const buildOrderCompletedTrackEvent = (order: Order): TrackParams => {
         order.taxedPrice.totalTax !== undefined
           ? getTypedMoneyInCurrencyUnits(order.taxedPrice.totalTax)
           : undefined,
-      coupon: undefined,
+      coupon: getCouponCode(order),
       products: buildProducts(order),
       currency: order.totalPrice.currencyCode,
     },
@@ -146,4 +146,14 @@ const buildProducts = (order: Order) => {
       position: i + 1,
     };
   });
+};
+const getCouponCode = (order: Order) => {
+  if (!order.discountCodes || order.discountCodes.length === 0) {
+    return undefined;
+  }
+
+  // Export only supports one discount code
+  const discountCode = order.discountCodes[0].discountCode;
+
+  return discountCode.obj?.code;
 };

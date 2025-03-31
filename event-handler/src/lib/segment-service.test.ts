@@ -18,6 +18,7 @@ import * as orderWithMultipleShippingMethods from './test-orders/order-with-mult
 import * as orderWithMultipleShippingMethodsAndShippingDiscount from './test-orders/order-with-multiple-shipping-methods-and-shipping-discount.json';
 import * as orderWithUSTaxAndShippingDiscount from './test-orders/order-with-us-tax-and-shipping-discount.json';
 import * as orderWithUSTaxAndDiscountOnTotalPrice from './test-orders/order-with-us-tax-and-discount-on-total-price.json';
+import * as orderWithDiscountCode from './test-orders/order-with-discount-code.json';
 import { Order } from '@commercetools/platform-sdk';
 
 jest.mock('@segment/analytics-node');
@@ -479,6 +480,20 @@ describe('trackOrderCompleted', () => {
 
     expect(() => trackOrderCompleted(order)).toThrow(
       `Order ${order.id} is missing taxedShippingPrice`
+    );
+  });
+
+  it('should export discount code if available', () => {
+    const order = orderWithDiscountCode as Order;
+
+    trackOrderCompleted(order);
+
+    expect(mockTrack).toHaveBeenCalledWith(
+      expect.objectContaining({
+        properties: expect.objectContaining({
+          coupon: 'BOGO',
+        }),
+      })
     );
   });
 });
