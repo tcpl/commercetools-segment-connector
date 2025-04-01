@@ -1,24 +1,27 @@
 import request from 'supertest';
 import app from './app';
 import { createApiRoot } from './client/create.client';
-// import { Analytics } from '@segment/analytics-node';
+import { Analytics } from '@segment/analytics-node';
 
 jest.mock('./client/create.client');
 jest.mock('@segment/analytics-node');
 
-// const mockTrack = jest.fn();
+const mockIdentify = jest.fn();
 
 beforeEach(() => {
   jest.clearAllMocks();
 
-  // (Analytics as jest.Mock).mockImplementation(() => ({
-  //   track: mockTrack,
-  // }));
+  (Analytics as jest.Mock).mockImplementation(() => ({
+    identify: mockIdentify,
+  }));
 });
 
 it('should handle customer ResourceCreated event', async () => {
   const mockGetCustomer = jest.fn().mockResolvedValue({
-    body: { id: 'customer-id-123', email: 'test@example.com' },
+    body: {
+      id: '871ebaf7-736d-4fc4-9782-4c25101df9f7',
+      email: 'test@example.com',
+    },
   });
   (createApiRoot as jest.Mock).mockReturnValue({
     customers: () => ({
@@ -32,7 +35,11 @@ it('should handle customer ResourceCreated event', async () => {
       message: {
         data: Buffer.from(
           JSON.stringify({
-            resource: { typeId: 'customer', id: 'customer-id-123' },
+            resource: {
+              typeId: 'customer',
+              id: '871ebaf7-736d-4fc4-9782-4c25101df9f7',
+            },
+            version: 1,
             notificationType: 'ResourceCreated',
           })
         ).toString('base64'),
@@ -40,7 +47,7 @@ it('should handle customer ResourceCreated event', async () => {
     })
     .expect(204);
 
-  expect(mockGetCustomer).toHaveBeenCalled();
+  expect(mockIdentify).toHaveBeenCalled();
 });
 
 // it('should handle order ResourceCreated event', async () => {
