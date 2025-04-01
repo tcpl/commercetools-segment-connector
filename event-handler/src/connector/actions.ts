@@ -9,7 +9,7 @@ export async function createSubscription(
 ) {
   const {
     body: { results: subscriptions },
-  } = await getSubscription(apiRoot);
+  } = await getSubscriptions(apiRoot);
 
   if (subscriptions.length > 0) {
     return;
@@ -41,7 +41,7 @@ export async function createSubscription(
 export async function deleteSubscription(apiRoot: ByProjectKeyRequestBuilder) {
   const {
     body: { results: subscriptions },
-  } = await getSubscription(apiRoot);
+  } = await getSubscriptions(apiRoot);
 
   if (subscriptions.length > 0) {
     const subscription = subscriptions[0];
@@ -58,7 +58,7 @@ export async function deleteSubscription(apiRoot: ByProjectKeyRequestBuilder) {
   }
 }
 
-const getSubscription = async (apiRoot: ByProjectKeyRequestBuilder) => {
+const getSubscriptions = async (apiRoot: ByProjectKeyRequestBuilder) => {
   return await apiRoot
     .subscriptions()
     .get({
