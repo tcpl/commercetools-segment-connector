@@ -11,6 +11,7 @@
     "format": "prettier --write 'src/**/*.{js,ts}'",
     "test": "jest ./src --config jest.config.mjs",
     "test:watch": "jest ./src --watch",
+    "test:coverage": "jest ./src --config jest.config.mjs --coverage --collectCoverageFrom='src/**/*.ts'",
     "connector:post-deploy": "node build/connector/post-deploy.js",
     "connector:pre-undeploy": "node build/connector/pre-undeploy.js"
   },
