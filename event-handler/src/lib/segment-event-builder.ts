@@ -7,21 +7,22 @@ import {
 import Decimal from 'decimal.js';
 import { TrackParams } from '@segment/analytics-node';
 import _ from 'lodash';
+import { readConfiguration } from '../utils/config.utils';
 
 export const buildOrderCompletedTrackEvent = (order: Order): TrackParams => {
   if (!order.taxedPrice) {
     throw new Error(`Order ${order.id} is missing taxedPrice`);
   }
 
-  if (!order.taxedShippingPrice) {
-    throw new Error(`Order ${order.id} is missing taxedShippingPrice`);
-  }
+  const netShippingPriceCents =
+    order.taxedShippingPrice?.totalNet.centAmount ?? 0;
+  const grossShippingPriceCents =
+    order.taxedShippingPrice?.totalGross.centAmount ?? 0;
 
   const subTotalCents =
-    order.taxedPrice.totalNet.centAmount -
-    order.taxedShippingPrice.totalNet.centAmount;
+    order.taxedPrice.totalNet.centAmount - netShippingPriceCents;
 
-  const shippingTotalCents = order.taxedShippingPrice.totalGross.centAmount;
+  const shippingTotalCents = grossShippingPriceCents;
 
   const discountTotalCents = calculateDiscountTotalCents(order);
 
@@ -53,7 +54,7 @@ export const buildOrderCompletedTrackEvent = (order: Order): TrackParams => {
         order.taxedPrice.totalTax !== undefined
           ? getTypedMoneyInCurrencyUnits(order.taxedPrice.totalTax)
           : undefined,
-      coupon: undefined,
+      coupon: getCouponCode(order),
       products: buildProducts(order),
       currency: order.totalPrice.currencyCode,
     },
@@ -130,6 +131,8 @@ const getCentAmountInCurrencyUnits = (
 };
 
 const buildProducts = (order: Order) => {
+  const { locale } = readConfiguration();
+
   return order.lineItems.map((lineItem, i) => {
     const imageUrl =
       lineItem.variant.images && lineItem.variant.images.length > 0
@@ -138,12 +141,24 @@ const buildProducts = (order: Order) => {
 
     return {
       product_id: lineItem.productId,
-      name: lineItem.name['en-GB'],
+      name: lineItem.name[locale],
       sku: lineItem.variant.sku,
       price: getTypedMoneyInCurrencyUnits(getLineItemPrice(lineItem)),
+      total_price: getTypedMoneyInCurrencyUnits(lineItem.totalPrice),
       quantity: lineItem.quantity,
       image_url: imageUrl,
       position: i + 1,
     };
   });
+};
+
+const getCouponCode = (order: Order) => {
+  if (!order.discountCodes || order.discountCodes.length === 0) {
+    return undefined;
+  }
+
+  // Export only supports one discount code
+  const discountCode = order.discountCodes[0].discountCode;
+
+  return discountCode.obj?.code;
 };

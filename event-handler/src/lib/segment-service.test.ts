@@ -18,6 +18,8 @@ import * as orderWithMultipleShippingMethods from './test-orders/order-with-mult
 import * as orderWithMultipleShippingMethodsAndShippingDiscount from './test-orders/order-with-multiple-shipping-methods-and-shipping-discount.json';
 import * as orderWithUSTaxAndShippingDiscount from './test-orders/order-with-us-tax-and-shipping-discount.json';
 import * as orderWithUSTaxAndDiscountOnTotalPrice from './test-orders/order-with-us-tax-and-discount-on-total-price.json';
+import * as orderWithDiscountCode from './test-orders/order-with-discount-code.json';
+import * as orderWithNoShippingInfo from './test-orders/order-with-no-shipping-info.json';
 import { Order } from '@commercetools/platform-sdk';
 
 jest.mock('@segment/analytics-node');
@@ -195,6 +197,7 @@ describe('trackOrderCompleted', () => {
             product_id: 'b5241ecf-537f-4714-acaf-a0c36b20a74d',
             sku: 'FLAS-094',
             price: 5.99,
+            total_price: 119.8,
             quantity: 20,
             name: 'Steel Hip Flask',
             image_url:
@@ -232,6 +235,7 @@ describe('trackOrderCompleted', () => {
             product_id: '600bf085-00fa-47a8-88d3-e615ec6d9d71',
             sku: 'CNS-0434',
             price: 79.0,
+            total_price: 79.0,
             quantity: 1,
             name: 'Minimalist Cedar Nightstand',
             image_url:
@@ -471,14 +475,31 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('should throw an error if taxedShippingPrice is missing', () => {
-    const order = {
-      ...anonymousOrderWithNoDiscounts,
-      taxedShippingPrice: undefined,
-    } as Order;
+  it('should export discount code if available', () => {
+    const order = orderWithDiscountCode as Order;
 
-    expect(() => trackOrderCompleted(order)).toThrow(
-      `Order ${order.id} is missing taxedShippingPrice`
+    trackOrderCompleted(order);
+
+    expect(mockTrack).toHaveBeenCalledWith(
+      expect.objectContaining({
+        properties: expect.objectContaining({
+          coupon: 'BOGO',
+        }),
+      })
+    );
+  });
+
+  it('order with no shippingInfo should have a shipping cost of 0', () => {
+    const order = orderWithNoShippingInfo as Order;
+
+    trackOrderCompleted(order);
+
+    expect(mockTrack).toHaveBeenCalledWith(
+      expect.objectContaining({
+        properties: expect.objectContaining({
+          shipping: 0,
+        }),
+      })
     );
   });
 });

@@ -5,8 +5,7 @@ export interface Configuration {
   authUrl: string;
   apiUrl: string;
   segmentSourceWriteKey: string;
-  // basicAuthPwdCurrent: string;
-  // basicAuthPwdPrevious?: string;
+  locale: string;
   otlpExporterEndpoint?: string;
   otlpExporterEndpointApiKey?: string;
 }
