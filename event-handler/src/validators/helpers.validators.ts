@@ -28,23 +28,6 @@ export const standardString: ValidatorCreator = (
   ],
 ];
 
-export const standardEmail: ValidatorCreator = (path, message) => [
-  path,
-  [[required(validator.isEmail), message]],
-];
-
-export const standardNaturalNumber = (path, message) => [
-  path,
-  [
-    [
-      required((value) =>
-        validator.isNumeric(String(value), { no_symbols: true })
-      ),
-      message,
-    ],
-  ],
-];
-
 export const standardKey = (path, message) => [
   path,
   [
