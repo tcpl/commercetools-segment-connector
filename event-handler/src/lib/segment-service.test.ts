@@ -196,6 +196,7 @@ describe('trackOrderCompleted', () => {
             product_id: 'b5241ecf-537f-4714-acaf-a0c36b20a74d',
             sku: 'FLAS-094',
             price: 5.99,
+            total_price: 119.8,
             quantity: 20,
             name: 'Steel Hip Flask',
             image_url:
@@ -233,6 +234,7 @@ describe('trackOrderCompleted', () => {
             product_id: '600bf085-00fa-47a8-88d3-e615ec6d9d71',
             sku: 'CNS-0434',
             price: 79.0,
+            total_price: 79.0,
             quantity: 1,
             name: 'Minimalist Cedar Nightstand',
             image_url:

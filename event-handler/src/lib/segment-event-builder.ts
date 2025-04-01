@@ -144,6 +144,7 @@ const buildProducts = (order: Order) => {
       name: lineItem.name[locale],
       sku: lineItem.variant.sku,
       price: getTypedMoneyInCurrencyUnits(getLineItemPrice(lineItem)),
+      total_price: getTypedMoneyInCurrencyUnits(lineItem.totalPrice),
       quantity: lineItem.quantity,
       image_url: imageUrl,
       position: i + 1,
