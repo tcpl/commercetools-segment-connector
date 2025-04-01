@@ -14,15 +14,15 @@ export const buildOrderCompletedTrackEvent = (order: Order): TrackParams => {
     throw new Error(`Order ${order.id} is missing taxedPrice`);
   }
 
-  if (!order.taxedShippingPrice) {
-    throw new Error(`Order ${order.id} is missing taxedShippingPrice`);
-  }
+  const netShippingPriceCents =
+    order.taxedShippingPrice?.totalNet.centAmount ?? 0;
+  const grossShippingPriceCents =
+    order.taxedShippingPrice?.totalGross.centAmount ?? 0;
 
   const subTotalCents =
-    order.taxedPrice.totalNet.centAmount -
-    order.taxedShippingPrice.totalNet.centAmount;
+    order.taxedPrice.totalNet.centAmount - netShippingPriceCents;
 
-  const shippingTotalCents = order.taxedShippingPrice.totalGross.centAmount;
+  const shippingTotalCents = grossShippingPriceCents;
 
   const discountTotalCents = calculateDiscountTotalCents(order);
 
@@ -151,6 +151,7 @@ const buildProducts = (order: Order) => {
     };
   });
 };
+
 const getCouponCode = (order: Order) => {
   if (!order.discountCodes || order.discountCodes.length === 0) {
     return undefined;

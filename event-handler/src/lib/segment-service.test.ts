@@ -19,6 +19,7 @@ import * as orderWithMultipleShippingMethodsAndShippingDiscount from './test-ord
 import * as orderWithUSTaxAndShippingDiscount from './test-orders/order-with-us-tax-and-shipping-discount.json';
 import * as orderWithUSTaxAndDiscountOnTotalPrice from './test-orders/order-with-us-tax-and-discount-on-total-price.json';
 import * as orderWithDiscountCode from './test-orders/order-with-discount-code.json';
+import * as orderWithNoShippingInfo from './test-orders/order-with-no-shipping-info.json';
 import { Order } from '@commercetools/platform-sdk';
 
 jest.mock('@segment/analytics-node');
@@ -474,17 +475,6 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('should throw an error if taxedShippingPrice is missing', () => {
-    const order = {
-      ...anonymousOrderWithNoDiscounts,
-      taxedShippingPrice: undefined,
-    } as Order;
-
-    expect(() => trackOrderCompleted(order)).toThrow(
-      `Order ${order.id} is missing taxedShippingPrice`
-    );
-  });
-
   it('should export discount code if available', () => {
     const order = orderWithDiscountCode as Order;
 
@@ -494,6 +484,20 @@ describe('trackOrderCompleted', () => {
       expect.objectContaining({
         properties: expect.objectContaining({
           coupon: 'BOGO',
+        }),
+      })
+    );
+  });
+
+  it('order with no shippingInfo should have a shipping cost of 0', () => {
+    const order = orderWithNoShippingInfo as Order;
+
+    trackOrderCompleted(order);
+
+    expect(mockTrack).toHaveBeenCalledWith(
+      expect.objectContaining({
+        properties: expect.objectContaining({
+          shipping: 0,
         }),
       })
     );
