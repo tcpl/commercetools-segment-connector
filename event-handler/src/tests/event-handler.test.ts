@@ -1,9 +1,10 @@
+// High-level tests for the event handler
 import request from 'supertest';
-import app from './app';
-import { createApiRoot } from './client/create.client';
+import app from '../app';
+import { createApiRoot } from '../client/create.client';
 import { Analytics } from '@segment/analytics-node';
 
-jest.mock('./client/create.client');
+jest.mock('../client/create.client');
 jest.mock('@segment/analytics-node');
 
 const mockIdentify = jest.fn();
