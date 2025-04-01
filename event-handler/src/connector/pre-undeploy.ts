@@ -1,14 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { createApiRoot } from '../client/create.client';
-import { deleteSubscription } from './actions';
 import { getLogger } from '../utils/logger.utils';
-
-async function preUndeploy(): Promise<void> {
-  const apiRoot = createApiRoot();
-  await deleteSubscription(apiRoot);
-}
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
