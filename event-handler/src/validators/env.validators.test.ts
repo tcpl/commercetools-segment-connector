@@ -63,7 +63,7 @@ it('invalid otlpExporterEndpointApiKey should return error', () => {
   expect(validationErrors).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        code: 'InValidOtlpExporterHostApiKey',
+        code: 'InvalidOtlpExporterHostApiKey',
       }),
     ])
   );
