@@ -5,4 +5,5 @@ export const readConfiguration = jest.fn(() => ({
   authUrl: 'https://mock-auth-url.com',
   apiUrl: 'https://mock-api-url.com',
   segmentSourceWriteKey: 'mock-segment-write-key',
+  locale: 'en-GB',
 }));

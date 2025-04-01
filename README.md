@@ -23,6 +23,11 @@ An `Order Completed` tracking event is sent to segment when an order is created 
 - `shipping` - gross total shipping cost of the order.
 - `tax` - total amount of tax applied to the order.
 
+**Products**
+
+- `price` - unit price of the item (for a single quantity). This includes any product discounts, but not cart discounts.
+- `total_price` - this is for the entire quantity of the item and includes any item discounts. Note, this is not a standard property in Segment spec, but provided in case this needs to be passed to a destination.
+
 Depending on the destination you are sending the events to, you may need to edit the mapping configuration in Segment. **Review these values carefully to ensure they are correct for your use case.**
 
 We use `[orderId]-order-completed` as the `messageId` to ensure any duplicate order created events from commercetools are not duplicated in Segment.
