@@ -9,7 +9,7 @@ export async function createSubscription(
   topicName: string,
   projectId: string
 ) {
-  const logger = getLogger();
+  const logger = getLogger(false);
 
   const {
     body: { results: subscriptions },
