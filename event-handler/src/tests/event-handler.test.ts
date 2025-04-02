@@ -70,22 +70,9 @@ it('should track order created event for registered user', async () => {
     }),
   });
 
-  await request(app)
-    .post('/')
-    .send({
-      message: {
-        data: Buffer.from(
-          JSON.stringify({
-            resource: {
-              typeId: 'order',
-              id: '33925a10-c3fb-4ff5-a9b2-9134400b9d4d',
-            },
-            notificationType: 'ResourceCreated',
-          })
-        ).toString('base64'),
-      },
-    })
-    .expect(204);
+  await postOrderCreatedEvent('33925a10-c3fb-4ff5-a9b2-9134400b9d4d').expect(
+    204
+  );
 
   expect(mockTrack).toHaveBeenCalled();
 });
@@ -108,22 +95,9 @@ it('should not track order created event for order with no customerId or anonymo
     }),
   });
 
-  await request(app)
-    .post('/')
-    .send({
-      message: {
-        data: Buffer.from(
-          JSON.stringify({
-            resource: {
-              typeId: 'order',
-              id: '33925a10-c3fb-4ff5-a9b2-9134400b9d4d',
-            },
-            notificationType: 'ResourceCreated',
-          })
-        ).toString('base64'),
-      },
-    })
-    .expect(204);
+  await postOrderCreatedEvent('33925a10-c3fb-4ff5-a9b2-9134400b9d4d').expect(
+    204
+  );
 
   expect(mockTrack).not.toHaveBeenCalled();
 });
@@ -163,3 +137,21 @@ it('should ignore unsupported notification types', async () => {
 
   expect(createApiRoot).not.toHaveBeenCalled();
 });
+
+const postOrderCreatedEvent = (orderId: string) => {
+  return request(app)
+    .post('/')
+    .send({
+      message: {
+        data: Buffer.from(
+          JSON.stringify({
+            resource: {
+              typeId: 'order',
+              id: orderId,
+            },
+            notificationType: 'ResourceCreated',
+          })
+        ).toString('base64'),
+      },
+    });
+};
