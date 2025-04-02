@@ -87,38 +87,38 @@ it('should handle order created event for registered user', async () => {
   expect(mockTrack).toHaveBeenCalled();
 });
 
-// it('should ignore unsupported resource types', async () => {
-//   await request(app)
-//     .post('/')
-//     .send({
-//       message: {
-//         data: Buffer.from(
-//           JSON.stringify({
-//             resource: { typeId: 'unsupported', id: 'resource-id' },
-//             notificationType: 'ResourceCreated',
-//           })
-//         ).toString('base64'),
-//       },
-//     })
-//     .expect(204);
+it('should ignore unsupported resource types', async () => {
+  await request(app)
+    .post('/')
+    .send({
+      message: {
+        data: Buffer.from(
+          JSON.stringify({
+            resource: { typeId: 'unsupported', id: 'resource-id' },
+            notificationType: 'ResourceCreated',
+          })
+        ).toString('base64'),
+      },
+    })
+    .expect(204);
 
-//   expect(createApiRoot).not.toHaveBeenCalled();
-// });
+  expect(createApiRoot).not.toHaveBeenCalled();
+});
 
-// it('should ignore unsupported notification types', async () => {
-//   await request(app)
-//     .post('/')
-//     .send({
-//       message: {
-//         data: Buffer.from(
-//           JSON.stringify({
-//             resource: { typeId: 'customer', id: 'customer-id-123' },
-//             notificationType: 'UnsupportedType',
-//           })
-//         ).toString('base64'),
-//       },
-//     })
-//     .expect(204);
+it('should ignore unsupported notification types', async () => {
+  await request(app)
+    .post('/')
+    .send({
+      message: {
+        data: Buffer.from(
+          JSON.stringify({
+            resource: { typeId: 'customer', id: 'customer-id-123' },
+            notificationType: 'UnsupportedType',
+          })
+        ).toString('base64'),
+      },
+    })
+    .expect(204);
 
-//   expect(createApiRoot).not.toHaveBeenCalled();
-// });
+  expect(createApiRoot).not.toHaveBeenCalled();
+});
