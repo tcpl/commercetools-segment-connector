@@ -23,16 +23,26 @@ const subscriptionExistsResponse = {
     ],
   },
 };
+
+const originalEnv = process.env;
+
 beforeEach(() => {
   jest.clearAllMocks();
+
+  process.env = {
+    ...originalEnv,
+    CONNECT_GCP_TOPIC_NAME: 'test-topic',
+    CONNECT_GCP_PROJECT_ID: 'test-project',
+  };
 
   mockPost = jest.fn().mockReturnThis();
 });
 
-it('should create a new subscription if none exists', async () => {
-  process.env.CONNECT_GCP_TOPIC_NAME = 'test-topic';
-  process.env.CONNECT_GCP_PROJECT_ID = 'test-project';
+afterEach(() => {
+  process.env = originalEnv;
+});
 
+it('should create a new subscription if none exists', async () => {
   (createApiRoot as jest.Mock).mockReturnValue(
     getMockApiRoot(emptyGetSubscriptionsResponse)
   );
@@ -53,9 +63,6 @@ it('should create a new subscription if none exists', async () => {
 });
 
 it('should update an existing subscription if one exists', async () => {
-  process.env.CONNECT_GCP_TOPIC_NAME = 'test-topic';
-  process.env.CONNECT_GCP_PROJECT_ID = 'test-project';
-
   (createApiRoot as jest.Mock).mockReturnValue(
     getMockApiRoot(subscriptionExistsResponse)
   );
@@ -78,19 +85,6 @@ it('should update an existing subscription if one exists', async () => {
     },
   });
 });
-
-// it('should log an error and set exit code on failure', async () => {
-//   const mockLogger = require('../utils/logger.utils').getLogger();
-//   mockCreateSubscription.mockRejectedValue(new Error('Test error'));
-
-//   await run();
-
-//   expect(mockLogger.error).toHaveBeenCalledWith(
-//     'Post-deploy failed:',
-//     expect.any(Error)
-//   );
-//   expect(process.exitCode).toBe(1);
-// });
 
 const getMockApiRoot = (
   mockGetResponse: object
