@@ -1,4 +1,4 @@
-import { it, expect, beforeEach, describe, jest } from '@jest/globals';
+import { it, expect, beforeEach, jest } from '@jest/globals';
 import { run } from './post-deploy';
 import { createApiRoot } from '../client/create.client';
 import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
@@ -13,10 +13,18 @@ const emptyGetSubscriptionsResponse = {
   },
 };
 
+const subscriptionExistsResponse = {
+  body: {
+    results: [
+      {
+        id: 'subscription-id',
+        version: 1,
+      },
+    ],
+  },
+};
 beforeEach(() => {
   jest.clearAllMocks();
-
-  // @ts-expect-error
   mockPost = jest.fn().mockReturnThis();
 });
 
@@ -44,17 +52,6 @@ it('should create a new subscription if none exists', async () => {
 });
 
 it('should update an existing subscription if one exists', async () => {
-  const subscriptionExistsResponse = {
-    body: {
-      results: [
-        {
-          id: 'subscription-id',
-          version: 1,
-        },
-      ],
-    },
-  };
-
   process.env.CONNECT_GCP_TOPIC_NAME = 'test-topic';
   process.env.CONNECT_GCP_PROJECT_ID = 'test-project';
 
@@ -103,19 +100,6 @@ const getMockApiRoot = (
     withId: jest.fn().mockReturnThis(),
     withKey: jest.fn().mockReturnThis(),
     post: mockPost,
-    // @ts-expect-error
     execute: jest.fn().mockResolvedValue(mockGetResponse),
   } as unknown as ByProjectKeyRequestBuilder;
 };
-
-// const getMockApiRoot = (mockGetResponse: object) => {
-//   return {
-//     subscriptions: jest.fn().mockReturnThis(),
-//     get: jest.fn().mockReturnThis(),
-//     withId: jest.fn().mockReturnThis(),
-//     withKey: jest.fn().mockReturnThis(),
-//     delete: mockDelete,
-//     post: mockPost,
-//     execute: jest.fn().mockResolvedValue(mockGetResponse),
-//   } as unknown as ByProjectKeyRequestBuilder;
-// };
