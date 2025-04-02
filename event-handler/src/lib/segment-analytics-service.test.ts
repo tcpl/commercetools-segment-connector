@@ -3,7 +3,7 @@ import {
   identifyAnonymousCustomer,
   identifyCustomer,
   trackOrderCompleted,
-} from './segment-service';
+} from './segment-analytics-service';
 import * as orderWithUSTax from './test-orders/order-with-us-tax.json';
 import * as orderWithShippingDiscount from './test-orders/order-with-shipping-discount.json';
 import * as orderWithDiscountOnTotalPrice from './test-orders/order-with-discount-on-total-price.json';
