@@ -29,7 +29,7 @@ beforeEach(() => {
   }));
 });
 
-it('should handle customer ResourceCreated event', async () => {
+it('should handle customer created event', async () => {
   (createApiRoot as jest.Mock).mockReturnValue({
     customers: () => ({
       withId: () => ({ get: () => ({ execute: mockGetCustomer }) }),
@@ -48,6 +48,34 @@ it('should handle customer ResourceCreated event', async () => {
             },
             version: 1,
             notificationType: 'ResourceCreated',
+          })
+        ).toString('base64'),
+      },
+    })
+    .expect(204);
+
+  expect(mockIdentify).toHaveBeenCalled();
+});
+
+it('should handle customer updated event', async () => {
+  (createApiRoot as jest.Mock).mockReturnValue({
+    customers: () => ({
+      withId: () => ({ get: () => ({ execute: mockGetCustomer }) }),
+    }),
+  });
+
+  await request(app)
+    .post('/')
+    .send({
+      message: {
+        data: Buffer.from(
+          JSON.stringify({
+            resource: {
+              typeId: 'customer',
+              id: '871ebaf7-736d-4fc4-9782-4c25101df9f7',
+            },
+            version: 2,
+            notificationType: 'ResourceUpdated',
           })
         ).toString('base64'),
       },
