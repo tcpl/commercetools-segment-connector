@@ -45,19 +45,20 @@ describe('readConfiguration', () => {
     expect(readConfiguration).toThrow(EnvironmentVariablesValidationError);
   });
 
-  // it('should use default locale when LOCALE is not set', () => {
-  //   process.env.CTP_CLIENT_ID = 'test-client-id';
-  //   process.env.CTP_CLIENT_SECRET = 'test-client-secret';
-  //   process.env.CTP_PROJECT_KEY = 'test-project-key';
-  //   process.env.CTP_AUTH_URL = 'https://auth.url';
-  //   process.env.CTP_API_URL = 'https://api.url';
-  //   process.env.SEGMENT_SOURCE_WRITE_KEY = 'test-segment-key';
-  //   process.env.OTEL_EXPORTER_OTLP_ENDPOINT = 'https://otel.endpoint';
-  //   process.env.OTEL_EXPORTER_OTLP_ENDPOINT_API_KEY = 'test-api-key';
-  //   delete process.env.LOCALE;
+  it('should use default locale when LOCALE is not set', () => {
+    const testConfig = getConfig();
 
-  //   const config = readConfiguration();
+    process.env.CTP_CLIENT_ID = testConfig.clientId;
+    process.env.CTP_CLIENT_SECRET = testConfig.clientSecret;
+    process.env.CTP_PROJECT_KEY = testConfig.projectKey;
+    process.env.CTP_AUTH_URL = testConfig.authUrl;
+    process.env.CTP_API_URL = testConfig.apiUrl;
+    process.env.SEGMENT_SOURCE_WRITE_KEY = testConfig.segmentSourceWriteKey;
 
-  //   expect(config.locale).toBe('en-GB');
-  // });
+    delete process.env.LOCALE;
+
+    const config = readConfiguration();
+
+    expect(config.locale).toBe('en-GB');
+  });
 });
