@@ -1,12 +1,12 @@
 import { readConfiguration } from './config.utils';
 import EnvironmentVariablesValidationError from '../errors/environment-variables-validation.error';
+import { getConfig } from '../test-helpers/test-config-helper';
 
 describe('readConfiguration', () => {
   const originalEnv = process.env;
 
   beforeEach(() => {
     jest.resetModules();
-    process.env = { ...originalEnv };
   });
 
   afterEach(() => {
@@ -14,23 +14,25 @@ describe('readConfiguration', () => {
   });
 
   it('should return the configuration when all environment variables are valid', () => {
-    process.env.CTP_CLIENT_ID = '012345678901234567890123'; // 24 characters
-    process.env.CTP_CLIENT_SECRET = '01234567890123456789012345678901'; // 32 characters
-    process.env.CTP_PROJECT_KEY = 'test-project-key';
-    process.env.CTP_AUTH_URL = 'https://auth.example.com';
-    process.env.CTP_API_URL = 'https://api.example.com';
-    process.env.SEGMENT_SOURCE_WRITE_KEY = 'segmentWriteKey';
+    const testConfig = getConfig();
+
+    process.env.CTP_CLIENT_ID = testConfig.clientId;
+    process.env.CTP_CLIENT_SECRET = testConfig.clientSecret;
+    process.env.CTP_PROJECT_KEY = testConfig.projectKey;
+    process.env.CTP_AUTH_URL = testConfig.authUrl;
+    process.env.CTP_API_URL = testConfig.apiUrl;
+    process.env.SEGMENT_SOURCE_WRITE_KEY = testConfig.segmentSourceWriteKey;
     process.env.LOCALE = 'en-US';
 
     const config = readConfiguration();
 
     expect(config).toEqual({
-      clientId: '012345678901234567890123',
-      clientSecret: '01234567890123456789012345678901',
-      projectKey: 'test-project-key',
-      authUrl: 'https://auth.example.com',
-      apiUrl: 'https://api.example.com',
-      segmentSourceWriteKey: 'segmentWriteKey',
+      clientId: testConfig.clientId,
+      clientSecret: testConfig.clientSecret,
+      projectKey: testConfig.projectKey,
+      authUrl: testConfig.authUrl,
+      apiUrl: testConfig.apiUrl,
+      segmentSourceWriteKey: testConfig.segmentSourceWriteKey,
       locale: 'en-US',
     });
   });
