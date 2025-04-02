@@ -5,10 +5,15 @@ import { createApiRoot } from '../client/create.client';
 import { Analytics } from '@segment/analytics-node';
 import { Order } from '@commercetools/platform-sdk';
 import * as testOrder from '../lib/test-orders/order-with-us-tax.json';
+import {
+  configureApis,
+  CreateWorkspaceRegulationV1Input,
+} from '@segment/public-api-sdk-typescript';
 
 jest.mock('../client/create.client');
 jest.mock('@segment/analytics-node');
 jest.mock('../utils/config.utils');
+jest.mock('@segment/public-api-sdk-typescript');
 
 const mockIdentify = jest.fn();
 const mockTrack = jest.fn();
@@ -83,6 +88,42 @@ it('should handle customer updated event', async () => {
     .expect(204);
 
   expect(mockIdentify).toHaveBeenCalled();
+});
+
+it('should handle customer deleted event', async () => {
+  const mockCreateWorkspaceRegulation = jest.fn();
+
+  (configureApis as jest.Mock).mockReturnValue({
+    deletionAndSuppresion: {
+      createWorkspaceRegulation: mockCreateWorkspaceRegulation,
+    },
+  });
+
+  const customerId = '871ebaf7-736d-4fc4-9782-4c25101df9f7';
+
+  await request(app)
+    .post('/')
+    .send({
+      message: {
+        data: Buffer.from(
+          JSON.stringify({
+            resource: {
+              typeId: 'customer',
+              id: customerId,
+            },
+            notificationType: 'ResourceDeleted',
+          })
+        ).toString('base64'),
+      },
+    })
+    .expect(204);
+
+  expect(mockCreateWorkspaceRegulation).toHaveBeenCalledWith({
+    regulationType:
+      CreateWorkspaceRegulationV1Input.RegulationTypeEnum.SUPPRESS_WITH_DELETE,
+    subjectType: CreateWorkspaceRegulationV1Input.SubjectTypeEnum.USER_ID,
+    subjectIds: [customerId],
+  });
 });
 
 it('should track order created event for registered user', async () => {
