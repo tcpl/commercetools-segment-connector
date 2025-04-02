@@ -69,6 +69,16 @@ const envValidators = [
     },
     { min: 1, max: 128 }
   ),
+
+  optional(standardString)(
+    ['segmentPublicApiToken'],
+    {
+      code: 'InvalidSegmentPublicApiToken',
+      message: 'Segment Public API Token not correct.',
+      referencedBy: 'environmentVariables',
+    },
+    { min: 4, max: 128 }
+  ),
 ];
 
 export default envValidators;
