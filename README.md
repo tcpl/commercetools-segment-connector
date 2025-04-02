@@ -4,7 +4,7 @@ This connector uses commercetools subscriptions to send customer and order data 
 
 At present this connector handles the following commercetools events:
 
-- `customer`: `ResourceCreated` and `ResourceUpdated`
+- `customer`: `ResourceCreated`, `ResourceUpdated`, `ResourceDeleted`
 - `order`: `ResourceCreated`
 
 ## Customer Creation/Updates
@@ -12,6 +12,16 @@ At present this connector handles the following commercetools events:
 An `identify` call will be made to Segment when a customer is created or updated in commercetools. This follows the [Segment spec](https://segment.com/docs/connections/spec/identify/).
 
 The customer ID and update version number are used as the `messageId` to ensure any duplicate events from commercetools are not duplicated in Segment.
+
+## Customer Deletion
+
+A call to Segment’s Public API is made to request the deletion of a user when they are deleted in commercetools. The `SUPPRESS_WITH_DELETE` option is used to ensure that the user ID is removed from Segment and any future events are suppressed.
+
+Note, this call just requests the deletion. You can see the state of the deletion in the Segment UI.
+
+We can only make this call with a Public API token. This is marked as optional in the configuration as it is only available on paid plans (although there is a free trial period for paid plans).
+
+See [User Deletion and Suppression](https://segment.com/docs/privacy/user-deletion-and-suppression/) for more details.
 
 ## Order Creation
 
