@@ -47,6 +47,7 @@
     "@opentelemetry/sdk-logs": "^0.55.0",
     "@opentelemetry/winston-transport": "^0.8.0",
     "@segment/analytics-node": "^2.2.1",
+    "@segment/public-api-sdk-typescript": "^58.0.1-b11060",
     "body-parser": "^1.20.3",
     "common": "link:../common",
     "decimal.js": "^10.5.0",
