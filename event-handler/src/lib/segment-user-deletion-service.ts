@@ -4,11 +4,20 @@ import {
   unwrap,
 } from '@segment/public-api-sdk-typescript';
 import { getLogger } from '../utils/logger.utils';
+import { readConfiguration } from '../utils/config.utils';
 
 export const deleteUser = async (userId: string) => {
-  const api = configureApis('');
-
   const logger = getLogger();
+  const configuration = readConfiguration();
+
+  if (!configuration.segmentPublicApiToken) {
+    logger.warn(
+      `Segment Public API token not found in configuration. Cannot request user deletion for ${userId}`
+    );
+    return;
+  }
+
+  const api = configureApis(configuration.segmentPublicApiToken);
 
   try {
     const regulationType =
