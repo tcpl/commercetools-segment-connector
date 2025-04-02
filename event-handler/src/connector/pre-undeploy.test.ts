@@ -17,7 +17,7 @@ const subscriptionExistsResponse = {
   body: {
     results: [
       {
-        id: 'subscription-id',
+        id: '54fdc3c1-6cb7-4030-b71d-3f0902c28658',
         version: 1,
       },
     ],
@@ -26,6 +26,7 @@ const subscriptionExistsResponse = {
 
 beforeEach(() => {
   jest.clearAllMocks();
+
   mockDelete = jest.fn().mockReturnThis();
 });
 

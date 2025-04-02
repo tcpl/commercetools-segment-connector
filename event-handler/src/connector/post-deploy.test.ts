@@ -17,7 +17,7 @@ const subscriptionExistsResponse = {
   body: {
     results: [
       {
-        id: 'subscription-id',
+        id: '8bf5c886-73b8-49ea-94df-0156fd1abd6c',
         version: 1,
       },
     ],
