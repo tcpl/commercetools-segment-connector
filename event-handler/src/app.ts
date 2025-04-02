@@ -4,7 +4,10 @@ dotenv.config();
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import { decodeToJson } from './utils/decoder.utils';
-import { handleCustomerUpsert } from './lib/customer-event-handler';
+import {
+  handleCustomerUpsert,
+  handleCustomerDeletion,
+} from './lib/customer-event-handler';
 import { handleOrderCreated } from './lib/order-event-handler';
 
 const app = express();
@@ -25,6 +28,9 @@ app.post('/', async (req: Request, res: Response) => {
       case 'ResourceCreated':
       case 'ResourceUpdated':
         await handleCustomerUpsert(resourceId);
+        break;
+      case 'ResourceDeleted':
+        await handleCustomerDeletion(resourceId);
         break;
     }
   } else if (

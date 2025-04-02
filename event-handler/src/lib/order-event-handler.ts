@@ -3,7 +3,7 @@ import { getCustomerByEmail } from './customer-service';
 import {
   identifyAnonymousCustomer,
   trackOrderCompleted,
-} from './segment-service';
+} from './segment-analytics-service';
 import { getLogger } from '../utils/logger.utils';
 
 export async function handleOrderCreated(orderId: string) {

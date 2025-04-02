@@ -8,6 +8,7 @@ export const getConfig = (): Configuration => {
     authUrl: 'https://auth.example.com',
     apiUrl: 'https://api.example.com',
     segmentSourceWriteKey: 'mock-segment-write-key',
+    segmentPublicApiToken: 'mock-segment-public-api-token',
     locale: 'en-GB',
   };
 };

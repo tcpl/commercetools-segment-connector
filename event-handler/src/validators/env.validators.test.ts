@@ -82,6 +82,19 @@ it('invalid segmentSourceWriteKey should return error', () => {
   );
 });
 
+it('invalid segmentPublicApiToken should return error', () => {
+  // token too short
+  const validationErrors = validate({ segmentPublicApiToken: 'abc' });
+
+  expect(validationErrors).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        code: 'InvalidSegmentPublicApiToken',
+      }),
+    ])
+  );
+});
+
 const validate = (overrides?: object) => {
   const envVars: Configuration = {
     ...getConfig(),

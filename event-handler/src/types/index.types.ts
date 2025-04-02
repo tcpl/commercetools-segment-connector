@@ -5,6 +5,7 @@ export interface Configuration {
   authUrl: string;
   apiUrl: string;
   segmentSourceWriteKey: string;
+  segmentPublicApiToken?: string;
   locale: string;
   otlpExporterEndpoint?: string;
   otlpExporterEndpointApiKey?: string;

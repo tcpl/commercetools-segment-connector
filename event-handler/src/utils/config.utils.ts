@@ -11,7 +11,8 @@ export const readConfiguration = (): Configuration => {
     authUrl: process.env.CTP_AUTH_URL as string,
     apiUrl: process.env.CTP_API_URL as string,
     segmentSourceWriteKey: process.env.SEGMENT_SOURCE_WRITE_KEY as string,
-    otlpExporterEndpoint: process.env.OTEL_EXPORTER_OTLP_ENDPOINT as string,
+    segmentPublicApiToken: process.env.SEGMENT_PUBLIC_API_TOKEN,
+    otlpExporterEndpoint: process.env.OTEL_EXPORTER_OTLP_ENDPOINT,
     otlpExporterEndpointApiKey: process.env
       .OTEL_EXPORTER_OTLP_ENDPOINT_API_KEY as string,
     locale: process.env.LOCALE || 'en-GB',
