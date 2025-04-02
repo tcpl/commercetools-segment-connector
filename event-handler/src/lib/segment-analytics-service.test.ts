@@ -20,6 +20,7 @@ import * as orderWithUSTaxAndShippingDiscount from './test-orders/order-with-us-
 import * as orderWithUSTaxAndDiscountOnTotalPrice from './test-orders/order-with-us-tax-and-discount-on-total-price.json';
 import * as orderWithDiscountCode from './test-orders/order-with-discount-code.json';
 import * as orderWithNoShippingInfo from './test-orders/order-with-no-shipping-info.json';
+import * as orderWithConsentField from './test-orders/order-with-consent-field.json';
 import { Order } from '@commercetools/platform-sdk';
 
 jest.mock('@segment/analytics-node');
@@ -541,6 +542,27 @@ describe('trackOrderCompleted', () => {
         properties: expect.objectContaining({
           shipping: 0,
         }),
+      })
+    );
+  });
+
+  it('order with consent field should pass consent to Segment', () => {
+    const order = orderWithConsentField as Order;
+
+    trackOrderCompleted(order);
+
+    expect(mockTrack).toHaveBeenCalledWith(
+      expect.objectContaining({
+        context: {
+          consent: {
+            categoryPreferences: {
+              Advertising: true,
+              Analytics: false,
+              Functional: true,
+              DataSharing: false,
+            },
+          },
+        },
       })
     );
   });
