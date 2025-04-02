@@ -56,7 +56,7 @@ it('should handle customer ResourceCreated event', async () => {
   expect(mockIdentify).toHaveBeenCalled();
 });
 
-it('should handle order created event for registered user', async () => {
+it('should track order created event for registered user', async () => {
   const mockGetOrder = jest.fn().mockResolvedValue({
     body: testOrder as Order,
   });
@@ -76,7 +76,10 @@ it('should handle order created event for registered user', async () => {
       message: {
         data: Buffer.from(
           JSON.stringify({
-            resource: { typeId: 'order', id: 'order-id-789' },
+            resource: {
+              typeId: 'order',
+              id: '33925a10-c3fb-4ff5-a9b2-9134400b9d4d',
+            },
             notificationType: 'ResourceCreated',
           })
         ).toString('base64'),
@@ -85,6 +88,44 @@ it('should handle order created event for registered user', async () => {
     .expect(204);
 
   expect(mockTrack).toHaveBeenCalled();
+});
+
+it('should not track order created event for order with no customerId or anonymousId', async () => {
+  const mockGetOrder = jest.fn().mockResolvedValue({
+    body: {
+      testOrder,
+      customerId: undefined,
+      anonymousId: undefined,
+    } as Partial<Order>,
+  });
+
+  (createApiRoot as jest.Mock).mockReturnValue({
+    orders: () => ({
+      withId: () => ({ get: () => ({ execute: mockGetOrder }) }),
+    }),
+    customers: () => ({
+      withId: () => ({ get: () => ({ execute: mockGetCustomer }) }),
+    }),
+  });
+
+  await request(app)
+    .post('/')
+    .send({
+      message: {
+        data: Buffer.from(
+          JSON.stringify({
+            resource: {
+              typeId: 'order',
+              id: '33925a10-c3fb-4ff5-a9b2-9134400b9d4d',
+            },
+            notificationType: 'ResourceCreated',
+          })
+        ).toString('base64'),
+      },
+    })
+    .expect(204);
+
+  expect(mockTrack).not.toHaveBeenCalled();
 });
 
 it('should ignore unsupported resource types', async () => {
