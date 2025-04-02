@@ -2,6 +2,7 @@ import { it, expect } from '@jest/globals';
 import envValidators from '../validators/env.validators';
 import { Configuration } from '../types/index.types';
 import { getValidateMessages } from './helpers.validators';
+import { getConfig } from '../test-helpers/test-config-helper';
 
 it('valid configuration should return no errors', () => {
   const validationErrors = validate();
@@ -83,13 +84,7 @@ it('invalid segmentSourceWriteKey should return error', () => {
 
 const validate = (overrides?: object) => {
   const envVars: Configuration = {
-    clientId: '012345678901234567890123', // 24 characters
-    clientSecret: '01234567890123456789012345678901', // 32 characters
-    projectKey: 'projectKey',
-    authUrl: 'https://auth.example.com',
-    apiUrl: 'https://api.example.com',
-    segmentSourceWriteKey: 'segmentWriteKey',
-    locale: 'en-GB',
+    ...getConfig(),
     ...overrides,
   };
 
