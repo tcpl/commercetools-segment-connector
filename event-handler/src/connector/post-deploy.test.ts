@@ -5,7 +5,7 @@ import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 
 jest.mock('../client/create.client');
 
-let mockPost: typeof jest.fn;
+let mockPost: jest.Mock;
 
 const emptyGetSubscriptionsResponse = {
   body: {
@@ -25,6 +25,7 @@ const subscriptionExistsResponse = {
 };
 beforeEach(() => {
   jest.clearAllMocks();
+
   mockPost = jest.fn().mockReturnThis();
 });
 
@@ -100,6 +101,8 @@ const getMockApiRoot = (
     withId: jest.fn().mockReturnThis(),
     withKey: jest.fn().mockReturnThis(),
     post: mockPost,
-    execute: jest.fn().mockResolvedValue(mockGetResponse),
+    execute: jest
+      .fn()
+      .mockImplementation(() => Promise.resolve(mockGetResponse)),
   } as unknown as ByProjectKeyRequestBuilder;
 };
