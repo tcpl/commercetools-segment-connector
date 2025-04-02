@@ -5,6 +5,8 @@ import type {
   Destination,
 } from '@commercetools/platform-sdk';
 
+jest.mock('../utils/config.utils');
+
 let mockDelete: typeof jest.fn;
 let mockPost: typeof jest.fn;
 
