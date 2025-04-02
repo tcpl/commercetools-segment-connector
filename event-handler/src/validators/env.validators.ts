@@ -53,11 +53,21 @@ const envValidators = [
   optional(standardString)(
     ['otlpExporterEndpointApiKey'],
     {
-      code: 'InValidOtlpExporterHostApiKey',
+      code: 'InvalidOtlpExporterHostApiKey',
       message: 'Otlp key not correct.',
       referencedBy: 'environmentVariables',
     },
     { min: 4, max: 128 }
+  ),
+
+  standardString(
+    ['segmentSourceWriteKey'],
+    {
+      code: 'InvalidSegmentSourceWriteKey',
+      message: 'Segment Source Write Key should be set.',
+      referencedBy: 'environmentVariables',
+    },
+    { min: 1, max: 128 }
   ),
 ];
 
