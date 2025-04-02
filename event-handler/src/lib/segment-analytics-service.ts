@@ -55,7 +55,11 @@ export function identifyCustomer(customer: Customer) {
   }
 }
 
-export function identifyAnonymousCustomer(anonymousId: string, email: string) {
+export function identifyAnonymousCustomer(
+  anonymousId: string,
+  email: string,
+  consent?: object
+) {
   const logger = getLogger();
 
   const analytics = createAnalytics();
@@ -64,6 +68,7 @@ export function identifyAnonymousCustomer(anonymousId: string, email: string) {
     analytics.identify({
       anonymousId,
       traits: { email },
+      context: consent ? { consent } : undefined,
     });
 
     logger.info(

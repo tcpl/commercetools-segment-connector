@@ -22,7 +22,17 @@ export async function handleOrderCreated(orderId: string) {
 
     // only identify the user if they are not already in the system
     if (!customer) {
-      identifyAnonymousCustomer(order.anonymousId, order.customerEmail);
+      let consent;
+
+      if (order.custom?.fields.consent) {
+        consent = JSON.parse(order.custom.fields.consent);
+      }
+
+      identifyAnonymousCustomer(
+        order.anonymousId,
+        order.customerEmail,
+        consent
+      );
     }
   }
 
