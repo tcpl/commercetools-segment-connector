@@ -80,7 +80,7 @@ it('should track order created event for registered user', async () => {
 it('should not track order created event for order with no customerId or anonymousId', async () => {
   const mockGetOrder = jest.fn().mockResolvedValue({
     body: {
-      testOrder,
+      ...testOrder,
       customerId: undefined,
       anonymousId: undefined,
     } as Partial<Order>,
@@ -100,6 +100,42 @@ it('should not track order created event for order with no customerId or anonymo
   );
 
   expect(mockTrack).not.toHaveBeenCalled();
+});
+
+it('should identify anonymous customer when no registered customer exists with the customerEmail', async () => {
+  const mockGetOrder = jest.fn().mockResolvedValue({
+    body: {
+      ...testOrder,
+      customerId: undefined,
+      anonymousId: '2a5c1992-4380-4ca2-b679-64a613bd6df8',
+      customerEmail: 'nonexistent@example.com',
+    } as Partial<Order>,
+  });
+
+  // No customer found
+  const mockGetCustomer = jest.fn().mockResolvedValue({
+    body: {
+      results: [],
+    },
+  });
+
+  (createApiRoot as jest.Mock).mockReturnValue({
+    orders: () => ({
+      withId: () => ({ get: () => ({ execute: mockGetOrder }) }),
+    }),
+    customers: () => ({
+      get: () => ({ execute: mockGetCustomer }),
+    }),
+  });
+
+  await postOrderCreatedEvent('33925a10-c3fb-4ff5-a9b2-9134400b9d4d').expect(
+    204
+  );
+
+  expect(mockIdentify).toHaveBeenCalledWith({
+    anonymousId: '2a5c1992-4380-4ca2-b679-64a613bd6df8',
+    traits: { email: 'nonexistent@example.com' },
+  });
 });
 
 it('should ignore unsupported resource types', async () => {
