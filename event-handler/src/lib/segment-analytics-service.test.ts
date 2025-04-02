@@ -95,6 +95,48 @@ describe('sendCustomer', () => {
     });
   });
 
+  it('customer with consent field should pass consent to Segment', async () => {
+    const mockCustomer = createMockCustomer({
+      email: 'test@example.com',
+      firstName: 'John',
+      lastName: 'Doe',
+      middleName: 'middle',
+      title: 'Mr',
+      dateOfBirth: '1990-11-01',
+      customerNumber: 'CN123',
+      externalId: 'EXT123',
+      isEmailVerified: true,
+      locale: 'en-US',
+      custom: {
+        type: {
+          typeId: 'type',
+          id: '8b37d6b9-8eb5-4b2e-a743-b74751c379ca',
+        },
+        fields: {
+          consent:
+            '{"categoryPreferences":{"Advertising":true,"Analytics":false,"Functional":true,"DataSharing":false}}',
+        },
+      },
+    });
+
+    identifyCustomer(mockCustomer);
+
+    expect(mockIdentify).toHaveBeenCalledWith(
+      expect.objectContaining({
+        context: {
+          consent: {
+            categoryPreferences: {
+              Advertising: true,
+              Analytics: false,
+              Functional: true,
+              DataSharing: false,
+            },
+          },
+        },
+      })
+    );
+  });
+
   it('should throw an error when Segment API fails', async () => {
     const segmentError = new Error('Segment API failure');
 

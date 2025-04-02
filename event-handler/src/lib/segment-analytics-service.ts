@@ -1,4 +1,4 @@
-import { Analytics } from '@segment/analytics-node';
+import { Analytics, IdentifyParams } from '@segment/analytics-node';
 import { getLogger } from '../utils/logger.utils';
 import { Customer, Order } from '@commercetools/platform-sdk';
 import { readConfiguration } from '../utils/config.utils';
@@ -20,7 +20,7 @@ export function identifyCustomer(customer: Customer) {
   try {
     // https://segment.com/docs/connections/spec/identify/#custom-traits
 
-    analytics.identify({
+    const identifyParams: IdentifyParams = {
       userId: customer.id,
       messageId: `${customer.id}-${customer.version}`,
       timestamp: customer.lastModifiedAt,
@@ -36,7 +36,17 @@ export function identifyCustomer(customer: Customer) {
         locale: customer.locale,
         createdAt: customer.createdAt,
       },
-    });
+    };
+
+    if (customer.custom?.fields.consent) {
+      const consent = JSON.parse(customer.custom.fields.consent);
+
+      identifyParams.context = {
+        consent,
+      };
+    }
+
+    analytics.identify(identifyParams);
 
     logger.info(`Customer ${customer.id} sent to Segment successfully`);
   } catch (error) {
