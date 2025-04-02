@@ -5,7 +5,7 @@ import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 
 jest.mock('../client/create.client');
 
-const mockPost = jest.fn();
+let mockPost: typeof jest.fn;
 
 const emptyGetSubscriptionsResponse = {
   body: {
@@ -16,15 +16,18 @@ const emptyGetSubscriptionsResponse = {
 beforeEach(() => {
   jest.clearAllMocks();
 
-  (createApiRoot as jest.Mock).mockReturnValue(
-    getMockApiRoot(emptyGetSubscriptionsResponse)
-  );
+  // @ts-expect-error
+  mockPost = jest.fn().mockReturnThis();
 });
 
 describe('post-deploy', () => {
   it('should create a new subscription if none exists', async () => {
     process.env.CONNECT_GCP_TOPIC_NAME = 'test-topic';
     process.env.CONNECT_GCP_PROJECT_ID = 'test-project';
+
+    (createApiRoot as jest.Mock).mockReturnValue(
+      getMockApiRoot(emptyGetSubscriptionsResponse)
+    );
 
     await run();
 
@@ -41,36 +44,43 @@ describe('post-deploy', () => {
     });
   });
 
-  // it('should update an existing subscription if one exists', async () => {
-  //   const mockApiRoot = getMockApiRoot(subscriptionExistsResponse);
+  it('should update an existing subscription if one exists', async () => {
+    const subscriptionExistsResponse = {
+      body: {
+        results: [
+          {
+            id: 'subscription-id',
+            version: 1,
+          },
+        ],
+      },
+    };
 
-  //   await createSubscription(mockApiRoot, topicName, projectId);
+    process.env.CONNECT_GCP_TOPIC_NAME = 'test-topic';
+    process.env.CONNECT_GCP_PROJECT_ID = 'test-project';
 
-  //   expect(mockPost).toHaveBeenCalledWith({
-  //     body: {
-  //       version: 1,
-  //       actions: [
-  //         {
-  //           action: 'changeDestination',
-  //           destination,
-  //         },
-  //       ],
-  //     },
-  //   });
-  // });
+    (createApiRoot as jest.Mock).mockReturnValue(
+      getMockApiRoot(subscriptionExistsResponse)
+    );
 
-  // it('should create a subscription with the correct parameters', async () => {
-  //   process.env.CONNECT_GCP_TOPIC_NAME = 'test-topic';
-  //   process.env.CONNECT_GCP_PROJECT_ID = 'test-project';
+    await run();
 
-  //   await run();
-
-  //   expect(mockCreateSubscription).toHaveBeenCalledWith(
-  //     expect.anything(),
-  //     'test-topic',
-  //     'test-project'
-  //   );
-  // });
+    expect(mockPost).toHaveBeenCalledWith({
+      body: {
+        version: 1,
+        actions: [
+          {
+            action: 'changeDestination',
+            destination: {
+              type: 'GoogleCloudPubSub',
+              topic: 'test-topic',
+              projectId: 'test-project',
+            },
+          },
+        ],
+      },
+    });
+  });
 
   // it('should log an error and set exit code on failure', async () => {
   //   const mockLogger = require('../utils/logger.utils').getLogger();
@@ -92,7 +102,9 @@ const getMockApiRoot = (
   return {
     subscriptions: jest.fn().mockReturnThis(),
     get: jest.fn().mockReturnThis(),
-    post: mockPost.mockReturnThis(),
+    withId: jest.fn().mockReturnThis(),
+    withKey: jest.fn().mockReturnThis(),
+    post: mockPost,
     // @ts-expect-error
     execute: jest.fn().mockResolvedValue(mockGetResponse),
   } as unknown as ByProjectKeyRequestBuilder;
