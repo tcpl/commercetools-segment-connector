@@ -8,6 +8,7 @@ import * as testOrder from '../lib/test-orders/order-with-us-tax.json';
 
 jest.mock('../client/create.client');
 jest.mock('@segment/analytics-node');
+jest.mock('../utils/config.utils');
 
 const mockIdentify = jest.fn();
 const mockTrack = jest.fn();
