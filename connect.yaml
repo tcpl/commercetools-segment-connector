@@ -15,6 +15,10 @@ deployAs:
           description: Segment Public API host
           required: false
           default: https://api.segmentapis.com
+        - key: SEGMENT_ANALYTICS_HOST
+          description: Segment Analytics host
+          required: false
+          default: https://api.segment.io
 inheritAs:
   apiClient:
     scopes:

@@ -11,6 +11,7 @@ import { Configuration } from '../types/index.types';
 const createAnalytics = (configuration: Configuration) => {
   return new Analytics({
     writeKey: configuration.segmentSourceWriteKey,
+    host: configuration.segmentAnalyticsHost,
   });
 };
 

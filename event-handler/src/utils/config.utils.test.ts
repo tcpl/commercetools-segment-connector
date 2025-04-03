@@ -28,6 +28,7 @@ describe('readConfiguration', () => {
       projectKey: testConfig.projectKey,
       authUrl: testConfig.authUrl,
       apiUrl: testConfig.apiUrl,
+      segmentAnalyticsHost: testConfig.segmentAnalyticsHost,
       segmentSourceWriteKey: testConfig.segmentSourceWriteKey,
       segmentPublicApiHost: testConfig.segmentPublicApiHost,
       locale: 'en-US',
