@@ -2,13 +2,6 @@
 
 This connector uses commercetools subscriptions to send customer and order data to Twilio Segment.
 
-## Prerequisites
-
-1. commercetools composable commerce [account](https://commercetools.com/free-trial)
-2. Segment [account](https://segment.com/signup)
-3. A Node.js source setup in Segment. See [Quickstart: Node.js](https://segment.com/docs/connections/sources/catalog/libraries/server/node/quickstart/). You will need your `Write Key` from the source settings.
-4. A Segment Public API Token (optional). This is only available on paid plans and is required for user deletion. See Customer Deletion below.
-
 ## Overview
 
 The diagram below provides an overview of the integration.
@@ -19,6 +12,13 @@ sequenceDiagram
         GCP->>connector: customer/order events
         connector->>Segment: identify, track, delete
 ```
+
+## Prerequisites
+
+1. commercetools composable commerce [account](https://commercetools.com/free-trial)
+2. Segment [account](https://segment.com/signup)
+3. A Node.js source setup in Segment. See [Quickstart: Node.js](https://segment.com/docs/connections/sources/catalog/libraries/server/node/quickstart/). You will need your `Write Key` from the source settings.
+4. A Segment Public API Token (optional). This is only available on paid plans and is required for user deletion. See Customer Deletion section below.
 
 ## Events
 
@@ -139,7 +139,7 @@ Make sure the topic has permissions for `subscriptions@commercetools-platform.ia
 - Run `yarn build` to build the project
 - Run `yarn connector:post-deploy` to create the subscription in commercetools.
 - Run the event service by running `yarn dev` in the `event-handler` directory. This will start a local server on port 8080.
-- Use a HTTP tunnel tool like ngrok to expose the local server to the internet. E.g. `ngrok http 8080` (note you can get a consistent URL from the ngrok dashboard which will provide a consistent host).
+- Use a HTTP tunnel tool like ngrok to expose the local server to the internet. E.g. `ngrok http 8080` (note you can get a consistent domain from the ngrok dashboard which will provide a consistent domain rather than auto-generating a new one each time).
 - Create a subscription in GCP Pub/Sub for the topic you created above. Use the ngrok URL as the endpoint for the subscription. E.g. `https://[Your ngrok ID].ngrok-free.app/`
 
 See the [connect-email-integration-template](https://github.com/commercetools/connect-email-integration-template/blob/fdc6689e7a53f9f72e05a38d41ea805ad94b8911/mail-sender/README.md?plain=1#L174) for other instructions on how to run the connector locally
