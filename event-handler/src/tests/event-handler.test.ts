@@ -10,7 +10,6 @@ import fetchMock from 'jest-fetch-mock';
 jest.mock('../client/create.client');
 jest.mock('@segment/analytics-node');
 jest.mock('../utils/config.utils');
-jest.mock('@segment/public-api-sdk-typescript');
 
 fetchMock.enableMocks();
 
