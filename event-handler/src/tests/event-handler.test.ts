@@ -5,15 +5,14 @@ import { createApiRoot } from '../client/create.client';
 import { Analytics } from '@segment/analytics-node';
 import { Order } from '@commercetools/platform-sdk';
 import * as testOrder from '../lib/test-orders/order-with-us-tax.json';
-import {
-  configureApis,
-  CreateWorkspaceRegulationV1Input,
-} from '@segment/public-api-sdk-typescript';
+import fetchMock from 'jest-fetch-mock';
 
 jest.mock('../client/create.client');
 jest.mock('@segment/analytics-node');
 jest.mock('../utils/config.utils');
 jest.mock('@segment/public-api-sdk-typescript');
+
+fetchMock.enableMocks();
 
 const mockIdentify = jest.fn();
 const mockTrack = jest.fn();
@@ -27,6 +26,7 @@ const mockGetCustomer = jest.fn().mockResolvedValue({
 
 beforeEach(() => {
   jest.clearAllMocks();
+  fetchMock.resetMocks();
 
   (Analytics as jest.Mock).mockImplementation(() => ({
     identify: mockIdentify,
@@ -91,15 +91,12 @@ it('should handle customer updated event', async () => {
 });
 
 it('should handle customer deleted event', async () => {
-  const mockCreateWorkspaceRegulation = jest.fn();
-
-  (configureApis as jest.Mock).mockReturnValue({
-    deletionAndSuppresion: {
-      createWorkspaceRegulation: mockCreateWorkspaceRegulation,
-    },
-  });
-
   const customerId = '871ebaf7-736d-4fc4-9782-4c25101df9f7';
+
+  fetchMock.mockResponseOnce(
+    JSON.stringify({ regulateId: 'regulate-id-123' }),
+    { status: 200 }
+  );
 
   await request(app)
     .post('/')
@@ -118,12 +115,21 @@ it('should handle customer deleted event', async () => {
     })
     .expect(204);
 
-  expect(mockCreateWorkspaceRegulation).toHaveBeenCalledWith({
-    regulationType:
-      CreateWorkspaceRegulationV1Input.RegulationTypeEnum.SUPPRESS_WITH_DELETE,
-    subjectType: CreateWorkspaceRegulationV1Input.SubjectTypeEnum.USER_ID,
-    subjectIds: [customerId],
-  });
+  expect(fetchMock).toHaveBeenCalledWith(
+    'https://api.segmentapis.com/regulations',
+    expect.objectContaining({
+      method: 'POST',
+      headers: {
+        Authorization: expect.stringContaining('Bearer'),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        regulationType: 'SUPPRESS_WITH_DELETE',
+        subjectType: 'USER_ID',
+        subjectIds: [customerId],
+      }),
+    })
+  );
 });
 
 it('should track order created event for registered user', async () => {
