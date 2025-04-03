@@ -6,6 +6,7 @@ export interface Configuration {
   apiUrl: string;
   segmentSourceWriteKey: string;
   segmentPublicApiToken?: string;
+  segmentPublicApiHost: string;
   locale: string;
   consentCustomFieldName: string;
   otlpExporterEndpoint?: string;

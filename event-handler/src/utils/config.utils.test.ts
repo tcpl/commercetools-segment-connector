@@ -29,6 +29,7 @@ describe('readConfiguration', () => {
       authUrl: testConfig.authUrl,
       apiUrl: testConfig.apiUrl,
       segmentSourceWriteKey: testConfig.segmentSourceWriteKey,
+      segmentPublicApiHost: testConfig.segmentPublicApiHost,
       locale: 'en-US',
       consentCustomFieldName: 'consentCustomFieldName',
     });

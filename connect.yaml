@@ -11,6 +11,10 @@ deployAs:
         - key: SEGMENT_PUBLIC_API_TOKEN
           description: Segment Public API Token (for user deletion/suppression)
           required: false
+        - key: SEGMENT_PUBLIC_API_HOST
+          description: Segment Public API host
+          required: false
+          default: https://api.segmentapis.com
 inheritAs:
   apiClient:
     scopes:

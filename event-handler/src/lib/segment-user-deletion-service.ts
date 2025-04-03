@@ -12,18 +12,21 @@ export const deleteUser = async (userId: string) => {
     return;
   }
 
-  const response = await fetch('https://api.segmentapis.com/regulations', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${configuration.segmentPublicApiToken}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      regulationType: 'SUPPRESS_WITH_DELETE',
-      subjectType: 'USER_ID',
-      subjectIds: [userId],
-    }),
-  });
+  const response = await fetch(
+    `${configuration.segmentPublicApiHost}/regulations`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${configuration.segmentPublicApiToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        regulationType: 'SUPPRESS_WITH_DELETE',
+        subjectType: 'USER_ID',
+        subjectIds: [userId],
+      }),
+    }
+  );
 
   if (!response.ok) {
     const errorText = await response.text();

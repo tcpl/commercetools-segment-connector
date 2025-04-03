@@ -12,6 +12,8 @@ export const readConfiguration = (): Configuration => {
     apiUrl: process.env.CTP_API_URL as string,
     segmentSourceWriteKey: process.env.SEGMENT_SOURCE_WRITE_KEY as string,
     segmentPublicApiToken: process.env.SEGMENT_PUBLIC_API_TOKEN,
+    segmentPublicApiHost:
+      process.env.SEGMENT_PUBLIC_API_HOST ?? 'https://api.segmentapis.com',
     otlpExporterEndpoint: process.env.OTEL_EXPORTER_OTLP_ENDPOINT,
     otlpExporterEndpointApiKey: process.env
       .OTEL_EXPORTER_OTLP_ENDPOINT_API_KEY as string,
