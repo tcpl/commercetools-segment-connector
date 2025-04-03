@@ -296,6 +296,13 @@ it('should ignore unsupported notification types', async () => {
   expect(createApiRoot).not.toHaveBeenCalled();
 });
 
+test('Post invalid body', async () => {
+  const response = await request(app).post('/').send({
+    message: 'hello world',
+  });
+  expect(response.status).toBe(400);
+});
+
 const postOrderCreatedEvent = (orderId: string) => {
   return request(app)
     .post('/')
