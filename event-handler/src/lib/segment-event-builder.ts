@@ -8,11 +8,21 @@ import Decimal from 'decimal.js';
 import { TrackParams } from '@segment/analytics-node';
 import _ from 'lodash';
 import { readConfiguration } from '../utils/config.utils';
+import { Configuration } from '../types/index.types';
+
+export const buildSegmentContext = (consent?: string) => {
+  if (consent) {
+    return { consent: JSON.parse(consent) };
+  }
+  return undefined;
+};
 
 export const buildOrderCompletedTrackEvent = (order: Order): TrackParams => {
   if (!order.taxedPrice) {
     throw new Error(`Order ${order.id} is missing taxedPrice`);
   }
+
+  const configuration = readConfiguration();
 
   const netShippingPriceCents =
     order.taxedShippingPrice?.totalNet.centAmount ?? 0;
@@ -55,9 +65,12 @@ export const buildOrderCompletedTrackEvent = (order: Order): TrackParams => {
           ? getTypedMoneyInCurrencyUnits(order.taxedPrice.totalTax)
           : undefined,
       coupon: getCouponCode(order),
-      products: buildProducts(order),
+      products: buildProducts(order, configuration),
       currency: order.totalPrice.currencyCode,
     },
+    context: buildSegmentContext(
+      order.custom?.fields?.[configuration.consentCustomFieldName]
+    ),
   };
 };
 
@@ -130,8 +143,8 @@ const getCentAmountInCurrencyUnits = (
     .toNumber();
 };
 
-const buildProducts = (order: Order) => {
-  const { locale } = readConfiguration();
+const buildProducts = (order: Order, configuration: Configuration) => {
+  const { locale } = configuration;
 
   return order.lineItems.map((lineItem, i) => {
     const imageUrl =
