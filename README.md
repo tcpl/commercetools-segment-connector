@@ -110,3 +110,25 @@ DATA
 ```
 
 The same approach can be used to create a custom field on an order.
+
+## Running the Connector locally
+
+### Prerequisite: GCP Pub/Sub
+
+To run an event based connect application locally, you need to setup a GCP Pub/Sub topic and subscription. When running in connect this is done for you.
+
+Make sure the topic has permissions for `subscriptions@commercetools-platform.iam.gserviceaccount.com` to publish to the topic.
+
+### Steps
+
+- Create an API Client in commercetools with the following scopes: `view_orders`, `view_customers` and `manage_subscriptions`
+- `cd` into the `event-handler` directory
+- Set up a local .env file as per `.env.example` (using your commercetools API client, GCP Pub/Sub topic and Segment details)
+- Run `yarn`
+- Run `yarn build`
+- Run `yarn connector:post-deploy` to create the subscription in commercetools.
+- Run the event service by running `yarn dev` in the `event-handler` directory. This will start a local server on port 8080.
+- Use a HTTP tunnel tool like ngrok to expose the local server to the internet. E.g. `ngrok http 8080` (note you can get a consistent URL from the ngrok dashboard which will provide a consistent host).
+- Create a subscription in GCP Pub/Sub for the topic you created above. Use the ngrok URL as the endpoint for the subscription. E.g. `https://[Your ngrok ID].ngrok-free.app/`
+
+See the [connect-email-integration-template](https://github.com/commercetools/connect-email-integration-template/blob/fdc6689e7a53f9f72e05a38d41ea805ad94b8911/mail-sender/README.md?plain=1#L174) for more details on how to run the connector locally
