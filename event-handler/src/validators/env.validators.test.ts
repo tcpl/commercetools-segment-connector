@@ -70,6 +70,18 @@ it('invalid otlpExporterEndpointApiKey should return error', () => {
   );
 });
 
+it('invalid segmentAnalyticsHost should return error', () => {
+  const validationErrors = validate({ segmentAnalyticsHost: 'invalidHost' });
+
+  expect(validationErrors).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        code: 'InvalidSegmentAnalyticsHost',
+      }),
+    ])
+  );
+});
+
 it('invalid segmentSourceWriteKey should return error', () => {
   const validationErrors = validate({ segmentSourceWriteKey: '' });
 
@@ -77,6 +89,18 @@ it('invalid segmentSourceWriteKey should return error', () => {
     expect.arrayContaining([
       expect.objectContaining({
         code: 'InvalidSegmentSourceWriteKey',
+      }),
+    ])
+  );
+});
+
+it('invalid segmentPublicApiHost should return error', () => {
+  const validationErrors = validate({ segmentPublicApiHost: 'invalidHost' });
+
+  expect(validationErrors).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        code: 'InvalidSegmentPublicApiHost',
       }),
     ])
   );
