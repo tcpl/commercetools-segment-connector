@@ -10,5 +10,6 @@ export const getConfig = (): Configuration => {
     segmentSourceWriteKey: 'mock-segment-write-key',
     segmentPublicApiToken: 'mock-segment-public-api-token',
     locale: 'en-GB',
+    consentCustomFieldName: 'consent',
   };
 };
