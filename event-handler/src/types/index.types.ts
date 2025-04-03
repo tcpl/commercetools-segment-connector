@@ -4,10 +4,10 @@ export interface Configuration {
   projectKey: string;
   authUrl: string;
   apiUrl: string;
-  segmentSourceWriteKey: string;
-  segmentPublicApiToken?: string;
-  segmentPublicApiHost: string;
   segmentAnalyticsHost: string;
+  segmentSourceWriteKey: string;
+  segmentPublicApiHost: string;
+  segmentPublicApiToken?: string;
   locale: string;
   consentCustomFieldName: string;
   otlpExporterEndpoint?: string;
