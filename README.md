@@ -2,18 +2,27 @@
 
 This connector uses commercetools subscriptions to send customer and order data to Twilio Segment.
 
-At present this connector handles the following commercetools events:
+## Prerequisites
+
+1. commercetools composable commerce [account](https://commercetools.com/free-trial)
+2. Segment [account](https://segment.com/signup)
+3. A Node.js source setup in Segment. See [Quickstart: Node.js](https://segment.com/docs/connections/sources/catalog/libraries/server/node/quickstart/). You will need your `Write Key` from the source settings.
+4. A Segment Public API Token (optional). This is only available on paid plans and is required for user deletion. See Customer Deletion below.
+
+## Events
+
+This connector handles the following commercetools events:
 
 - `customer`: `ResourceCreated`, `ResourceUpdated`, `ResourceDeleted`
 - `order`: `ResourceCreated`
 
-## Customer Creation/Updates
+### Customer Creation/Updates
 
 An `identify` call will be made to Segment when a customer is created or updated in commercetools. This follows the [Segment spec](https://segment.com/docs/connections/spec/identify/).
 
 The customer ID and update version number are used as the `messageId` to ensure any duplicate events from commercetools are not duplicated in Segment.
 
-## Customer Deletion
+### Customer Deletion
 
 A call to Segment’s Public API is made to request the deletion of a user when they are deleted in commercetools. The `SUPPRESS_WITH_DELETE` option is used to ensure that the user ID is removed from Segment and any future events are suppressed.
 
@@ -23,7 +32,7 @@ We can only make this call with a Public API token. This is marked as optional i
 
 See [User Deletion and Suppression](https://segment.com/docs/privacy/user-deletion-and-suppression/) for more details.
 
-## Order Creation
+### Order Creation
 
 An `Order Completed` tracking event is sent to segment when an order is created in commercetools. It follows the [Segment spec](https://segment.com/docs/connections/spec/ecommerce/v2/#order-completed). Below are details on the value properties.
 
@@ -42,7 +51,7 @@ Depending on the destination you are sending the events to, you may need to edit
 
 We use `[orderId]-order-completed` as the `messageId` to ensure any duplicate order created events from commercetools are not duplicated in Segment.
 
-### Anonymous Orders
+## Anonymous Orders
 
 For anonymous/guest account orders, an `Identify` call will be made if there is no registered account for the email address on the order. This is only done if the email address is not already registered in commercetools because otherwise guest account orders (where the email hasn't been verified) would be attached to a registered account.
 
