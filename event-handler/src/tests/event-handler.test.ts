@@ -19,10 +19,16 @@ jest.mock('@segment/public-api-sdk-typescript');
 const mockIdentify = jest.fn();
 const mockTrack = jest.fn();
 
-const mockGetCustomer = jest.fn().mockResolvedValue({
+const mockGetCustomerCustomerFound = jest.fn().mockResolvedValue({
   body: {
     id: '871ebaf7-736d-4fc4-9782-4c25101df9f7',
     email: 'test@example.com',
+  },
+});
+
+const mockGetCustomerNoCustomerFound = jest.fn().mockResolvedValue({
+  body: {
+    results: [],
   },
 });
 
@@ -38,7 +44,9 @@ beforeEach(() => {
 it('should handle customer created event', async () => {
   (createApiRoot as jest.Mock).mockReturnValue({
     customers: () => ({
-      withId: () => ({ get: () => ({ execute: mockGetCustomer }) }),
+      withId: () => ({
+        get: () => ({ execute: mockGetCustomerCustomerFound }),
+      }),
     }),
   });
 
@@ -66,7 +74,9 @@ it('should handle customer created event', async () => {
 it('should handle customer updated event', async () => {
   (createApiRoot as jest.Mock).mockReturnValue({
     customers: () => ({
-      withId: () => ({ get: () => ({ execute: mockGetCustomer }) }),
+      withId: () => ({
+        get: () => ({ execute: mockGetCustomerCustomerFound }),
+      }),
     }),
   });
 
@@ -132,14 +142,7 @@ it('should track order created event for registered user', async () => {
     body: testOrder as Order,
   });
 
-  (createApiRoot as jest.Mock).mockReturnValue({
-    orders: () => ({
-      withId: () => ({ get: () => ({ execute: mockGetOrder }) }),
-    }),
-    customers: () => ({
-      withId: () => ({ get: () => ({ execute: mockGetCustomer }) }),
-    }),
-  });
+  setupApiRootMock(mockGetOrder, mockGetCustomerCustomerFound);
 
   await postOrderCreatedEvent('33925a10-c3fb-4ff5-a9b2-9134400b9d4d').expect(
     204
@@ -157,14 +160,7 @@ it('should not track order created event for order with no customerId or anonymo
     } as Partial<Order>,
   });
 
-  (createApiRoot as jest.Mock).mockReturnValue({
-    orders: () => ({
-      withId: () => ({ get: () => ({ execute: mockGetOrder }) }),
-    }),
-    customers: () => ({
-      withId: () => ({ get: () => ({ execute: mockGetCustomer }) }),
-    }),
-  });
+  setupApiRootMock(mockGetOrder, mockGetCustomerCustomerFound);
 
   await postOrderCreatedEvent('33925a10-c3fb-4ff5-a9b2-9134400b9d4d').expect(
     204
@@ -183,21 +179,7 @@ it('should identify customer for anonymous order when no registered customer exi
     } as Partial<Order>,
   });
 
-  // No customer found
-  const mockGetCustomer = jest.fn().mockResolvedValue({
-    body: {
-      results: [],
-    },
-  });
-
-  (createApiRoot as jest.Mock).mockReturnValue({
-    orders: () => ({
-      withId: () => ({ get: () => ({ execute: mockGetOrder }) }),
-    }),
-    customers: () => ({
-      get: () => ({ execute: mockGetCustomer }),
-    }),
-  });
+  setupApiRootMock(mockGetOrder, mockGetCustomerNoCustomerFound);
 
   await postOrderCreatedEvent('33925a10-c3fb-4ff5-a9b2-9134400b9d4d').expect(
     204
@@ -219,21 +201,7 @@ it('anonymous order with consent field and no registered customer should pass co
     } as Partial<Order>,
   });
 
-  // No customer found
-  const mockGetCustomer = jest.fn().mockResolvedValue({
-    body: {
-      results: [],
-    },
-  });
-
-  (createApiRoot as jest.Mock).mockReturnValue({
-    orders: () => ({
-      withId: () => ({ get: () => ({ execute: mockGetOrder }) }),
-    }),
-    customers: () => ({
-      get: () => ({ execute: mockGetCustomer }),
-    }),
-  });
+  setupApiRootMock(mockGetOrder, mockGetCustomerNoCustomerFound);
 
   await postOrderCreatedEvent('33925a10-c3fb-4ff5-a9b2-9134400b9d4d').expect(
     204
@@ -278,14 +246,7 @@ it('should not identify customer for anonymous order when a registered customer 
     },
   });
 
-  (createApiRoot as jest.Mock).mockReturnValue({
-    orders: () => ({
-      withId: () => ({ get: () => ({ execute: mockGetOrder }) }),
-    }),
-    customers: () => ({
-      get: () => ({ execute: mockGetCustomer }),
-    }),
-  });
+  setupApiRootMock(mockGetOrder, mockGetCustomer);
 
   await postOrderCreatedEvent('33925a10-c3fb-4ff5-a9b2-9134400b9d4d').expect(
     204
@@ -346,4 +307,18 @@ const postOrderCreatedEvent = (orderId: string) => {
         ).toString('base64'),
       },
     });
+};
+
+const setupApiRootMock = (
+  mockGetOrder: jest.Mock,
+  mockGetCustomer: jest.Mock
+) => {
+  (createApiRoot as jest.Mock).mockReturnValue({
+    orders: () => ({
+      withId: () => ({ get: () => ({ execute: mockGetOrder }) }),
+    }),
+    customers: () => ({
+      get: () => ({ execute: mockGetCustomer }),
+    }),
+  });
 };
