@@ -1,8 +1,3 @@
-import {
-  configureApis,
-  CreateWorkspaceRegulationV1Input,
-  unwrap,
-} from '@segment/public-api-sdk-typescript';
 import { getLogger } from '../utils/logger.utils';
 import { readConfiguration } from '../utils/config.utils';
 
@@ -17,27 +12,31 @@ export const deleteUser = async (userId: string) => {
     return;
   }
 
-  const api = configureApis(configuration.segmentPublicApiToken);
+  const response = await fetch('https://api.segmentapis.com/regulations', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${configuration.segmentPublicApiToken}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      regulationType: 'SUPPRESS_WITH_DELETE',
+      subjectType: 'USER_ID',
+      subjectIds: [userId],
+    }),
+  });
 
-  try {
-    const regulationType =
-      CreateWorkspaceRegulationV1Input.RegulationTypeEnum.SUPPRESS_WITH_DELETE;
-    const subjectType =
-      CreateWorkspaceRegulationV1Input.SubjectTypeEnum.USER_ID;
-    const subjectIds = [userId];
+  if (!response.ok) {
+    const errorText = await response.text();
 
-    const result = await unwrap(
-      api.deletionAndSuppresion.createWorkspaceRegulation({
-        regulationType,
-        subjectType,
-        subjectIds,
-      })
-    );
+    const errorMessage = `Failed to delete user ID ${userId} in Segment. Status: ${response.status}, Response: ${errorText}`;
 
-    logger.info(
-      `Successfully requested user ID ${userId} be deleted in Segment. Regulate ID: ${result.regulateId}`
-    );
-  } catch (e) {
-    logger.error(`Error deleting user ID ${userId} in Segment`, e);
+    logger.error(errorMessage);
+
+    throw new Error(errorMessage);
   }
+
+  const result = await response.json();
+  logger.info(
+    `Successfully requested user ID ${userId} be deleted in Segment. Regulate ID: ${result.regulateId}`
+  );
 };
