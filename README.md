@@ -9,6 +9,17 @@ This connector uses commercetools subscriptions to send customer and order data 
 3. A Node.js source setup in Segment. See [Quickstart: Node.js](https://segment.com/docs/connections/sources/catalog/libraries/server/node/quickstart/). You will need your `Write Key` from the source settings.
 4. A Segment Public API Token (optional). This is only available on paid plans and is required for user deletion. See Customer Deletion below.
 
+## Overview
+
+The diagram below provides an overview of the integration.
+
+```mermaid
+sequenceDiagram
+        commercetools->>GCP: customer/order events
+        GCP->>connector: customer/order events
+        connector->>Segment: identify, track, delete
+```
+
 ## Events
 
 This connector handles the following commercetools events:
