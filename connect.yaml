@@ -6,19 +6,15 @@ deployAs:
       postDeploy: yarn install && yarn build && yarn connector:post-deploy
       preUndeploy: yarn install && yarn build && yarn connector:pre-undeploy
     configuration:
-      standardConfiguration: []
+      standardConfiguration:
+        - key: SEGMENT_PUBLIC_API_HOST
+          description: Segment Public API host (for user deletion/suppression)
+          required: false
+          default: https://api.segmentapis.com
       securedConfiguration:
         - key: SEGMENT_PUBLIC_API_TOKEN
           description: Segment Public API Token (for user deletion/suppression)
           required: false
-        - key: SEGMENT_PUBLIC_API_HOST
-          description: Segment Public API host
-          required: false
-          default: https://api.segmentapis.com
-        - key: SEGMENT_ANALYTICS_HOST
-          description: Segment Analytics host
-          required: false
-          default: https://api.segment.io
 inheritAs:
   apiClient:
     scopes:
@@ -33,6 +29,10 @@ inheritAs:
         description: OpenTelemetry OTLP exporter API key
         required: false
     standardConfiguration:
+      - key: SEGMENT_ANALYTICS_HOST
+        description: Segment Analytics host
+        required: false
+        default: https://api.segment.io
       - key: OTEL_EXPORTER_OTLP_ENDPOINT
         description: OpenTelemetry OTLP exporter endpoint
         required: false
