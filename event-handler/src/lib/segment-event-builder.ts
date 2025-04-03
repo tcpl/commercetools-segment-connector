@@ -9,6 +9,13 @@ import { TrackParams } from '@segment/analytics-node';
 import _ from 'lodash';
 import { readConfiguration } from '../utils/config.utils';
 
+export const buildSegmentContext = (consent?: string) => {
+  if (consent) {
+    return { consent: JSON.parse(consent) };
+  }
+  return undefined;
+};
+
 export const buildOrderCompletedTrackEvent = (order: Order): TrackParams => {
   if (!order.taxedPrice) {
     throw new Error(`Order ${order.id} is missing taxedPrice`);
@@ -27,15 +34,6 @@ export const buildOrderCompletedTrackEvent = (order: Order): TrackParams => {
   const discountTotalCents = calculateDiscountTotalCents(order);
 
   // https://segment.com/docs/connections/spec/ecommerce/v2/#order-completed
-  let context;
-
-  if (order.custom?.fields.consent) {
-    const consent = JSON.parse(order.custom.fields.consent);
-
-    context = {
-      consent,
-    };
-  }
 
   return {
     userId: order.customerId as string, // need either userId or anonymousId
@@ -67,7 +65,7 @@ export const buildOrderCompletedTrackEvent = (order: Order): TrackParams => {
       products: buildProducts(order),
       currency: order.totalPrice.currencyCode,
     },
-    context,
+    context: buildSegmentContext(order.custom?.fields?.consent),
   };
 };
 

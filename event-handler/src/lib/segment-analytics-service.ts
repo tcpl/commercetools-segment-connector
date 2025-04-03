@@ -2,7 +2,10 @@ import { Analytics, IdentifyParams } from '@segment/analytics-node';
 import { getLogger } from '../utils/logger.utils';
 import { Customer, Order } from '@commercetools/platform-sdk';
 import { readConfiguration } from '../utils/config.utils';
-import { buildOrderCompletedTrackEvent } from './segment-event-builder';
+import {
+  buildOrderCompletedTrackEvent,
+  buildSegmentContext,
+} from './segment-event-builder';
 
 const createAnalytics = () => {
   const configuration = readConfiguration();
@@ -14,7 +17,6 @@ const createAnalytics = () => {
 
 export function identifyCustomer(customer: Customer) {
   const logger = getLogger();
-
   const analytics = createAnalytics();
 
   try {
@@ -36,18 +38,10 @@ export function identifyCustomer(customer: Customer) {
         locale: customer.locale,
         createdAt: customer.createdAt,
       },
+      context: buildSegmentContext(customer.custom?.fields?.consent),
     };
 
-    if (customer.custom?.fields.consent) {
-      const consent = JSON.parse(customer.custom.fields.consent);
-
-      identifyParams.context = {
-        consent,
-      };
-    }
-
     analytics.identify(identifyParams);
-
     logger.info(`Customer ${customer.id} sent to Segment successfully`);
   } catch (error) {
     logger.error(`Error sending customer ${customer.id} to Segment: ${error}`);
@@ -58,17 +52,16 @@ export function identifyCustomer(customer: Customer) {
 export function identifyAnonymousCustomer(
   anonymousId: string,
   email: string,
-  consent?: object
+  consentJson?: string
 ) {
   const logger = getLogger();
-
   const analytics = createAnalytics();
 
   try {
     analytics.identify({
       anonymousId,
       traits: { email },
-      context: consent ? { consent } : undefined,
+      context: buildSegmentContext(consentJson),
     });
 
     logger.info(
