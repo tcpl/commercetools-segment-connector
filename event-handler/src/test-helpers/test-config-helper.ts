@@ -8,7 +8,9 @@ export const getConfig = (): Configuration => {
     authUrl: 'https://auth.example.com',
     apiUrl: 'https://api.example.com',
     segmentSourceWriteKey: 'mock-segment-write-key',
+    segmentAnalyticsHost: 'https://api.segment.io',
     segmentPublicApiToken: 'mock-segment-public-api-token',
+    segmentPublicApiHost: 'https://api.segmentapis.com',
     locale: 'en-GB',
     consentCustomFieldName: 'consent',
   };
