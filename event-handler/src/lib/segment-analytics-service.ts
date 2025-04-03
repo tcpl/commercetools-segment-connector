@@ -6,18 +6,18 @@ import {
   buildOrderCompletedTrackEvent,
   buildSegmentContext,
 } from './segment-event-builder';
+import { Configuration } from '../types/index.types';
 
-const createAnalytics = () => {
-  const configuration = readConfiguration();
-
+const createAnalytics = (configuration: Configuration) => {
   return new Analytics({
     writeKey: configuration.segmentSourceWriteKey,
   });
 };
 
 export function identifyCustomer(customer: Customer) {
+  const configuration = readConfiguration();
   const logger = getLogger();
-  const analytics = createAnalytics();
+  const analytics = createAnalytics(configuration);
 
   try {
     // https://segment.com/docs/connections/spec/identify/#custom-traits
@@ -38,7 +38,9 @@ export function identifyCustomer(customer: Customer) {
         locale: customer.locale,
         createdAt: customer.createdAt,
       },
-      context: buildSegmentContext(customer.custom?.fields?.consent),
+      context: buildSegmentContext(
+        customer.custom?.fields?.[configuration.consentCustomFieldName]
+      ),
     };
 
     analytics.identify(identifyParams);
@@ -54,8 +56,9 @@ export function identifyAnonymousCustomer(
   email: string,
   consentJson?: string
 ) {
+  const configuration = readConfiguration();
   const logger = getLogger();
-  const analytics = createAnalytics();
+  const analytics = createAnalytics(configuration);
 
   try {
     analytics.identify({
@@ -76,9 +79,10 @@ export function identifyAnonymousCustomer(
 }
 
 export function trackOrderCompleted(order: Order) {
+  const configuration = readConfiguration();
   const logger = getLogger();
 
-  const analytics = createAnalytics();
+  const analytics = createAnalytics(configuration);
 
   try {
     const event = buildOrderCompletedTrackEvent(order);

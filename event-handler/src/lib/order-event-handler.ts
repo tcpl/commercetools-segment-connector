@@ -5,9 +5,11 @@ import {
   trackOrderCompleted,
 } from './segment-analytics-service';
 import { getLogger } from '../utils/logger.utils';
+import { readConfiguration } from '../utils/config.utils';
 
 export async function handleOrderCreated(orderId: string) {
   const logger = getLogger();
+  const configuration = readConfiguration();
 
   const order = await getOrder(orderId);
 
@@ -25,7 +27,7 @@ export async function handleOrderCreated(orderId: string) {
       identifyAnonymousCustomer(
         order.anonymousId,
         order.customerEmail,
-        order.custom?.fields.consent
+        order.custom?.fields?.[configuration.consentCustomFieldName]
       );
     }
   }

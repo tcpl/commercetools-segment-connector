@@ -16,6 +16,7 @@ export const readConfiguration = (): Configuration => {
     otlpExporterEndpointApiKey: process.env
       .OTEL_EXPORTER_OTLP_ENDPOINT_API_KEY as string,
     locale: process.env.LOCALE || 'en-GB',
+    consentCustomFieldName: process.env.CONSENT_CUSTOM_FIELD_NAME || 'consent',
   };
 
   const validationErrors = getValidateMessages(envValidators, envVars);

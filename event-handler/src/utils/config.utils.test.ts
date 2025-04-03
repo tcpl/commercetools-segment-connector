@@ -23,6 +23,7 @@ describe('readConfiguration', () => {
     process.env.CTP_API_URL = testConfig.apiUrl;
     process.env.SEGMENT_SOURCE_WRITE_KEY = testConfig.segmentSourceWriteKey;
     process.env.LOCALE = 'en-US';
+    process.env.CONSENT_CUSTOM_FIELD_NAME = 'consentCustomFieldName';
 
     const config = readConfiguration();
 
@@ -34,6 +35,7 @@ describe('readConfiguration', () => {
       apiUrl: testConfig.apiUrl,
       segmentSourceWriteKey: testConfig.segmentSourceWriteKey,
       locale: 'en-US',
+      consentCustomFieldName: 'consentCustomFieldName',
     });
   });
 
