@@ -1,4 +1,4 @@
-import { Analytics, IdentifyParams } from '@segment/analytics-node';
+import { Analytics, Context, IdentifyParams } from '@segment/analytics-node';
 import { getLogger } from '../utils/logger.utils';
 import { Customer, Order } from '@commercetools/platform-sdk';
 import { readConfiguration } from '../utils/config.utils';
@@ -12,10 +12,11 @@ const createAnalytics = (configuration: Configuration) => {
   return new Analytics({
     writeKey: configuration.segmentSourceWriteKey,
     host: configuration.segmentAnalyticsHost,
+    flushAt: 1, // disable batching
   });
 };
 
-export function identifyCustomer(customer: Customer) {
+export async function identifyCustomer(customer: Customer) {
   const configuration = readConfiguration();
   const logger = getLogger();
   const analytics = createAnalytics(configuration);
@@ -44,7 +45,15 @@ export function identifyCustomer(customer: Customer) {
       ),
     };
 
-    analytics.identify(identifyParams);
+    await new Promise<void>((resolve, reject) => {
+      analytics.identify(identifyParams, (err?: unknown, _ctx?: Context) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
     logger.info(`Customer ${customer.id} sent to Segment successfully`);
   } catch (error) {
     logger.error(`Error sending customer ${customer.id} to Segment: ${error}`);
