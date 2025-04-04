@@ -1,4 +1,4 @@
-import { Analytics, Context, IdentifyParams } from '@segment/analytics-node';
+import { Analytics, IdentifyParams } from '@segment/analytics-node';
 import { getLogger } from '../utils/logger.utils';
 import { Customer, Order } from '@commercetools/platform-sdk';
 import { readConfiguration } from '../utils/config.utils';
@@ -46,7 +46,7 @@ export async function identifyCustomer(customer: Customer) {
     };
 
     await new Promise<void>((resolve, reject) => {
-      analytics.identify(identifyParams, (err?: unknown, _ctx?: Context) => {
+      analytics.identify(identifyParams, (err?: unknown) => {
         if (err) {
           reject(err);
         } else {

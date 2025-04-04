@@ -40,7 +40,7 @@ beforeEach(() => {
   }));
 
   mockIdentify.mockImplementation((_params, callback) => {
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<void>((resolve) => {
       if (callback) {
         callback(null); // Simulate success
       }
