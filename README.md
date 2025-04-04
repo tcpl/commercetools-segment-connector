@@ -2,18 +2,38 @@
 
 This connector uses commercetools subscriptions to send customer and order data to Twilio Segment.
 
-At present this connector handles the following commercetools events:
+## Overview
+
+The diagram below provides an overview of the integration.
+
+```mermaid
+sequenceDiagram
+        commercetools->>GCP: customer/order events
+        GCP->>connector: customer/order events
+        connector->>Segment: identify, track, delete
+```
+
+## Prerequisites
+
+1. commercetools composable commerce [account](https://commercetools.com/free-trial)
+2. Segment [account](https://segment.com/signup)
+3. A Node.js source setup in Segment. See [Quickstart: Node.js](https://segment.com/docs/connections/sources/catalog/libraries/server/node/quickstart/). You will need your `Write Key` from the source settings.
+4. A Segment Public API Token (optional). This is only available on paid plans and is required for user deletion. See Customer Deletion section below.
+
+## Events
+
+This connector handles the following commercetools events:
 
 - `customer`: `ResourceCreated`, `ResourceUpdated`, `ResourceDeleted`
 - `order`: `ResourceCreated`
 
-## Customer Creation/Updates
+### Customer Creation/Updates
 
 An `identify` call will be made to Segment when a customer is created or updated in commercetools. This follows the [Segment spec](https://segment.com/docs/connections/spec/identify/).
 
 The customer ID and update version number are used as the `messageId` to ensure any duplicate events from commercetools are not duplicated in Segment.
 
-## Customer Deletion
+### Customer Deletion
 
 A call to Segment’s Public API is made to request the deletion of a user when they are deleted in commercetools. The `SUPPRESS_WITH_DELETE` option is used to ensure that the user ID is removed from Segment and any future events are suppressed.
 
@@ -23,7 +43,7 @@ We can only make this call with a Public API token. This is marked as optional i
 
 See [User Deletion and Suppression](https://segment.com/docs/privacy/user-deletion-and-suppression/) for more details.
 
-## Order Creation
+### Order Creation
 
 An `Order Completed` tracking event is sent to segment when an order is created in commercetools. It follows the [Segment spec](https://segment.com/docs/connections/spec/ecommerce/v2/#order-completed). Below are details on the value properties.
 
@@ -42,7 +62,7 @@ Depending on the destination you are sending the events to, you may need to edit
 
 We use `[orderId]-order-completed` as the `messageId` to ensure any duplicate order created events from commercetools are not duplicated in Segment.
 
-### Anonymous Orders
+## Anonymous Orders
 
 For anonymous/guest account orders, an `Identify` call will be made if there is no registered account for the email address on the order. This is only done if the email address is not already registered in commercetools because otherwise guest account orders (where the email hasn't been verified) would be attached to a registered account.
 
@@ -101,3 +121,25 @@ DATA
 ```
 
 The same approach can be used to create a custom field on an order.
+
+## Running the Connector locally
+
+### Prerequisite: GCP Pub/Sub
+
+To run an event based connect application locally, you need to setup a GCP Pub/Sub topic and subscription. When running in Connect this is done for you.
+
+Make sure the topic has permissions for `subscriptions@commercetools-platform.iam.gserviceaccount.com` to publish to the topic.
+
+### Steps
+
+- Create an API Client in commercetools with the following scopes: `view_orders`, `view_customers` and `manage_subscriptions`
+- `cd` into the `event-handler` directory
+- Set up a local .env file as per `.env.example` (using your commercetools API client, GCP Pub/Sub topic and Segment details)
+- Run `yarn` to install the dependencies
+- Run `yarn build` to build the project
+- Run `yarn connector:post-deploy` to create the subscription in commercetools.
+- Run the event service by running `yarn dev` in the `event-handler` directory. This will start a local server on port 8080.
+- Use a HTTP tunnel tool like ngrok to expose the local server to the internet. E.g. `ngrok http 8080` (note you can get a consistent domain from the ngrok dashboard which will provide a consistent domain rather than auto-generating a new one each time).
+- Create a subscription in GCP Pub/Sub for the topic you created above. Use the ngrok URL as the endpoint for the subscription. E.g. `https://[Your ngrok ID].ngrok-free.app/`
+
+See the [connect-email-integration-template](https://github.com/commercetools/connect-email-integration-template/blob/fdc6689e7a53f9f72e05a38d41ea805ad94b8911/mail-sender/README.md?plain=1#L174) for other instructions on how to run the connector locally
