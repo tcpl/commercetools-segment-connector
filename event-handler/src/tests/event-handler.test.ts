@@ -38,6 +38,15 @@ beforeEach(() => {
     identify: mockIdentify,
     track: mockTrack,
   }));
+
+  mockIdentify.mockImplementation((_params, callback) => {
+    return new Promise<void>((resolve, reject) => {
+      if (callback) {
+        callback(null); // Simulate success
+      }
+      resolve();
+    });
+  });
 });
 
 it('should handle customer created event', async () => {
