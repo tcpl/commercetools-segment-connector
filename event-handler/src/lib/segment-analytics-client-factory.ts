@@ -3,7 +3,7 @@ import { readConfiguration } from '../utils/config.utils';
 
 let analytics: Analytics | undefined = undefined;
 
-export const createAnalytics = () => {
+export const getAnalytics = () => {
   if (analytics) {
     return analytics;
   }

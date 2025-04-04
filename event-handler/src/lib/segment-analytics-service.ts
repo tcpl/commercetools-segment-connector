@@ -6,12 +6,12 @@ import {
   buildOrderCompletedTrackEvent,
   buildSegmentContext,
 } from './segment-event-builder';
-import { createAnalytics } from './segment-analytics-client-factory';
+import { getAnalytics } from './segment-analytics-client-factory';
 
 export function identifyCustomer(customer: Customer) {
   const configuration = readConfiguration();
   const logger = getLogger();
-  const analytics = createAnalytics();
+  const analytics = getAnalytics();
 
   try {
     // https://segment.com/docs/connections/spec/identify/#custom-traits
@@ -51,7 +51,7 @@ export function identifyAnonymousCustomer(
   consentJson?: string
 ) {
   const logger = getLogger();
-  const analytics = createAnalytics();
+  const analytics = getAnalytics();
 
   try {
     analytics.identify({
@@ -74,7 +74,7 @@ export function identifyAnonymousCustomer(
 export function trackOrderCompleted(order: Order) {
   const logger = getLogger();
 
-  const analytics = createAnalytics();
+  const analytics = getAnalytics();
 
   try {
     const event = buildOrderCompletedTrackEvent(order);
