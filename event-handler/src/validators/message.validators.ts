@@ -25,7 +25,8 @@ export async function validateMessageBody(request: Request) {
       'Bad request: Wrong No Pub/Sub message format - Missing data in body message'
     );
   }
+
   const encodedMessageBody = request.body.message.data;
-  const messageBody = decodeToJson(encodedMessageBody);
-  return messageBody;
+
+  return decodeToJson(encodedMessageBody);
 }
