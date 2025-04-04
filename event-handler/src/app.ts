@@ -13,7 +13,6 @@ import { validateMessageBody } from './validators/message.validators';
 const app = express();
 app.disable('x-powered-by');
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/', async (req: Request, res: Response) => {
   const messageBody = await validateMessageBody(req);
