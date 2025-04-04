@@ -126,7 +126,7 @@ The same approach can be used to create a custom field on an order.
 
 ### Prerequisite: GCP Pub/Sub
 
-To run an event based connect application locally, you need to setup a GCP Pub/Sub topic and subscription. When running in connect this is done for you.
+To run an event based connect application locally, you need to setup a GCP Pub/Sub topic and subscription. When running in Connect this is done for you.
 
 Make sure the topic has permissions for `subscriptions@commercetools-platform.iam.gserviceaccount.com` to publish to the topic.
 
