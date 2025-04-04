@@ -7,26 +7,10 @@ deployAs:
       preUndeploy: yarn install && yarn build && yarn connector:pre-undeploy
     configuration:
       standardConfiguration:
-        - key: SEGMENT_ANALYTICS_HOST
-          description: Segment Analytics host
-          default: https://api.segment.io
         - key: SEGMENT_PUBLIC_API_HOST
           description: Segment Public API host (for user deletion/suppression)
           default: https://api.segmentapis.com
-        - key: OTEL_EXPORTER_OTLP_ENDPOINT
-          description: OpenTelemetry OTLP exporter endpoint
-        - key: LOCALE
-          description: Locale to use for multilingual properties (e.g product names)
-          default: en-GB
-        - key: CONSENT_CUSTOM_FIELD_NAME
-          description: Custom field name on customers and orders for consent settings
-          default: consent
       securedConfiguration:
-        - key: SEGMENT_SOURCE_WRITE_KEY
-          description: The write key from your Twilio Segment Source
-          required: true
-        - key: OTEL_EXPORTER_OTLP_ENDPOINT_API_KEY
-          description: OpenTelemetry OTLP exporter API key
         - key: SEGMENT_PUBLIC_API_TOKEN
           description: Segment Public API Token (for user deletion/suppression)
 inheritAs:
@@ -35,3 +19,22 @@ inheritAs:
       - view_orders
       - view_customers
       - manage_subscriptions
+  configuration:
+    securedConfiguration:
+      - key: SEGMENT_SOURCE_WRITE_KEY
+        description: The write key from your Twilio Segment Source
+        required: true
+      - key: OTEL_EXPORTER_OTLP_ENDPOINT_API_KEY
+        description: OpenTelemetry OTLP exporter API key
+    standardConfiguration:
+      - key: SEGMENT_ANALYTICS_HOST
+        description: Segment Analytics host
+        default: https://api.segment.io
+      - key: OTEL_EXPORTER_OTLP_ENDPOINT
+        description: OpenTelemetry OTLP exporter endpoint
+      - key: LOCALE
+        description: Locale to use for multilingual properties (e.g product names)
+        default: en-GB
+      - key: CONSENT_CUSTOM_FIELD_NAME
+        description: Custom field name on customers and orders for consent settings
+        default: consent
