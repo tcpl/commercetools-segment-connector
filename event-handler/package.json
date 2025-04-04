@@ -5,6 +5,7 @@
   "scripts": {
     "postinstall": "cd .. && husky ./event-handler/.husky",
     "start": "node build/index.js",
+    "gcp-build": "tsc",
     "dev": "tsx --watch --conditions=development src/index.ts",
     "build": "rimraf ./build && tsc",
     "lint": "prettier --check 'src/**/*.{js,ts}' && eslint .",
