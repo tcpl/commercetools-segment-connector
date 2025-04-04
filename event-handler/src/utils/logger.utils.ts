@@ -6,7 +6,7 @@ import {
   BatchLogRecordProcessor,
   SimpleLogRecordProcessor,
 } from '@opentelemetry/sdk-logs';
-import { Resource } from '@opentelemetry/resources';
+import { resourceFromAttributes } from '@opentelemetry/resources';
 import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-http';
 
 import { OpenTelemetryTransportV3 } from '@opentelemetry/winston-transport';
@@ -27,7 +27,7 @@ export const getLogger = (useBatchLogRecordProcessor: boolean = true) => {
       configuration.otlpExporterEndpointApiKey
     ) {
       const loggerProvider = new LoggerProvider({
-        resource: new Resource({
+        resource: resourceFromAttributes({
           ['service.name']: `tcpl-segment-connector:${configuration.projectKey}`,
         }),
       });
