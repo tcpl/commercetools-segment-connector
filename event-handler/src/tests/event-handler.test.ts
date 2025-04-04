@@ -296,6 +296,29 @@ it('should ignore unsupported notification types', async () => {
   expect(createApiRoot).not.toHaveBeenCalled();
 });
 
+test('should return 400 for empty body', async () => {
+  const response = await request(app).post('/');
+  expect(response.status).toBe(400);
+});
+
+test('should return 400 for invalid body', async () => {
+  const response = await request(app).post('/').send({
+    message: 'hello world',
+  });
+  expect(response.status).toBe(400);
+});
+
+test('should return 400 for empty body', async () => {
+  const response = await request(app)
+    .post('/')
+    .send({
+      message: {
+        data: null,
+      },
+    });
+  expect(response.status).toBe(400);
+});
+
 const postOrderCreatedEvent = (orderId: string) => {
   return request(app)
     .post('/')
