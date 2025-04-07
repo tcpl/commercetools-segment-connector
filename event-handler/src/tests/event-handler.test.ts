@@ -44,6 +44,12 @@ beforeEach(() => {
       callback(null); // Simulate success
     }
   });
+
+  mockTrack.mockImplementation((_params, callback) => {
+    if (callback) {
+      callback(null); // Simulate success
+    }
+  });
 });
 
 it('should handle customer created event', async () => {

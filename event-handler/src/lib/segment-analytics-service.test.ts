@@ -225,6 +225,12 @@ describe('trackOrderCompleted', () => {
     (Analytics as jest.Mock).mockImplementation(() => ({
       track: mockTrack,
     }));
+
+    mockTrack.mockImplementation((_params, callback) => {
+      if (callback) {
+        callback(null); // Simulate success
+      }
+    });
   });
 
   it('order with US Tax tracked correctly', async () => {
@@ -232,7 +238,7 @@ describe('trackOrderCompleted', () => {
 
     await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith({
+    expect(mockTrack.mock.calls[0][0]).toEqual({
       event: 'Order Completed',
       userId: 'e3b424f5-0d5c-419d-b067-32cd70b13a89',
       anonymousId: undefined,
@@ -270,7 +276,7 @@ describe('trackOrderCompleted', () => {
 
     await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith({
+    expect(mockTrack.mock.calls[0][0]).toEqual({
       event: 'Order Completed',
       userId: undefined,
       anonymousId: 'af71da5e-28bd-4059-8b06-cfe3c513274e',
@@ -308,7 +314,7 @@ describe('trackOrderCompleted', () => {
 
     await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 59.24,
@@ -326,7 +332,7 @@ describe('trackOrderCompleted', () => {
 
     await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 13.06,
@@ -344,7 +350,7 @@ describe('trackOrderCompleted', () => {
 
     await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 3.12,
@@ -362,7 +368,7 @@ describe('trackOrderCompleted', () => {
 
     await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 282.62,
@@ -380,7 +386,7 @@ describe('trackOrderCompleted', () => {
 
     await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 65.83,
@@ -398,7 +404,7 @@ describe('trackOrderCompleted', () => {
 
     await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 172.47,
@@ -416,7 +422,7 @@ describe('trackOrderCompleted', () => {
 
     await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 380.84,
@@ -434,7 +440,7 @@ describe('trackOrderCompleted', () => {
 
     await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 228.21,
@@ -452,7 +458,7 @@ describe('trackOrderCompleted', () => {
 
     await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 280.66,
@@ -470,7 +476,7 @@ describe('trackOrderCompleted', () => {
 
     await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 280.66,
@@ -488,7 +494,7 @@ describe('trackOrderCompleted', () => {
 
     await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 208.33,
@@ -506,7 +512,7 @@ describe('trackOrderCompleted', () => {
 
     await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 40.31,
@@ -535,7 +541,7 @@ describe('trackOrderCompleted', () => {
 
     await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           coupon: 'BOGO',
@@ -549,7 +555,7 @@ describe('trackOrderCompleted', () => {
 
     await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           shipping: 0,
@@ -563,7 +569,7 @@ describe('trackOrderCompleted', () => {
 
     await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         context: {
           consent: {
