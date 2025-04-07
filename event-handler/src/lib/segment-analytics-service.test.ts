@@ -35,6 +35,12 @@ describe('sendCustomer', () => {
     (Analytics as jest.Mock).mockImplementation(() => ({
       identify: mockIdentify,
     }));
+
+    mockIdentify.mockImplementation((_params, callback) => {
+      if (callback) {
+        callback(null); // Simulate success
+      }
+    });
   });
 
   it('should send customer data to Segment', async () => {
@@ -51,9 +57,9 @@ describe('sendCustomer', () => {
       locale: 'en-US',
     });
 
-    identifyCustomer(mockCustomer);
+    await identifyCustomer(mockCustomer);
 
-    expect(mockIdentify).toHaveBeenCalledWith({
+    expect(mockIdentify.mock.calls[0][0]).toEqual({
       userId: '762a5ae5-e8c8-47c2-8af2-0dd7024d0f7c',
       messageId: '762a5ae5-e8c8-47c2-8af2-0dd7024d0f7c-2',
       timestamp: '2023-02-01T12:00:00.000Z',
@@ -75,9 +81,9 @@ describe('sendCustomer', () => {
   it('should handle missing customer properties gracefully', async () => {
     const mockCustomer = createMockCustomer();
 
-    identifyCustomer(mockCustomer);
+    await identifyCustomer(mockCustomer);
 
-    expect(mockIdentify).toHaveBeenCalledWith({
+    expect(mockIdentify.mock.calls[0][0]).toEqual({
       userId: '762a5ae5-e8c8-47c2-8af2-0dd7024d0f7c',
       messageId: '762a5ae5-e8c8-47c2-8af2-0dd7024d0f7c-2',
       timestamp: '2023-02-01T12:00:00.000Z',
@@ -120,9 +126,9 @@ describe('sendCustomer', () => {
       },
     });
 
-    identifyCustomer(mockCustomer);
+    await identifyCustomer(mockCustomer);
 
-    expect(mockIdentify).toHaveBeenCalledWith(
+    expect(mockIdentify.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         context: {
           consent: {
@@ -139,15 +145,15 @@ describe('sendCustomer', () => {
   });
 
   it('should throw an error when Segment API fails', async () => {
-    const segmentError = new Error('Segment API failure');
-
-    mockIdentify.mockImplementation(() => {
-      throw segmentError;
+    mockIdentify.mockImplementation((_params, callback) => {
+      if (callback) {
+        callback(new Error('test error'));
+      }
     });
 
     const mockCustomer = createMockCustomer();
 
-    expect(() => identifyCustomer(mockCustomer)).toThrow(segmentError);
+    expect(async () => await identifyCustomer(mockCustomer)).rejects.toThrow();
   });
 });
 
@@ -160,33 +166,39 @@ describe('identifyAnonymousUser', () => {
     (Analytics as jest.Mock).mockImplementation(() => ({
       identify: mockIdentify,
     }));
+
+    mockIdentify.mockImplementation((_params, callback) => {
+      if (callback) {
+        callback(null); // Simulate success
+      }
+    });
   });
 
   it('should identify an anonymous user with provided anonymousId and email', async () => {
     const anonymousId = '550e8400-e29b-41d4-a716-446655440000';
     const email = 'anonymous@example.com';
 
-    identifyAnonymousCustomer(anonymousId, email);
+    await identifyAnonymousCustomer(anonymousId, email);
 
-    expect(mockIdentify).toHaveBeenCalledWith({
+    expect(mockIdentify.mock.calls[0][0]).toEqual({
       anonymousId,
       traits: { email },
     });
   });
 
   it('should throw an error when Segment API fails', async () => {
-    const segmentError = new Error('Segment API failure');
-
-    mockIdentify.mockImplementation(() => {
-      throw segmentError;
+    mockIdentify.mockImplementation((_params, callback) => {
+      if (callback) {
+        callback(new Error('test error'));
+      }
     });
 
     const anonymousId = '550e8400-e29b-41d4-a716-446655440002';
     const email = 'anonymous@example.com';
 
-    expect(() => identifyAnonymousCustomer(anonymousId, email)).toThrow(
-      segmentError
-    );
+    expect(
+      async () => await identifyAnonymousCustomer(anonymousId, email)
+    ).rejects.toThrow();
   });
 });
 
@@ -213,14 +225,20 @@ describe('trackOrderCompleted', () => {
     (Analytics as jest.Mock).mockImplementation(() => ({
       track: mockTrack,
     }));
+
+    mockTrack.mockImplementation((_params, callback) => {
+      if (callback) {
+        callback(null); // Simulate success
+      }
+    });
   });
 
-  it('order with US Tax tracked correctly', () => {
+  it('order with US Tax tracked correctly', async () => {
     const order = orderWithUSTax as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith({
+    expect(mockTrack.mock.calls[0][0]).toEqual({
       event: 'Order Completed',
       userId: 'e3b424f5-0d5c-419d-b067-32cd70b13a89',
       anonymousId: undefined,
@@ -253,12 +271,12 @@ describe('trackOrderCompleted', () => {
     });
   });
 
-  it('order with shipping discount tracked correctly', () => {
+  it('order with shipping discount tracked correctly', async () => {
     const order = orderWithShippingDiscount as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith({
+    expect(mockTrack.mock.calls[0][0]).toEqual({
       event: 'Order Completed',
       userId: undefined,
       anonymousId: 'af71da5e-28bd-4059-8b06-cfe3c513274e',
@@ -291,12 +309,24 @@ describe('trackOrderCompleted', () => {
     });
   });
 
-  it('order with discount on total price tracked correctly', () => {
+  it('should throw an error when Segment API fails', async () => {
+    mockTrack.mockImplementation((_params, callback) => {
+      if (callback) {
+        callback(new Error('test error'));
+      }
+    });
+
     const order = orderWithDiscountOnTotalPrice as Order;
 
-    trackOrderCompleted(order);
+    expect(async () => await trackOrderCompleted(order)).rejects.toThrow();
+  });
 
-    expect(mockTrack).toHaveBeenCalledWith(
+  it('order with discount on total price tracked correctly', async () => {
+    const order = orderWithDiscountOnTotalPrice as Order;
+
+    await trackOrderCompleted(order);
+
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 59.24,
@@ -309,12 +339,12 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with total price discount larger than item total tracked correctly', () => {
+  it('order with total price discount larger than item total tracked correctly', async () => {
     const order = orderWithTotalPriceDiscountLargerThanItemTotal as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 13.06,
@@ -327,12 +357,12 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with item discount tracked correctly', () => {
+  it('order with item discount tracked correctly', async () => {
     const order = orderWithItemDiscount as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 3.12,
@@ -345,12 +375,12 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with product discount tracked correctly', () => {
+  it('order with product discount tracked correctly', async () => {
     const order = orderWithProductDiscount as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 282.62,
@@ -363,12 +393,12 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('anonymous order with no discounts tracked correctly', () => {
+  it('anonymous order with no discounts tracked correctly', async () => {
     const order = anonymousOrderWithNoDiscounts as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 65.83,
@@ -381,12 +411,12 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with US tax and item discount tracked correctly', () => {
+  it('order with US tax and item discount tracked correctly', async () => {
     const order = orderWithUSTaxAndItemDiscount as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 172.47,
@@ -399,12 +429,12 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with US tax and multi-buy discount tracked correctly', () => {
+  it('order with US tax and multi-buy discount tracked correctly', async () => {
     const order = orderWithUSTaxAndMultiBuyDiscount as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 380.84,
@@ -417,12 +447,12 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with US tax, item discount, and product discount tracked correctly', () => {
+  it('order with US tax, item discount, and product discount tracked correctly', async () => {
     const order = orderWithUSTaxItemAndProductDiscount as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 228.21,
@@ -435,12 +465,12 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with multiple shipping methods tracked correctly', () => {
+  it('order with multiple shipping methods tracked correctly', async () => {
     const order = orderWithMultipleShippingMethods as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 280.66,
@@ -453,12 +483,12 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with multiple shipping methods and shipping discount tracked correctly', () => {
+  it('order with multiple shipping methods and shipping discount tracked correctly', async () => {
     const order = orderWithMultipleShippingMethodsAndShippingDiscount as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 280.66,
@@ -471,12 +501,12 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with US tax and shipping discount tracked correctly', () => {
+  it('order with US tax and shipping discount tracked correctly', async () => {
     const order = orderWithUSTaxAndShippingDiscount as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 208.33,
@@ -489,12 +519,12 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with US tax and discount on total price tracked correctly', () => {
+  it('order with US tax and discount on total price tracked correctly', async () => {
     const order = orderWithUSTaxAndDiscountOnTotalPrice as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           subtotal: 40.31,
@@ -507,23 +537,23 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('should throw an error if taxedPrice is missing', () => {
+  it('should throw an error if taxedPrice is missing', async () => {
     const order = {
       ...anonymousOrderWithNoDiscounts,
       taxedPrice: undefined,
     } as Order;
 
-    expect(() => trackOrderCompleted(order)).toThrow(
+    await expect(() => trackOrderCompleted(order)).rejects.toThrow(
       `Order ${order.id} is missing taxedPrice`
     );
   });
 
-  it('should export discount code if available', () => {
+  it('should export discount code if available', async () => {
     const order = orderWithDiscountCode as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           coupon: 'BOGO',
@@ -532,12 +562,12 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with no shippingInfo should have a shipping cost of 0', () => {
+  it('order with no shippingInfo should have a shipping cost of 0', async () => {
     const order = orderWithNoShippingInfo as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         properties: expect.objectContaining({
           shipping: 0,
@@ -546,12 +576,12 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with consent field should pass consent to Segment', () => {
+  it('order with consent field should pass consent to Segment', async () => {
     const order = orderWithConsentField as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
-    expect(mockTrack).toHaveBeenCalledWith(
+    expect(mockTrack.mock.calls[0][0]).toEqual(
       expect.objectContaining({
         context: {
           consent: {

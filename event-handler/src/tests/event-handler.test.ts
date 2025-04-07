@@ -38,6 +38,18 @@ beforeEach(() => {
     identify: mockIdentify,
     track: mockTrack,
   }));
+
+  mockIdentify.mockImplementation((_params, callback) => {
+    if (callback) {
+      callback(null); // Simulate success
+    }
+  });
+
+  mockTrack.mockImplementation((_params, callback) => {
+    if (callback) {
+      callback(null); // Simulate success
+    }
+  });
 });
 
 it('should handle customer created event', async () => {
@@ -190,7 +202,7 @@ it('should identify customer for anonymous order when no registered customer exi
     204
   );
 
-  expect(mockIdentify).toHaveBeenCalledWith({
+  expect(mockIdentify.mock.calls[0][0]).toEqual({
     anonymousId: '2a5c1992-4380-4ca2-b679-64a613bd6df8',
     traits: { email: 'nonexistent@example.com' },
   });
@@ -212,7 +224,7 @@ it('anonymous order with consent field and no registered customer should pass co
     204
   );
 
-  expect(mockIdentify).toHaveBeenCalledWith(
+  expect(mockIdentify.mock.calls[0][0]).toEqual(
     expect.objectContaining({
       context: {
         consent: {
