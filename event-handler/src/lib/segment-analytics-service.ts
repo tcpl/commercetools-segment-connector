@@ -7,6 +7,7 @@ import {
   buildSegmentContext,
 } from './segment-event-builder';
 import { Configuration } from '../types/index.types';
+import { promisify } from 'util';
 
 const createAnalytics = (configuration: Configuration) => {
   return new Analytics({
@@ -20,6 +21,7 @@ export async function identifyCustomer(customer: Customer) {
   const configuration = readConfiguration();
   const logger = getLogger();
   const analytics = createAnalytics(configuration);
+  const identifyAsync = promisify(analytics.identify.bind(analytics));
 
   try {
     // https://segment.com/docs/connections/spec/identify/#custom-traits
@@ -45,15 +47,7 @@ export async function identifyCustomer(customer: Customer) {
       ),
     };
 
-    await new Promise<void>((resolve, reject) => {
-      analytics.identify(identifyParams, (err?: unknown) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve();
-        }
-      });
-    });
+    await identifyAsync(identifyParams);
     logger.info(`Customer ${customer.id} sent to Segment successfully`);
   } catch (error) {
     logger.error(`Error sending customer ${customer.id} to Segment: ${error}`);
@@ -69,6 +63,7 @@ export async function identifyAnonymousCustomer(
   const configuration = readConfiguration();
   const logger = getLogger();
   const analytics = createAnalytics(configuration);
+  const identifyAsync = promisify(analytics.identify.bind(analytics));
 
   try {
     const identifyParams = {
@@ -77,16 +72,7 @@ export async function identifyAnonymousCustomer(
       context: buildSegmentContext(consentJson),
     };
 
-    await new Promise<void>((resolve, reject) => {
-      analytics.identify(identifyParams, (err?: unknown) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve();
-        }
-      });
-    });
-
+    await identifyAsync(identifyParams);
     logger.info(
       `Anonymous customer ${anonymousId} sent to Segment successfully`
     );
@@ -101,22 +87,13 @@ export async function identifyAnonymousCustomer(
 export async function trackOrderCompleted(order: Order) {
   const configuration = readConfiguration();
   const logger = getLogger();
-
   const analytics = createAnalytics(configuration);
+  const trackAsync = promisify(analytics.track.bind(analytics));
 
   try {
     const event = buildOrderCompletedTrackEvent(order);
 
-    await new Promise<void>((resolve, reject) => {
-      analytics.track(event, (err?: unknown) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve();
-        }
-      });
-    });
-
+    await trackAsync(event);
     logger.info(
       `Order Completed ${order.id} track event sent to Segment successfully`
     );
