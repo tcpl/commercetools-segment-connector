@@ -14,7 +14,6 @@ const createAnalytics = (configuration: Configuration) => {
     writeKey: configuration.segmentSourceWriteKey,
     host: configuration.segmentAnalyticsHost,
     flushAt: 1, // disable batching
-    path: '/not-found',
   });
 };
 
