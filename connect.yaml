@@ -29,3 +29,8 @@ deployAs:
           required: true
         - key: OTEL_EXPORTER_OTLP_ENDPOINT_API_KEY
           description: OpenTelemetry OTLP exporter API key
+inheritAs:
+  apiClient:
+    scopes:
+      - manage_extensions
+      - manage_types
