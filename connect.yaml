@@ -36,8 +36,12 @@ deployAs:
       postDeploy: yarn install && yarn build && yarn connector:post-deploy
       preUndeploy: yarn install && yarn build && yarn connector:pre-undeploy
     configuration:
-      standardConfiguration: []
-      securedConfiguration: []
+      standardConfiguration:
+        - key: OTEL_EXPORTER_OTLP_ENDPOINT
+          description: OpenTelemetry OTLP exporter endpoint
+      securedConfiguration:
+        - key: OTEL_EXPORTER_OTLP_ENDPOINT_API_KEY
+          description: OpenTelemetry OTLP exporter API key
 inheritAs:
   apiClient:
     scopes:
