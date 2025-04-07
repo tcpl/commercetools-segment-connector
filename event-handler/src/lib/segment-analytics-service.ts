@@ -61,7 +61,7 @@ export async function identifyCustomer(customer: Customer) {
   }
 }
 
-export function identifyAnonymousCustomer(
+export async function identifyAnonymousCustomer(
   anonymousId: string,
   email: string,
   consentJson?: string
@@ -71,10 +71,20 @@ export function identifyAnonymousCustomer(
   const analytics = createAnalytics(configuration);
 
   try {
-    analytics.identify({
+    const identifyParams = {
       anonymousId,
       traits: { email },
       context: buildSegmentContext(consentJson),
+    };
+
+    await new Promise<void>((resolve, reject) => {
+      analytics.identify(identifyParams, (err?: unknown) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
     });
 
     logger.info(
