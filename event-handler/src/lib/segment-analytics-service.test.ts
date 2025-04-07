@@ -186,20 +186,20 @@ describe('identifyAnonymousUser', () => {
     });
   });
 
-  // it('should throw an error when Segment API fails', async () => {
-  //   const segmentError = new Error('Segment API failure');
+  it('should throw an error when Segment API fails', async () => {
+    mockIdentify.mockImplementation((_params, callback) => {
+      if (callback) {
+        callback(new Error('test error'));
+      }
+    });
 
-  //   mockIdentify.mockImplementation(() => {
-  //     throw segmentError;
-  //   });
+    const anonymousId = '550e8400-e29b-41d4-a716-446655440002';
+    const email = 'anonymous@example.com';
 
-  //   const anonymousId = '550e8400-e29b-41d4-a716-446655440002';
-  //   const email = 'anonymous@example.com';
-
-  //   expect(() => identifyAnonymousCustomer(anonymousId, email)).toThrow(
-  //     segmentError
-  //   );
-  // });
+    expect(
+      async () => await identifyAnonymousCustomer(anonymousId, email)
+    ).rejects.toThrow();
+  });
 });
 
 const createMockCustomer = (overrides = {}) => ({
