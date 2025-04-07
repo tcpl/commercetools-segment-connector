@@ -1,0 +1,425 @@
+{
+  "type": "Order",
+  "id": "ae04cc1e-5376-40b9-9105-ff4729b489c3",
+  "version": 1,
+  "versionModifiedAt": "2025-03-28T15:15:28.625Z",
+  "lastMessageSequenceNumber": 1,
+  "createdAt": "2025-03-28T15:15:28.610Z",
+  "lastModifiedAt": "2025-03-28T15:15:28.610Z",
+  "lastModifiedBy": {
+    "clientId": "sOrR9n__bOkuAMvqqhlllNZ6",
+    "isPlatformClient": false
+  },
+  "createdBy": {
+    "clientId": "sOrR9n__bOkuAMvqqhlllNZ6",
+    "isPlatformClient": false
+  },
+  "customerEmail": "test@example.com",
+  "totalPrice": {
+    "type": "centPrecision",
+    "currencyCode": "USD",
+    "centAmount": 7900,
+    "fractionDigits": 2
+  },
+  "taxedPrice": {
+    "totalNet": {
+      "type": "centPrecision",
+      "currencyCode": "USD",
+      "centAmount": 6583,
+      "fractionDigits": 2
+    },
+    "totalGross": {
+      "type": "centPrecision",
+      "currencyCode": "USD",
+      "centAmount": 7900,
+      "fractionDigits": 2
+    },
+    "taxPortions": [
+      {
+        "rate": 0.2,
+        "amount": {
+          "type": "centPrecision",
+          "currencyCode": "USD",
+          "centAmount": 2150,
+          "fractionDigits": 2
+        },
+        "name": "Standard VAT for US"
+      }
+    ],
+    "totalTax": {
+      "type": "centPrecision",
+      "currencyCode": "USD",
+      "centAmount": 1317,
+      "fractionDigits": 2
+    }
+  },
+  "country": "US",
+  "taxedShippingPrice": {
+    "totalNet": {
+      "type": "centPrecision",
+      "currencyCode": "USD",
+      "centAmount": 2552,
+      "fractionDigits": 2
+    },
+    "totalGross": {
+      "type": "centPrecision",
+      "currencyCode": "USD",
+      "centAmount": 3062,
+      "fractionDigits": 2
+    },
+    "taxPortions": [
+      {
+        "rate": 0.2,
+        "amount": {
+          "type": "centPrecision",
+          "currencyCode": "USD",
+          "centAmount": 833,
+          "fractionDigits": 2
+        },
+        "name": "Standard VAT for US"
+      }
+    ],
+    "totalTax": {
+      "type": "centPrecision",
+      "currencyCode": "USD",
+      "centAmount": 510,
+      "fractionDigits": 2
+    }
+  },
+  "discountOnTotalPrice": {
+    "discountedAmount": {
+      "type": "centPrecision",
+      "currencyCode": "USD",
+      "centAmount": 5000,
+      "fractionDigits": 2
+    },
+    "includedDiscounts": [
+      {
+        "discount": {
+          "typeId": "cart-discount",
+          "id": "98e3c7bd-7bbc-42f6-84f1-b7f1aef69c8f"
+        },
+        "discountedAmount": {
+          "type": "centPrecision",
+          "currencyCode": "USD",
+          "centAmount": 5000,
+          "fractionDigits": 2
+        }
+      }
+    ],
+    "discountedNetAmount": {
+      "type": "centPrecision",
+      "currencyCode": "USD",
+      "centAmount": 4167,
+      "fractionDigits": 2
+    },
+    "discountedGrossAmount": {
+      "type": "centPrecision",
+      "currencyCode": "USD",
+      "centAmount": 5000,
+      "fractionDigits": 2
+    }
+  },
+  "orderState": "Open",
+  "syncInfo": [],
+  "returnInfo": [],
+  "taxMode": "Platform",
+  "inventoryMode": "None",
+  "taxRoundingMode": "HalfEven",
+  "taxCalculationMode": "LineItemLevel",
+  "origin": "Customer",
+  "shippingMode": "Single",
+  "shippingInfo": {
+    "shippingMethodName": "US Delivery",
+    "price": {
+      "type": "centPrecision",
+      "currencyCode": "USD",
+      "centAmount": 5000,
+      "fractionDigits": 2
+    },
+    "shippingRate": {
+      "price": {
+        "type": "centPrecision",
+        "currencyCode": "USD",
+        "centAmount": 5000,
+        "fractionDigits": 2
+      },
+      "freeAbove": {
+        "type": "centPrecision",
+        "currencyCode": "USD",
+        "centAmount": 100000,
+        "fractionDigits": 2
+      },
+      "tiers": []
+    },
+    "taxRate": {
+      "name": "Standard VAT for US",
+      "amount": 0.2,
+      "includedInPrice": true,
+      "country": "US",
+      "id": "Fr1LDwTv",
+      "key": "vat-standard-us",
+      "subRates": []
+    },
+    "taxCategory": {
+      "typeId": "tax-category",
+      "id": "e4105917-4e42-4998-b0e1-685f744f9956"
+    },
+    "deliveries": [],
+    "shippingMethod": {
+      "typeId": "shipping-method",
+      "id": "92d79985-d895-478e-80be-15a8683bd606"
+    },
+    "taxedPrice": {
+      "totalNet": {
+        "type": "centPrecision",
+        "currencyCode": "USD",
+        "centAmount": 4167,
+        "fractionDigits": 2
+      },
+      "totalGross": {
+        "type": "centPrecision",
+        "currencyCode": "USD",
+        "centAmount": 5000,
+        "fractionDigits": 2
+      },
+      "taxPortions": [
+        {
+          "rate": 0.2,
+          "amount": {
+            "type": "centPrecision",
+            "currencyCode": "USD",
+            "centAmount": 833,
+            "fractionDigits": 2
+          },
+          "name": "Standard VAT for US"
+        }
+      ],
+      "totalTax": {
+        "type": "centPrecision",
+        "currencyCode": "USD",
+        "centAmount": 833,
+        "fractionDigits": 2
+      }
+    },
+    "shippingMethodState": "MatchesCart"
+  },
+  "shippingAddress": {
+    "firstName": "First",
+    "lastName": "Last",
+    "streetName": "Street",
+    "postalCode": "Zip",
+    "city": "Town",
+    "state": "AK",
+    "country": "US",
+    "email": "test@example.com"
+  },
+  "shipping": [],
+  "discountTypeCombination": {
+    "type": "Stacking"
+  },
+  "lineItems": [
+    {
+      "id": "1de8d2dd-4092-4b4d-804b-d67acd75c8ea",
+      "productId": "600bf085-00fa-47a8-88d3-e615ec6d9d71",
+      "productKey": "minimalist-cedar-nightstand",
+      "name": {
+        "en-GB": "Minimalist Cedar Nightstand",
+        "de-DE": "Minimalistischer Zedernholz Nachttisch",
+        "en-US": "Minimalist Cedar Nightstand"
+      },
+      "productType": {
+        "typeId": "product-type",
+        "id": "d1a88a56-c368-453c-b5d1-73f5389fd898",
+        "version": 1
+      },
+      "productSlug": {
+        "en-GB": "minimalist-cedar-nightstand",
+        "de-DE": "minimalistischer-nachttisch-aus-zedernholz",
+        "en-US": "minimalist-cedar-nightstand"
+      },
+      "variant": {
+        "id": 1,
+        "sku": "CNS-0434",
+        "key": "minimalistCedarNightstand01",
+        "prices": [
+          {
+            "id": "3c78b1d0-0f09-43d8-ad32-6c604884a22b",
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "EUR",
+              "centAmount": 7900,
+              "fractionDigits": 2
+            },
+            "key": "7900EUR",
+            "country": "DE"
+          },
+          {
+            "id": "3289119d-0957-440c-892c-022ebaf39d87",
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "GBP",
+              "centAmount": 7900,
+              "fractionDigits": 2
+            },
+            "key": "7900GBP",
+            "country": "GB"
+          },
+          {
+            "id": "c8ae3d3f-f412-4fc8-ab89-576202f69d92",
+            "value": {
+              "type": "centPrecision",
+              "currencyCode": "USD",
+              "centAmount": 7900,
+              "fractionDigits": 2
+            },
+            "key": "7900USD",
+            "country": "US"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Minimalist_Cedar_Nightstand-1.3.jpeg",
+            "dimensions": {
+              "w": 4011,
+              "h": 6016
+            }
+          },
+          {
+            "url": "https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Minimalist_Cedar_Nightstand-1.1.jpeg",
+            "dimensions": {
+              "w": 4011,
+              "h": 6016
+            }
+          },
+          {
+            "url": "https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Minimalist_Cedar_Nightstand-1.2.jpeg",
+            "dimensions": {
+              "w": 4011,
+              "h": 6016
+            }
+          }
+        ],
+        "attributes": [
+          {
+            "name": "finish",
+            "value": {
+              "en-GB": "Gainsboro:#dcdcdc",
+              "de-DE": "Gainsboro:#dcdcdc",
+              "en-US": "Gainsboro:#dcdcdc"
+            }
+          }
+        ],
+        "assets": [],
+        "availability": {
+          "isOnStock": true,
+          "availableQuantity": 100,
+          "version": 1,
+          "id": "59f21bb1-fb1d-4a5a-ba39-ea31561608d5"
+        }
+      },
+      "price": {
+        "id": "c8ae3d3f-f412-4fc8-ab89-576202f69d92",
+        "value": {
+          "type": "centPrecision",
+          "currencyCode": "USD",
+          "centAmount": 7900,
+          "fractionDigits": 2
+        },
+        "key": "7900USD",
+        "country": "US"
+      },
+      "quantity": 1,
+      "discountedPricePerQuantity": [],
+      "taxRate": {
+        "name": "Standard VAT for US",
+        "amount": 0.2,
+        "includedInPrice": true,
+        "country": "US",
+        "id": "Fr1LDwTv",
+        "key": "vat-standard-us",
+        "subRates": []
+      },
+      "perMethodTaxRate": [],
+      "addedAt": "2025-03-28T15:14:58.055Z",
+      "lastModifiedAt": "2025-03-28T15:14:58.055Z",
+      "state": [
+        {
+          "quantity": 1,
+          "state": {
+            "typeId": "state",
+            "id": "23a7d77f-c6a0-4876-b763-a5d8a27f9549"
+          }
+        }
+      ],
+      "priceMode": "Platform",
+      "lineItemMode": "Standard",
+      "totalPrice": {
+        "type": "centPrecision",
+        "currencyCode": "USD",
+        "centAmount": 7900,
+        "fractionDigits": 2
+      },
+      "taxedPrice": {
+        "totalNet": {
+          "type": "centPrecision",
+          "currencyCode": "USD",
+          "centAmount": 6583,
+          "fractionDigits": 2
+        },
+        "totalGross": {
+          "type": "centPrecision",
+          "currencyCode": "USD",
+          "centAmount": 7900,
+          "fractionDigits": 2
+        },
+        "taxPortions": [
+          {
+            "rate": 0.2,
+            "amount": {
+              "type": "centPrecision",
+              "currencyCode": "USD",
+              "centAmount": 1317,
+              "fractionDigits": 2
+            },
+            "name": "Standard VAT for US"
+          }
+        ],
+        "totalTax": {
+          "type": "centPrecision",
+          "currencyCode": "USD",
+          "centAmount": 1317,
+          "fractionDigits": 2
+        }
+      },
+      "taxedPricePortions": []
+    }
+  ],
+  "customLineItems": [],
+  "transactionFee": true,
+  "discountCodes": [],
+  "directDiscounts": [],
+  "cart": {
+    "typeId": "cart",
+    "id": "340472d1-e56f-4530-a7b0-7ea4bdc5a1cd"
+  },
+  "paymentInfo": {
+    "payments": [
+      {
+        "typeId": "payment",
+        "id": "3137387e-1314-45d1-8caa-ac98c4719969"
+      }
+    ]
+  },
+  "billingAddress": {
+    "firstName": "First",
+    "lastName": "Last",
+    "streetName": "Street",
+    "postalCode": "Zip",
+    "city": "Town",
+    "country": "US",
+    "email": "test@example.com"
+  },
+  "itemShippingAddresses": [],
+  "refusedGifts": []
+}

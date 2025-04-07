@@ -29,6 +29,15 @@ deployAs:
           description: OpenTelemetry OTLP exporter API key
         - key: SEGMENT_PUBLIC_API_TOKEN
           description: Segment Public API Token (for user deletion/suppression)
+  - name: service
+    applicationType: service
+    endpoint: /
+    scripts:
+      postDeploy: yarn install && yarn build && yarn connector:post-deploy
+      preUndeploy: yarn install && yarn build && yarn connector:pre-undeploy
+    configuration:
+      standardConfiguration: []
+      securedConfiguration: []
 inheritAs:
   apiClient:
     scopes:
