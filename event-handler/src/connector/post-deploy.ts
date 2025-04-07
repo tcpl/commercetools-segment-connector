@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { createApiRoot } from '../client/create.client';
+import { createAdminApiRoot } from '../client/create.client';
 import { createSubscription } from './actions';
 import { getLogger } from '../utils/logger.utils';
 
@@ -12,7 +12,7 @@ async function postDeploy(properties: Map<string, unknown>): Promise<void> {
   const topicName = properties.get(CONNECT_GCP_TOPIC_NAME_KEY) as string;
   const projectId = properties.get(CONNECT_GCP_PROJECT_ID_KEY) as string;
 
-  const apiRoot = createApiRoot();
+  const apiRoot = createAdminApiRoot();
 
   await createSubscription(apiRoot, topicName, projectId);
 }

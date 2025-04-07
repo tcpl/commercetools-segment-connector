@@ -1,6 +1,6 @@
 import { it, expect, beforeEach, jest } from '@jest/globals';
 import { run } from './pre-undeploy';
-import { createApiRoot } from '../client/create.client';
+import { createAdminApiRoot } from '../client/create.client';
 import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 
 jest.mock('../client/create.client');
@@ -31,7 +31,7 @@ beforeEach(() => {
 });
 
 it('should delete an existing subscription if one exists', async () => {
-  (createApiRoot as jest.Mock).mockReturnValue(
+  (createAdminApiRoot as jest.Mock).mockReturnValue(
     getMockApiRoot(subscriptionExistsResponse)
   );
 
@@ -45,7 +45,7 @@ it('should delete an existing subscription if one exists', async () => {
 });
 
 it('should not attempt to delete if no subscription exists', async () => {
-  (createApiRoot as jest.Mock).mockReturnValue(
+  (createAdminApiRoot as jest.Mock).mockReturnValue(
     getMockApiRoot(emptyGetSubscriptionsResponse)
   );
 
