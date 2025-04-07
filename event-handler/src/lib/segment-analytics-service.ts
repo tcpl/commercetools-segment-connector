@@ -98,7 +98,7 @@ export async function identifyAnonymousCustomer(
   }
 }
 
-export function trackOrderCompleted(order: Order) {
+export async function trackOrderCompleted(order: Order) {
   const configuration = readConfiguration();
   const logger = getLogger();
 

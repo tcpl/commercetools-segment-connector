@@ -32,5 +32,5 @@ export async function handleOrderCreated(orderId: string) {
     }
   }
 
-  trackOrderCompleted(order);
+  await trackOrderCompleted(order);
 }

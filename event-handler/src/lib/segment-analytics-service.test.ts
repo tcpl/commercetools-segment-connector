@@ -227,10 +227,10 @@ describe('trackOrderCompleted', () => {
     }));
   });
 
-  it('order with US Tax tracked correctly', () => {
+  it('order with US Tax tracked correctly', async () => {
     const order = orderWithUSTax as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
     expect(mockTrack).toHaveBeenCalledWith({
       event: 'Order Completed',
@@ -265,10 +265,10 @@ describe('trackOrderCompleted', () => {
     });
   });
 
-  it('order with shipping discount tracked correctly', () => {
+  it('order with shipping discount tracked correctly', async () => {
     const order = orderWithShippingDiscount as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
     expect(mockTrack).toHaveBeenCalledWith({
       event: 'Order Completed',
@@ -303,10 +303,10 @@ describe('trackOrderCompleted', () => {
     });
   });
 
-  it('order with discount on total price tracked correctly', () => {
+  it('order with discount on total price tracked correctly', async () => {
     const order = orderWithDiscountOnTotalPrice as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
     expect(mockTrack).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -321,10 +321,10 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with total price discount larger than item total tracked correctly', () => {
+  it('order with total price discount larger than item total tracked correctly', async () => {
     const order = orderWithTotalPriceDiscountLargerThanItemTotal as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
     expect(mockTrack).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -339,10 +339,10 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with item discount tracked correctly', () => {
+  it('order with item discount tracked correctly', async () => {
     const order = orderWithItemDiscount as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
     expect(mockTrack).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -357,10 +357,10 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with product discount tracked correctly', () => {
+  it('order with product discount tracked correctly', async () => {
     const order = orderWithProductDiscount as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
     expect(mockTrack).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -375,10 +375,10 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('anonymous order with no discounts tracked correctly', () => {
+  it('anonymous order with no discounts tracked correctly', async () => {
     const order = anonymousOrderWithNoDiscounts as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
     expect(mockTrack).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -393,10 +393,10 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with US tax and item discount tracked correctly', () => {
+  it('order with US tax and item discount tracked correctly', async () => {
     const order = orderWithUSTaxAndItemDiscount as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
     expect(mockTrack).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -411,10 +411,10 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with US tax and multi-buy discount tracked correctly', () => {
+  it('order with US tax and multi-buy discount tracked correctly', async () => {
     const order = orderWithUSTaxAndMultiBuyDiscount as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
     expect(mockTrack).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -429,10 +429,10 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with US tax, item discount, and product discount tracked correctly', () => {
+  it('order with US tax, item discount, and product discount tracked correctly', async () => {
     const order = orderWithUSTaxItemAndProductDiscount as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
     expect(mockTrack).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -447,10 +447,10 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with multiple shipping methods tracked correctly', () => {
+  it('order with multiple shipping methods tracked correctly', async () => {
     const order = orderWithMultipleShippingMethods as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
     expect(mockTrack).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -465,10 +465,10 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with multiple shipping methods and shipping discount tracked correctly', () => {
+  it('order with multiple shipping methods and shipping discount tracked correctly', async () => {
     const order = orderWithMultipleShippingMethodsAndShippingDiscount as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
     expect(mockTrack).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -483,10 +483,10 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with US tax and shipping discount tracked correctly', () => {
+  it('order with US tax and shipping discount tracked correctly', async () => {
     const order = orderWithUSTaxAndShippingDiscount as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
     expect(mockTrack).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -501,10 +501,10 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with US tax and discount on total price tracked correctly', () => {
+  it('order with US tax and discount on total price tracked correctly', async () => {
     const order = orderWithUSTaxAndDiscountOnTotalPrice as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
     expect(mockTrack).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -519,21 +519,21 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('should throw an error if taxedPrice is missing', () => {
+  it('should throw an error if taxedPrice is missing', async () => {
     const order = {
       ...anonymousOrderWithNoDiscounts,
       taxedPrice: undefined,
     } as Order;
 
-    expect(() => trackOrderCompleted(order)).toThrow(
+    await expect(() => trackOrderCompleted(order)).rejects.toThrow(
       `Order ${order.id} is missing taxedPrice`
     );
   });
 
-  it('should export discount code if available', () => {
+  it('should export discount code if available', async () => {
     const order = orderWithDiscountCode as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
     expect(mockTrack).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -544,10 +544,10 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with no shippingInfo should have a shipping cost of 0', () => {
+  it('order with no shippingInfo should have a shipping cost of 0', async () => {
     const order = orderWithNoShippingInfo as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
     expect(mockTrack).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -558,10 +558,10 @@ describe('trackOrderCompleted', () => {
     );
   });
 
-  it('order with consent field should pass consent to Segment', () => {
+  it('order with consent field should pass consent to Segment', async () => {
     const order = orderWithConsentField as Order;
 
-    trackOrderCompleted(order);
+    await trackOrderCompleted(order);
 
     expect(mockTrack).toHaveBeenCalledWith(
       expect.objectContaining({
