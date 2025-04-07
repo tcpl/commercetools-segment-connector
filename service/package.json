@@ -3,16 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "postinstall": "cd .. && husky ./event-handler/.husky",
     "start": "node build/index.js",
     "gcp-build": "tsc",
     "dev": "tsx --watch --conditions=development src/index.ts",
     "build": "rimraf ./build && tsc",
-    "lint": "prettier --check 'src/**/*.{js,ts}' && eslint .",
-    "format": "prettier --write 'src/**/*.{js,ts}'",
-    "test": "jest ./src --config jest.config.mjs",
-    "test:watch": "jest ./src --watch",
-    "test:coverage": "jest ./src --config jest.config.mjs --coverage --collectCoverageFrom='src/**/*.ts'",
     "connector:post-deploy": "node build/connector/post-deploy.js",
     "connector:pre-undeploy": "node build/connector/pre-undeploy.js"
   },
