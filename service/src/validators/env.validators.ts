@@ -59,38 +59,6 @@ const envValidators = [
     },
     { min: 4, max: 128 }
   ),
-
-  standardUrl(['segmentAnalyticsHost'], {
-    code: 'InvalidSegmentAnalyticsHost',
-    message: 'SEGMENT_ANALYTICS_HOST is not a valid URL.',
-    referencedBy: 'environmentVariables',
-  }),
-
-  standardString(
-    ['segmentSourceWriteKey'],
-    {
-      code: 'InvalidSegmentSourceWriteKey',
-      message: 'Segment Source Write Key should be set.',
-      referencedBy: 'environmentVariables',
-    },
-    { min: 1, max: 128 }
-  ),
-
-  standardUrl(['segmentPublicApiHost'], {
-    code: 'InvalidSegmentPublicApiHost',
-    message: 'SEGMENT_PUBLIC_API_HOST is not a valid URL.',
-    referencedBy: 'environmentVariables',
-  }),
-
-  optional(standardString)(
-    ['segmentPublicApiToken'],
-    {
-      code: 'InvalidSegmentPublicApiToken',
-      message: 'Segment Public API Token not correct.',
-      referencedBy: 'environmentVariables',
-    },
-    { min: 4, max: 128 }
-  ),
 ];
 
 export default envValidators;

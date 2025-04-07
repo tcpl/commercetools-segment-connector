@@ -7,10 +7,10 @@ export async function run(): Promise<void> {
   const logger = getLogger(false);
 
   try {
-    logger.info('Running post-deploy...');
-    logger.info('Successfully completed post-deploy...');
+    logger.info('Service - Running post-deploy...');
+    logger.info('Service - Successfully completed post-deploy...');
   } catch (error) {
-    logger.error('Post-deploy failed:', error);
+    logger.error('Service - Post-deploy failed:', error);
     process.exitCode = 1;
   }
 }
