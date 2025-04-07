@@ -4,12 +4,8 @@ import type {
   HttpMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
 import { readConfiguration } from '../utils/config.utils';
-import { Configuration } from '../types/index.types';
 
-const getProjectScope = (configuration: Configuration, scope: string) =>
-  `${scope}:${configuration.projectKey}`;
-
-export const createClient = () => {
+export const createClient = (scopes: string[]) => {
   const configuration = readConfiguration();
 
   const httpMiddlewareOptions: HttpMiddlewareOptions = {
@@ -23,11 +19,7 @@ export const createClient = () => {
       clientId: configuration.clientId,
       clientSecret: configuration.clientSecret,
     },
-    scopes: [
-      getProjectScope(configuration, 'manage_subscriptions'),
-      getProjectScope(configuration, 'view_orders'),
-      getProjectScope(configuration, 'view_customers'),
-    ],
+    scopes,
   };
 
   return new ClientBuilder()
