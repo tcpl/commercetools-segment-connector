@@ -1,12 +1,12 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { createApiRoot } from '../client/create.client';
+import { createAdminApiRoot } from '../client/create.client';
 import { deleteSubscription } from './actions';
 import { getLogger } from '../utils/logger.utils';
 
 async function preUndeploy(): Promise<void> {
-  const apiRoot = createApiRoot();
+  const apiRoot = createAdminApiRoot();
   await deleteSubscription(apiRoot);
 }
 

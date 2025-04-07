@@ -1,6 +1,6 @@
 import { it, expect, beforeEach, jest } from '@jest/globals';
 import { run } from './post-deploy';
-import { createApiRoot } from '../client/create.client';
+import { createAdminApiRoot } from '../client/create.client';
 import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 
 jest.mock('../client/create.client');
@@ -43,7 +43,7 @@ afterEach(() => {
 });
 
 it('should create a new subscription if none exists', async () => {
-  (createApiRoot as jest.Mock).mockReturnValue(
+  (createAdminApiRoot as jest.Mock).mockReturnValue(
     getMockApiRoot(emptyGetSubscriptionsResponse)
   );
 
@@ -63,7 +63,7 @@ it('should create a new subscription if none exists', async () => {
 });
 
 it('should update an existing subscription if one exists', async () => {
-  (createApiRoot as jest.Mock).mockReturnValue(
+  (createAdminApiRoot as jest.Mock).mockReturnValue(
     getMockApiRoot(subscriptionExistsResponse)
   );
 
