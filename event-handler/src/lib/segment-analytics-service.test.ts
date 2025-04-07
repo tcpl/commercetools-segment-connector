@@ -147,17 +147,17 @@ describe('sendCustomer', () => {
     );
   });
 
-  // it('should throw an error when Segment API fails', async () => {
-  //   const segmentError = new Error('Segment API failure');
+  it('should throw an error when Segment API fails', async () => {
+    mockIdentify.mockImplementation((_params, callback) => {
+      if (callback) {
+        callback(new Error('test error'));
+      }
+    });
 
-  //   mockIdentify.mockImplementation(() => {
-  //     throw segmentError;
-  //   });
+    const mockCustomer = createMockCustomer();
 
-  //   const mockCustomer = createMockCustomer();
-
-  //   expect(() => identifyCustomer(mockCustomer)).toThrow(segmentError);
-  // });
+    expect(async () => await identifyCustomer(mockCustomer)).rejects.toThrow();
+  });
 });
 
 describe('identifyAnonymousUser', () => {
