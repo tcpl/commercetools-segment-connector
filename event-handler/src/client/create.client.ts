@@ -7,6 +7,7 @@ import { Configuration } from '../types/index.types';
 const getProjectScope = (configuration: Configuration, scope: string) =>
   `${scope}:${configuration.projectKey}`;
 
+// used for install/uninstall - has manage_subscriptions scope
 export const createAdminApiRoot = () => {
   const configuration = readConfiguration();
 
