@@ -309,6 +309,18 @@ describe('trackOrderCompleted', () => {
     });
   });
 
+  it('should throw an error when Segment API fails', async () => {
+    mockTrack.mockImplementation((_params, callback) => {
+      if (callback) {
+        callback(new Error('test error'));
+      }
+    });
+
+    const order = orderWithDiscountOnTotalPrice as Order;
+
+    expect(async () => await trackOrderCompleted(order)).rejects.toThrow();
+  });
+
   it('order with discount on total price tracked correctly', async () => {
     const order = orderWithDiscountOnTotalPrice as Order;
 
