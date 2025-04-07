@@ -107,7 +107,15 @@ export async function trackOrderCompleted(order: Order) {
   try {
     const event = buildOrderCompletedTrackEvent(order);
 
-    analytics.track(event);
+    await new Promise<void>((resolve, reject) => {
+      analytics.track(event, (err?: unknown) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
 
     logger.info(
       `Order Completed ${order.id} track event sent to Segment successfully`
