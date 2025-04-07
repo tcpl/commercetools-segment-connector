@@ -7,27 +7,21 @@ import { Configuration } from '../types/index.types';
 const getProjectScope = (configuration: Configuration, scope: string) =>
   `${scope}:${configuration.projectKey}`;
 
-export const createAdminApiRoot = (
-  (root?: ByProjectKeyRequestBuilder) => () => {
-    if (root) {
-      return root;
-    }
+export const createAdminApiRoot = () => {
+  const configuration = readConfiguration();
 
-    const configuration = readConfiguration();
+  const scopes = [
+    getProjectScope(configuration, 'manage_subscriptions'),
+    getProjectScope(configuration, 'view_orders'),
+    getProjectScope(configuration, 'view_customers'),
+  ];
 
-    const scopes = [
-      getProjectScope(configuration, 'manage_subscriptions'),
-      getProjectScope(configuration, 'view_orders'),
-      getProjectScope(configuration, 'view_customers'),
-    ];
-
-    root = createApiBuilderFromCtpClient(createClient(scopes)).withProjectKey({
-      projectKey: readConfiguration().projectKey,
-    });
-
-    return root;
-  }
-)();
+  return createApiBuilderFromCtpClient(
+    createClient(configuration, scopes)
+  ).withProjectKey({
+    projectKey: configuration.projectKey,
+  });
+};
 
 export const createApiRoot = ((root?: ByProjectKeyRequestBuilder) => () => {
   if (root) {
@@ -41,8 +35,10 @@ export const createApiRoot = ((root?: ByProjectKeyRequestBuilder) => () => {
     getProjectScope(configuration, 'view_customers'),
   ];
 
-  root = createApiBuilderFromCtpClient(createClient(scopes)).withProjectKey({
-    projectKey: readConfiguration().projectKey,
+  root = createApiBuilderFromCtpClient(
+    createClient(configuration, scopes)
+  ).withProjectKey({
+    projectKey: configuration.projectKey,
   });
 
   return root;

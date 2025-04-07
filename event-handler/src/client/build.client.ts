@@ -3,11 +3,12 @@ import type {
   AuthMiddlewareOptions,
   HttpMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
-import { readConfiguration } from '../utils/config.utils';
+import { Configuration } from '../types/index.types';
 
-export const createClient = (scopes: string[]) => {
-  const configuration = readConfiguration();
-
+export const createClient = (
+  configuration: Configuration,
+  scopes: string[]
+) => {
   const httpMiddlewareOptions: HttpMiddlewareOptions = {
     host: configuration.apiUrl,
   };
