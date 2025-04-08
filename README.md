@@ -20,6 +20,8 @@ sequenceDiagram
 3. A Node.js source setup in Segment. See [Quickstart: Node.js](https://segment.com/docs/connections/sources/catalog/libraries/server/node/quickstart/). You will need your `Write Key` from the source settings.
 4. A Segment Public API Token (optional). This is only available on paid plans and is required for user deletion. See Customer Deletion section below.
 
+There are some optional settings for exporting logs using Open Telemetry (named `OTEL_EXPORTER_*`). This is useful to view connector install/uninstall logs as well as better querying of logs. It supports a HTTP endpoint that accepts an `api-key` header (e.g. New Relic).
+
 ## Events
 
 This connector handles the following commercetools events:
@@ -143,3 +145,7 @@ Make sure the topic has permissions for `subscriptions@commercetools-platform.ia
 - Create a subscription in GCP Pub/Sub for the topic you created above. Use the ngrok URL as the endpoint for the subscription. E.g. `https://[Your ngrok ID].ngrok-free.app/`
 
 See the [connect-email-integration-template](https://github.com/commercetools/connect-email-integration-template/blob/fdc6689e7a53f9f72e05a38d41ea805ad94b8911/mail-sender/README.md?plain=1#L174) for other instructions on how to run the connector locally
+
+## Invalid Segment Source Write Key
+
+Note, Segment does not return an error if the source write key is invalid (e.g. see https://github.com/segmentio/analytics-ruby/issues/136). Make sure events are coming through using the Source Debugger when changing the `SEGMENT_SOURCE_WRITE_KEY`.
