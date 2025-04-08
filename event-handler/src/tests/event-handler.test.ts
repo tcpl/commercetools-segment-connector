@@ -7,7 +7,6 @@ import { Order } from '@commercetools/platform-sdk';
 import * as testOrder from '../lib/test-orders/order-with-us-tax.json';
 import fetchMock from 'jest-fetch-mock';
 import * as orderWithConsentField from '../lib/test-orders/order-with-consent-field.json';
-import { ResourceNotFoundError } from '@commercetools/platform-sdk';
 
 jest.mock('../client/create.client');
 jest.mock('@segment/analytics-node');
