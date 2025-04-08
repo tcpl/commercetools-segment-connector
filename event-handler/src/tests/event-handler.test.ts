@@ -7,6 +7,7 @@ import { Order } from '@commercetools/platform-sdk';
 import * as testOrder from '../lib/test-orders/order-with-us-tax.json';
 import fetchMock from 'jest-fetch-mock';
 import * as orderWithConsentField from '../lib/test-orders/order-with-consent-field.json';
+import { ResourceNotFoundError } from '@commercetools/platform-sdk';
 
 jest.mock('../client/create.client');
 jest.mock('@segment/analytics-node');
@@ -206,6 +207,29 @@ it('should identify customer for anonymous order when no registered customer exi
     anonymousId: '2a5c1992-4380-4ca2-b679-64a613bd6df8',
     traits: { email: 'nonexistent@example.com' },
   });
+});
+
+it('should return 500 status code when exception thrown from commercetools', async () => {
+  class TestError extends Error {
+    statusCode: number | string;
+    message: string;
+
+    constructor(statusCode: number | string, message: string) {
+      super(message);
+      this.statusCode = statusCode;
+      this.message = message;
+    }
+  }
+
+  const mockGetOrder = jest.fn().mockImplementation(() => {
+    throw new TestError(404, 'Not found');
+  });
+
+  setupApiRootMock(mockGetOrder, mockGetCustomerNoCustomerFound);
+
+  await postOrderCreatedEvent('33925a10-c3fb-4ff5-a9b2-9134400b9d4d').expect(
+    500
+  );
 });
 
 it('anonymous order with consent field and no registered customer should pass consent to Segment', async () => {
