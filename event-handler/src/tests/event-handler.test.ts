@@ -208,6 +208,29 @@ it('should identify customer for anonymous order when no registered customer exi
   });
 });
 
+it('should return 500 status code when exception thrown from commercetools', async () => {
+  class TestError extends Error {
+    statusCode: number | string;
+    message: string;
+
+    constructor(statusCode: number | string, message: string) {
+      super(message);
+      this.statusCode = statusCode;
+      this.message = message;
+    }
+  }
+
+  const mockGetOrder = jest.fn().mockImplementation(() => {
+    throw new TestError(404, 'Not found');
+  });
+
+  setupApiRootMock(mockGetOrder, mockGetCustomerNoCustomerFound);
+
+  await postOrderCreatedEvent('33925a10-c3fb-4ff5-a9b2-9134400b9d4d').expect(
+    500
+  );
+});
+
 it('anonymous order with consent field and no registered customer should pass consent to Segment', async () => {
   const mockGetOrder = jest.fn().mockResolvedValue({
     body: {
